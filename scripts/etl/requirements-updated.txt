@@ -1,0 +1,26 @@
+# Core data processing (updated for Python 3.13 compatibility)
+polars>=0.20.0           # Fast DataFrame library (Rust-powered)
+pyarrow>=15.0.0          # Parquet file format
+numpy>=1.26.0            # Numerical computing (let pip find compatible version)
+
+# HTTP & Web scraping
+httpx>=0.25.0            # Async HTTP client
+beautifulsoup4>=4.12.0   # HTML parsing
+lxml>=4.9.0              # XML/HTML parser
+tenacity>=8.2.0          # Retry logic
+
+# Data validation
+pydantic>=2.5.0          # Data validation
+pydantic-settings>=2.1.0 # Settings management
+
+# CLI & Progress
+click>=8.1.0             # CLI framework
+tqdm>=4.66.0             # Progress bars
+rich>=13.7.0             # Beautiful terminal output
+
+# Utilities
+python-dotenv>=1.0.0     # Environment variables
+loguru>=0.7.0            # Logging
+
+# Geospatial (optional, for spatial operations)
+shapely>=2.0.0           # Geometric operations

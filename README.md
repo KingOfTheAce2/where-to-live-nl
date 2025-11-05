@@ -93,7 +93,8 @@ All data comes from **free, open government sources** - no web scraping, no Term
 ┌─────────────────────────────────────────┐
 │     Frontend (Vercel - Free Tier)       │
 │   • React/Next.js                       │
-│   • Mapbox GL JS / MapLibre             │
+│   • MapLibre GL JS (open source)        │
+│   • PDOK Maps (Dutch govt, free)        │
 │   • Tailwind CSS                        │
 └────────────────┬────────────────────────┘
                  │
@@ -162,28 +163,51 @@ Government APIs → ETL Scripts → Processed Data → Cloudflare R2 → CDN →
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### Quick Start (10 Minutes)
+
+**Step 1: Data Collection** (Start here!)
+
 ```bash
+# Navigate to ETL scripts
+cd scripts/etl
+
+# Set up Python environment
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Download sample BAG data (100 addresses)
+python -m ingest.bag --sample 100
+
+# Transform to Parquet
+python -m transform.bag_to_parquet
+```
+
+**See complete guide**: [GETTING_STARTED.md](GETTING_STARTED.md)
+
+**Detailed ETL docs**: [scripts/etl/QUICKSTART.md](scripts/etl/QUICKSTART.md)
+
+---
+
+### Frontend Setup (Coming Soon)
+
+```bash
+# Prerequisites
 node >= 18.x
 npm >= 9.x
 git
-```
 
-### Installation
-```bash
 # Clone the repository
-git clone https://github.com/yourusername/huischeck.git
-cd huischeck
+git clone https://github.com/yourusername/where-to-live-nl.git
+cd where-to-live-nl
 
 # Install dependencies
 npm install
 
 # Set up environment variables
 cp .env.example .env.local
-# Edit .env.local with your API keys
-
-# Run data ingestion (first time only)
-npm run data:import
 
 # Start development server
 npm run dev
@@ -191,30 +215,15 @@ npm run dev
 
 Visit `http://localhost:3000`
 
-### Data Setup
-```bash
-# Download and process government datasets
-npm run data:download
-
-# Transform to optimized formats
-npm run data:process
-
-# Generate vector tiles
-npm run data:tiles
-
-# Upload to R2 (requires Cloudflare account)
-npm run data:upload
-```
-
 ---
 
 ## 📂 Project Structure
 ```
-huischeck/
+where-to-live-nl/
 ├── src/
 │   ├── app/                 # Next.js app directory
 │   ├── components/          # React components
-│   │   ├── map/            # Map-related components
+│   │   ├── map/            # Map-related components (MapLibre)
 │   │   ├── search/         # Search functionality
 │   │   └── property/       # Property details
 │   ├── lib/                # Utilities and helpers
@@ -230,12 +239,16 @@ huischeck/
 │   └── deploy/             # Deployment scripts
 ├── data/
 │   ├── raw/                # Downloaded datasets
-│   ├── processed/          # Cleaned data
-│   └── tiles/              # Vector tiles
+│   ├── processed/          # Cleaned data (Parquet)
+│   └── tiles/              # Vector tiles (if self-hosting)
 ├── public/
 │   └── static/             # Static assets
-└── workers/                # Cloudflare Workers
-    └── api/                # Serverless functions
+├── workers/                # Cloudflare Workers
+│   └── api/                # Serverless functions
+├── ROADMAP.md              # Detailed development plan
+├── PRICING.md              # Cost analysis & free hosting guide
+├── DATA_STORAGE.md         # JSON vs Parquet vs SQL guide
+└── MAPPING.md              # Complete mapping implementation guide
 ```
 
 ---
@@ -263,6 +276,20 @@ huischeck/
 - [ ] Predictive pricing model
 - [ ] Erfpacht calculator
 - [ ] Community forum
+
+---
+
+## 📖 Documentation
+
+Comprehensive guides for understanding and contributing to the project:
+
+- **[GETTING_STARTED.md](GETTING_STARTED.md)** - Your first steps (10-minute setup)
+- **[LEGAL.md](LEGAL.md)** - ⚖️ Kadaster, GDPR & compliance guide (READ FIRST!)
+- **[ROADMAP.md](ROADMAP.md)** - 52-week development plan with detailed tasks
+- **[PRICING.md](PRICING.md)** - Complete cost analysis ($0-5/month hosting!)
+- **[DATA_STORAGE.md](DATA_STORAGE.md)** - JSON vs Parquet vs PostgreSQL guide
+- **[MAPPING.md](MAPPING.md)** - How to use PDOK + MapLibre (free, no vendor lock-in)
+- **[scripts/etl/QUICKSTART.md](scripts/etl/QUICKSTART.md)** - ETL pipeline setup guide
 
 ---
 
