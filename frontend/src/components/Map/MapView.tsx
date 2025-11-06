@@ -3,16 +3,17 @@
 import { useEffect, useRef, useState } from 'react'
 import maplibregl from 'maplibre-gl'
 import type { Destination } from '@/app/page'
-import type { Property } from '@/types/property'
+import type { Property, PropertyFilters } from '@/types/property'
 import { formatPrice, formatAddress, getPropertyTypeLabel } from '@/types/property'
 import { createCircle, calculateRadius, getModeColor, getModeBorderColor } from '@/lib/isochrones'
 
 interface MapViewProps {
   destinations: Destination[]
   showProperties?: boolean
+  propertyFilters?: PropertyFilters
 }
 
-export default function MapView({ destinations, showProperties = true }: MapViewProps) {
+export default function MapView({ destinations, showProperties = true, propertyFilters = {} }: MapViewProps) {
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<maplibregl.Map | null>(null)
   const markers = useRef<Map<string, maplibregl.Marker>>(new Map())
@@ -413,9 +414,27 @@ export default function MapView({ destinations, showProperties = true }: MapView
         // Get current map bounds
         const bounds = map.current!.getBounds()
 
-        const response = await fetch(
-          `/api/properties?minLat=${bounds.getSouth()}&maxLat=${bounds.getNorth()}&minLng=${bounds.getWest()}&maxLng=${bounds.getEast()}&limit=500`
-        )
+        // Build query params with bounds and filters
+        const params = new URLSearchParams({
+          minLat: bounds.getSouth().toString(),
+          maxLat: bounds.getNorth().toString(),
+          minLng: bounds.getWest().toString(),
+          maxLng: bounds.getEast().toString(),
+          limit: '500',
+        })
+
+        // Add property filters
+        if (propertyFilters.minPrice) params.set('minPrice', propertyFilters.minPrice.toString())
+        if (propertyFilters.maxPrice) params.set('maxPrice', propertyFilters.maxPrice.toString())
+        if (propertyFilters.propertyTypes && propertyFilters.propertyTypes.length > 0) {
+          params.set('types', propertyFilters.propertyTypes.join(','))
+        }
+        if (propertyFilters.minRooms) params.set('minRooms', propertyFilters.minRooms.toString())
+        if (propertyFilters.maxRooms) params.set('maxRooms', propertyFilters.maxRooms.toString())
+        if (propertyFilters.minArea) params.set('minArea', propertyFilters.minArea.toString())
+        if (propertyFilters.maxArea) params.set('maxArea', propertyFilters.maxArea.toString())
+
+        const response = await fetch(`/api/properties?${params.toString()}`)
         const data = await response.json()
 
         if (data.success) {
@@ -463,7 +482,7 @@ export default function MapView({ destinations, showProperties = true }: MapView
     return () => {
       map.current?.off('moveend', handleMoveEnd)
     }
-  }, [mapLoaded, showProperties])
+  }, [mapLoaded, showProperties, propertyFilters])
 
   return (
     <div className="relative w-full h-full">

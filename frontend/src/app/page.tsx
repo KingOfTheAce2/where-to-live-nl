@@ -2,8 +2,10 @@
 
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import { MapPin, Plus } from 'lucide-react'
+import { MapPin, Plus, ChevronDown, ChevronUp } from 'lucide-react'
 import AddressAutocomplete from '@/components/AddressAutocomplete'
+import PropertyFilters from '@/components/PropertyFilters'
+import type { PropertyFilters as Filters } from '@/types/property'
 
 // Dynamically import Map component (MapLibre requires window object)
 const MapView = dynamic(() => import('@/components/Map/MapView'), {
@@ -36,6 +38,8 @@ export default function HomePage() {
   ])
 
   const [selectedDestination, setSelectedDestination] = useState<Destination | null>(null)
+  const [propertyFilters, setPropertyFilters] = useState<Filters>({})
+  const [showFilters, setShowFilters] = useState(false)
 
   const addDestination = () => {
     const newId = (destinations.length + 1).toString()
@@ -183,6 +187,29 @@ export default function HomePage() {
               Add another destination
             </button>
           )}
+
+          {/* Property Filters Toggle */}
+          <div className="mt-6 pt-6 border-t border-gray-200">
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="w-full flex items-center justify-between text-left font-semibold text-gray-900 hover:text-primary-600 transition-colors"
+            >
+              <span>Property Filters</span>
+              {showFilters ? (
+                <ChevronUp className="w-5 h-5" />
+              ) : (
+                <ChevronDown className="w-5 h-5" />
+              )}
+            </button>
+            {showFilters && (
+              <div className="mt-4">
+                <PropertyFilters
+                  onFiltersChange={setPropertyFilters}
+                  initialFilters={propertyFilters}
+                />
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Calculate Button */}
@@ -201,7 +228,7 @@ export default function HomePage() {
 
       {/* Map */}
       <div className="flex-1 relative">
-        <MapView destinations={destinations} />
+        <MapView destinations={destinations} propertyFilters={propertyFilters} />
       </div>
     </div>
   )
