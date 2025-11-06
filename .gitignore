@@ -44,3 +44,11 @@ data/tiles/
 *.tmp
 *.temp
 .cache/
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/

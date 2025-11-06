@@ -16,7 +16,7 @@ When searching for housing in the Netherlands, expats face:
 - **Complex calculations**: Travel times, livability scores, safety metrics
 - **Information overload**: Difficulty prioritizing what matters
 
-HuisCheck solves this by aggregating public data into actionable insights.
+Where-to-Live-NL solves this by aggregating public data into actionable insights.
 
 ---
 
@@ -362,16 +362,16 @@ This tool provides **informational estimates** based on public data sources. It 
 - Travel times are estimates, not real-time calculations
 - Some rural areas have limited data coverage
 
-See [ISSUES.md](https://github.com/yourusername/huischeck/issues) for full list.
+See the [GitHub Issues](https://github.com/yourusername/where-to-live-nl/issues) page for a full list.
 
 ---
 
 ## 📞 Support
 
-- **Documentation**: [docs.huischeck.nl](https://docs.huischeck.nl)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/huischeck/issues)
-- **Email**: support@huischeck.nl
-- **Community**: [Discord Server](https://discord.gg/huischeck)
+- **Documentation**: [GitHub Wiki](https://github.com/yourusername/where-to-live-nl/wiki) (coming soon)
+- **Issues**: [GitHub Issues](https://github.com/yourusername/where-to-live-nl/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/yourusername/where-to-live-nl/discussions)
+- **Documentation Index**: [DOCS_INDEX.md](DOCS_INDEX.md)
 
 ---
 
