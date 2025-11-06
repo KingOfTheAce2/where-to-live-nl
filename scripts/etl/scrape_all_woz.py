@@ -56,7 +56,9 @@ def append_to_parquet(new_data: list[dict], output_path: Path):
     if not new_data:
         return
 
-    new_df = pl.DataFrame(new_data)
+    # Use infer_schema_length=None to scan all rows for schema inference
+    # This prevents integer overflow errors with large bag_pand_id values
+    new_df = pl.DataFrame(new_data, infer_schema_length=None)
 
     if output_path.exists():
         # Load existing and concatenate
