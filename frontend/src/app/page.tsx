@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { MapPin, Plus } from 'lucide-react'
+import AddressAutocomplete from '@/components/AddressAutocomplete'
 
 // Dynamically import Map component (MapLibre requires window object)
 const MapView = dynamic(() => import('@/components/Map/MapView'), {
@@ -102,14 +103,20 @@ export default function HomePage() {
                 )}
               </div>
 
-              {/* Address Input */}
-              <input
-                type="text"
-                value={dest.address}
-                onChange={(e) => updateDestination(dest.id, { address: e.target.value })}
-                placeholder="Enter address or search..."
-                className="w-full px-3 py-2 border border-gray-300 rounded-md mb-3 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              />
+              {/* Address Autocomplete */}
+              <div className="mb-3">
+                <AddressAutocomplete
+                  value={dest.address}
+                  onChange={(value) => updateDestination(dest.id, { address: value })}
+                  onSelect={(address, coordinates) => {
+                    updateDestination(dest.id, {
+                      address,
+                      coordinates,
+                    })
+                  }}
+                  placeholder="Search for address..."
+                />
+              </div>
 
               {/* Time Slider */}
               <div className="mb-3">
