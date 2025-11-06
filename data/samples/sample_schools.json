@@ -1,0 +1,3768 @@
+{
+  "metadata": {
+    "generated_at": "2025-11-06T19:32:42.649244",
+    "num_primary": 150,
+    "num_secondary": 50,
+    "cities": [
+      "Amsterdam",
+      "Rotterdam",
+      "Utrecht",
+      "Den Haag",
+      "Eindhoven",
+      "Groningen"
+    ],
+    "note": "This is sample data for testing. Not real DUO data."
+  },
+  "schools": [
+    {
+      "id": "PO-00001",
+      "name": "Het Kompas",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.346057,
+        "lng": 4.872861
+      },
+      "students": 272,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647460"
+      }
+    },
+    {
+      "id": "PO-00002",
+      "name": "De Zonnewijzer",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.354038,
+        "lng": 4.941841
+      },
+      "students": 314,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647484"
+      }
+    },
+    {
+      "id": "PO-00003",
+      "name": "De Vuurtoren",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.322821,
+        "lng": 4.878205
+      },
+      "students": 410,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647491"
+      }
+    },
+    {
+      "id": "PO-00004",
+      "name": "Het Kompas",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.3582,
+        "lng": 4.933026
+      },
+      "students": 402,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647498"
+      }
+    },
+    {
+      "id": "PO-00005",
+      "name": "De Wilg",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.354699,
+        "lng": 4.924669
+      },
+      "students": 344,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647504"
+      }
+    },
+    {
+      "id": "PO-00006",
+      "name": "De Boomhut",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.364966,
+        "lng": 4.940742
+      },
+      "students": 141,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647508"
+      }
+    },
+    {
+      "id": "PO-00007",
+      "name": "Het Kompas",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.392185,
+        "lng": 4.875307
+      },
+      "students": 160,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647513"
+      }
+    },
+    {
+      "id": "PO-00008",
+      "name": "De Zonnewijzer",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.393606,
+        "lng": 4.859456
+      },
+      "students": 297,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647525"
+      }
+    },
+    {
+      "id": "PO-00009",
+      "name": "Het Mozaïek",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.391343,
+        "lng": 4.865961
+      },
+      "students": 202,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647531"
+      }
+    },
+    {
+      "id": "PO-00010",
+      "name": "De Triangel",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.361653,
+        "lng": 4.845652
+      },
+      "students": 340,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647536"
+      }
+    },
+    {
+      "id": "PO-00011",
+      "name": "De Regenboog",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.369552,
+        "lng": 4.943169
+      },
+      "students": 391,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647543"
+      }
+    },
+    {
+      "id": "PO-00012",
+      "name": "Het Kompas",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.389639,
+        "lng": 4.895341
+      },
+      "students": 140,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647549"
+      }
+    },
+    {
+      "id": "PO-00013",
+      "name": "De Klimop",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.323531,
+        "lng": 4.947763
+      },
+      "students": 335,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647553"
+      }
+    },
+    {
+      "id": "PO-00014",
+      "name": "De Springplank",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.394913,
+        "lng": 4.939866
+      },
+      "students": 483,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647557"
+      }
+    },
+    {
+      "id": "PO-00015",
+      "name": "De Tweemaster",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.360164,
+        "lng": 4.906566
+      },
+      "students": 496,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647560"
+      }
+    },
+    {
+      "id": "PO-00016",
+      "name": "De Wereldbol",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.376622,
+        "lng": 4.899555
+      },
+      "students": 246,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647566"
+      }
+    },
+    {
+      "id": "PO-00017",
+      "name": "Het Spectrum",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.360207,
+        "lng": 4.895559
+      },
+      "students": 432,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647570"
+      }
+    },
+    {
+      "id": "PO-00018",
+      "name": "De Regenboog",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.38048,
+        "lng": 4.918804
+      },
+      "students": 354,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647574"
+      }
+    },
+    {
+      "id": "PO-00019",
+      "name": "De Springplank",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.403432,
+        "lng": 4.937465
+      },
+      "students": 471,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647577"
+      }
+    },
+    {
+      "id": "PO-00020",
+      "name": "De Wilg",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.389578,
+        "lng": 4.857694
+      },
+      "students": 152,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647581"
+      }
+    },
+    {
+      "id": "PO-00021",
+      "name": "De Kameleon",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.326691,
+        "lng": 4.955985
+      },
+      "students": 420,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647585"
+      }
+    },
+    {
+      "id": "PO-00022",
+      "name": "De Rank",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.405577,
+        "lng": 4.955307
+      },
+      "students": 315,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647589"
+      }
+    },
+    {
+      "id": "PO-00023",
+      "name": "De Wilg",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.347927,
+        "lng": 4.890899
+      },
+      "students": 206,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647592"
+      }
+    },
+    {
+      "id": "PO-00024",
+      "name": "De Rank",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.405212,
+        "lng": 4.933786
+      },
+      "students": 430,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647596"
+      }
+    },
+    {
+      "id": "PO-00025",
+      "name": "De Rank",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.40235,
+        "lng": 4.920992
+      },
+      "students": 249,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647599"
+      }
+    },
+    {
+      "id": "PO-00026",
+      "name": "Het Mozaïek",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.898975,
+        "lng": 4.4579
+      },
+      "students": 113,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647604"
+      }
+    },
+    {
+      "id": "PO-00027",
+      "name": "Het Sterrenbos",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.952294,
+        "lng": 4.454254
+      },
+      "students": 320,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647610"
+      }
+    },
+    {
+      "id": "PO-00028",
+      "name": "Het Klaverblad",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.932562,
+        "lng": 4.429544
+      },
+      "students": 370,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647616"
+      }
+    },
+    {
+      "id": "PO-00029",
+      "name": "De Rank",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.920563,
+        "lng": 4.464246
+      },
+      "students": 148,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647620"
+      }
+    },
+    {
+      "id": "PO-00030",
+      "name": "De Regenboog",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.911754,
+        "lng": 4.44436
+      },
+      "students": 129,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647623"
+      }
+    },
+    {
+      "id": "PO-00031",
+      "name": "Het Palet",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.905224,
+        "lng": 4.535955
+      },
+      "students": 113,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647629"
+      }
+    },
+    {
+      "id": "PO-00032",
+      "name": "De Zonnewijzer",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.921723,
+        "lng": 4.4807
+      },
+      "students": 285,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647632"
+      }
+    },
+    {
+      "id": "PO-00033",
+      "name": "De Triangel",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.899435,
+        "lng": 4.465442
+      },
+      "students": 301,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647636"
+      }
+    },
+    {
+      "id": "PO-00034",
+      "name": "De Tweemaster",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.907506,
+        "lng": 4.476947
+      },
+      "students": 278,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647640"
+      }
+    },
+    {
+      "id": "PO-00035",
+      "name": "De Zonnewijzer",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.90149,
+        "lng": 4.478806
+      },
+      "students": 212,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647643"
+      }
+    },
+    {
+      "id": "PO-00036",
+      "name": "De Springplank",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.881832,
+        "lng": 4.471061
+      },
+      "students": 429,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647647"
+      }
+    },
+    {
+      "id": "PO-00037",
+      "name": "De Horizon",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.905317,
+        "lng": 4.455934
+      },
+      "students": 348,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647651"
+      }
+    },
+    {
+      "id": "PO-00038",
+      "name": "De Boomhut",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.940394,
+        "lng": 4.421686
+      },
+      "students": 278,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647655"
+      }
+    },
+    {
+      "id": "PO-00039",
+      "name": "De Kameleon",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.95899,
+        "lng": 4.460973
+      },
+      "students": 464,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647658"
+      }
+    },
+    {
+      "id": "PO-00040",
+      "name": "De Triangel",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.968957,
+        "lng": 4.45727
+      },
+      "students": 396,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647662"
+      }
+    },
+    {
+      "id": "PO-00041",
+      "name": "De Klimop",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.928235,
+        "lng": 4.485512
+      },
+      "students": 388,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647665"
+      }
+    },
+    {
+      "id": "PO-00042",
+      "name": "De Tweemaster",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.969286,
+        "lng": 4.532946
+      },
+      "students": 407,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647669"
+      }
+    },
+    {
+      "id": "PO-00043",
+      "name": "De Tweemaster",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.923556,
+        "lng": 4.516402
+      },
+      "students": 213,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647674"
+      }
+    },
+    {
+      "id": "PO-00044",
+      "name": "De Wilg",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.898904,
+        "lng": 4.464768
+      },
+      "students": 492,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647680"
+      }
+    },
+    {
+      "id": "PO-00045",
+      "name": "De Horizon",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.908172,
+        "lng": 4.527922
+      },
+      "students": 214,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647684"
+      }
+    },
+    {
+      "id": "PO-00046",
+      "name": "De Triangel",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.918018,
+        "lng": 4.521901
+      },
+      "students": 175,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647688"
+      }
+    },
+    {
+      "id": "PO-00047",
+      "name": "De Kameleon",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.898191,
+        "lng": 4.436429
+      },
+      "students": 425,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647691"
+      }
+    },
+    {
+      "id": "PO-00048",
+      "name": "De Rank",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.968384,
+        "lng": 4.481881
+      },
+      "students": 483,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647695"
+      }
+    },
+    {
+      "id": "PO-00049",
+      "name": "De Horizon",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.922349,
+        "lng": 4.440247
+      },
+      "students": 327,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647698"
+      }
+    },
+    {
+      "id": "PO-00050",
+      "name": "Het Sterrenbos",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.959747,
+        "lng": 4.524153
+      },
+      "students": 307,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647702"
+      }
+    },
+    {
+      "id": "PO-00051",
+      "name": "De Boomhut",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.095316,
+        "lng": 5.162852
+      },
+      "students": 379,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647708"
+      }
+    },
+    {
+      "id": "PO-00052",
+      "name": "De Horizon",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.134449,
+        "lng": 5.100163
+      },
+      "students": 276,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647711"
+      }
+    },
+    {
+      "id": "PO-00053",
+      "name": "De Tweemaster",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.090052,
+        "lng": 5.07889
+      },
+      "students": 469,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647715"
+      }
+    },
+    {
+      "id": "PO-00054",
+      "name": "De Tweemaster",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.124889,
+        "lng": 5.177204
+      },
+      "students": 364,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647719"
+      }
+    },
+    {
+      "id": "PO-00055",
+      "name": "De Wilg",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.083391,
+        "lng": 5.179636
+      },
+      "students": 210,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647723"
+      }
+    },
+    {
+      "id": "PO-00056",
+      "name": "De Vuurtoren",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.111605,
+        "lng": 5.164296
+      },
+      "students": 420,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647729"
+      }
+    },
+    {
+      "id": "PO-00057",
+      "name": "De Wereldbol",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.057939,
+        "lng": 5.099051
+      },
+      "students": 464,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647732"
+      }
+    },
+    {
+      "id": "PO-00058",
+      "name": "Het Palet",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.077799,
+        "lng": 5.136978
+      },
+      "students": 314,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647736"
+      }
+    },
+    {
+      "id": "PO-00059",
+      "name": "Het Mozaïek",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.116503,
+        "lng": 5.100929
+      },
+      "students": 482,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647741"
+      }
+    },
+    {
+      "id": "PO-00060",
+      "name": "Het Palet",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.101338,
+        "lng": 5.106543
+      },
+      "students": 188,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647749"
+      }
+    },
+    {
+      "id": "PO-00061",
+      "name": "De Horizon",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.077827,
+        "lng": 5.084481
+      },
+      "students": 115,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647753"
+      }
+    },
+    {
+      "id": "PO-00062",
+      "name": "Het Kompas",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.101478,
+        "lng": 5.107563
+      },
+      "students": 340,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647756"
+      }
+    },
+    {
+      "id": "PO-00063",
+      "name": "De Wilg",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.05778,
+        "lng": 5.098574
+      },
+      "students": 477,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647762"
+      }
+    },
+    {
+      "id": "PO-00064",
+      "name": "Het Mozaïek",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.097025,
+        "lng": 5.106006
+      },
+      "students": 223,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647765"
+      }
+    },
+    {
+      "id": "PO-00065",
+      "name": "De Vuurtoren",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.104384,
+        "lng": 5.120288
+      },
+      "students": 364,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647768"
+      }
+    },
+    {
+      "id": "PO-00066",
+      "name": "Het Klaverblad",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.050418,
+        "lng": 5.142561
+      },
+      "students": 162,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647772"
+      }
+    },
+    {
+      "id": "PO-00067",
+      "name": "De Vuurtoren",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.066338,
+        "lng": 5.094836
+      },
+      "students": 440,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647776"
+      }
+    },
+    {
+      "id": "PO-00068",
+      "name": "De Boomhut",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.083301,
+        "lng": 5.175797
+      },
+      "students": 441,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647779"
+      }
+    },
+    {
+      "id": "PO-00069",
+      "name": "De Kameleon",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.120367,
+        "lng": 5.068068
+      },
+      "students": 197,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647783"
+      }
+    },
+    {
+      "id": "PO-00070",
+      "name": "De Horizon",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.068774,
+        "lng": 5.104456
+      },
+      "students": 208,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647788"
+      }
+    },
+    {
+      "id": "PO-00071",
+      "name": "De Vuurtoren",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.074564,
+        "lng": 5.105906
+      },
+      "students": 273,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647792"
+      }
+    },
+    {
+      "id": "PO-00072",
+      "name": "De Klimop",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.073169,
+        "lng": 5.098581
+      },
+      "students": 165,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647796"
+      }
+    },
+    {
+      "id": "PO-00073",
+      "name": "De Tweemaster",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.119313,
+        "lng": 5.154626
+      },
+      "students": 347,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647799"
+      }
+    },
+    {
+      "id": "PO-00074",
+      "name": "Het Mozaïek",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.059136,
+        "lng": 5.099863
+      },
+      "students": 393,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647803"
+      }
+    },
+    {
+      "id": "PO-00075",
+      "name": "De Zonnewijzer",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.104964,
+        "lng": 5.076823
+      },
+      "students": 114,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647808"
+      }
+    },
+    {
+      "id": "PO-00076",
+      "name": "De Vuurtoren",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.086921,
+        "lng": 4.314741
+      },
+      "students": 221,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647814"
+      }
+    },
+    {
+      "id": "PO-00077",
+      "name": "De Triangel",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.052629,
+        "lng": 4.33822
+      },
+      "students": 474,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647817"
+      }
+    },
+    {
+      "id": "PO-00078",
+      "name": "De Springplank",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.07542,
+        "lng": 4.267175
+      },
+      "students": 494,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647821"
+      }
+    },
+    {
+      "id": "PO-00079",
+      "name": "De Boomhut",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.054125,
+        "lng": 4.284803
+      },
+      "students": 349,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647825"
+      }
+    },
+    {
+      "id": "PO-00080",
+      "name": "De Vuurtoren",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.098169,
+        "lng": 4.297481
+      },
+      "students": 303,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647828"
+      }
+    },
+    {
+      "id": "PO-00081",
+      "name": "De Wereldbol",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.084203,
+        "lng": 4.2961
+      },
+      "students": 210,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647832"
+      }
+    },
+    {
+      "id": "PO-00082",
+      "name": "De Wereldbol",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.112806,
+        "lng": 4.351729
+      },
+      "students": 127,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647836"
+      }
+    },
+    {
+      "id": "PO-00083",
+      "name": "De Triangel",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.068415,
+        "lng": 4.298284
+      },
+      "students": 144,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647839"
+      }
+    },
+    {
+      "id": "PO-00084",
+      "name": "De Wereldbol",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.100279,
+        "lng": 4.265325
+      },
+      "students": 125,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647843"
+      }
+    },
+    {
+      "id": "PO-00085",
+      "name": "De Regenboog",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.103208,
+        "lng": 4.274414
+      },
+      "students": 282,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647846"
+      }
+    },
+    {
+      "id": "PO-00086",
+      "name": "De Klimop",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.078148,
+        "lng": 4.34875
+      },
+      "students": 463,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647849"
+      }
+    },
+    {
+      "id": "PO-00087",
+      "name": "Het Kompas",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.106206,
+        "lng": 4.358001
+      },
+      "students": 154,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647853"
+      }
+    },
+    {
+      "id": "PO-00088",
+      "name": "De Wilg",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.053009,
+        "lng": 4.298968
+      },
+      "students": 348,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647856"
+      }
+    },
+    {
+      "id": "PO-00089",
+      "name": "Het Spectrum",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.092071,
+        "lng": 4.246896
+      },
+      "students": 316,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647860"
+      }
+    },
+    {
+      "id": "PO-00090",
+      "name": "De Boomhut",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.043975,
+        "lng": 4.353964
+      },
+      "students": 395,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647866"
+      }
+    },
+    {
+      "id": "PO-00091",
+      "name": "De Regenboog",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.055134,
+        "lng": 4.324404
+      },
+      "students": 191,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647871"
+      }
+    },
+    {
+      "id": "PO-00092",
+      "name": "De Boomhut",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.047865,
+        "lng": 4.27773
+      },
+      "students": 211,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647876"
+      }
+    },
+    {
+      "id": "PO-00093",
+      "name": "De Kameleon",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.040123,
+        "lng": 4.299224
+      },
+      "students": 395,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647880"
+      }
+    },
+    {
+      "id": "PO-00094",
+      "name": "Het Anker",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.048104,
+        "lng": 4.259058
+      },
+      "students": 319,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647883"
+      }
+    },
+    {
+      "id": "PO-00095",
+      "name": "De Kameleon",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.084333,
+        "lng": 4.312481
+      },
+      "students": 335,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647887"
+      }
+    },
+    {
+      "id": "PO-00096",
+      "name": "De Rank",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.056721,
+        "lng": 4.305714
+      },
+      "students": 387,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647890"
+      }
+    },
+    {
+      "id": "PO-00097",
+      "name": "De Regenboog",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.083062,
+        "lng": 4.326096
+      },
+      "students": 217,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647894"
+      }
+    },
+    {
+      "id": "PO-00098",
+      "name": "De Horizon",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.067532,
+        "lng": 4.330185
+      },
+      "students": 112,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647897"
+      }
+    },
+    {
+      "id": "PO-00099",
+      "name": "Het Mozaïek",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.108808,
+        "lng": 4.272042
+      },
+      "students": 234,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647901"
+      }
+    },
+    {
+      "id": "PO-00100",
+      "name": "De Vuurtoren",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.06068,
+        "lng": 4.316505
+      },
+      "students": 500,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647904"
+      }
+    },
+    {
+      "id": "PO-00101",
+      "name": "De Horizon",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.462269,
+        "lng": 5.528439
+      },
+      "students": 190,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647908"
+      }
+    },
+    {
+      "id": "PO-00102",
+      "name": "De Kameleon",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.482569,
+        "lng": 5.493757
+      },
+      "students": 168,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647911"
+      }
+    },
+    {
+      "id": "PO-00103",
+      "name": "Het Kompas",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.481969,
+        "lng": 5.481426
+      },
+      "students": 461,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647915"
+      }
+    },
+    {
+      "id": "PO-00104",
+      "name": "De Zonnewijzer",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.401503,
+        "lng": 5.479343
+      },
+      "students": 313,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647918"
+      }
+    },
+    {
+      "id": "PO-00105",
+      "name": "De Wereldbol",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.445711,
+        "lng": 5.418299
+      },
+      "students": 498,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647922"
+      }
+    },
+    {
+      "id": "PO-00106",
+      "name": "Het Spectrum",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.454887,
+        "lng": 5.515523
+      },
+      "students": 370,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647927"
+      }
+    },
+    {
+      "id": "PO-00107",
+      "name": "De Zonnewijzer",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.454311,
+        "lng": 5.440547
+      },
+      "students": 355,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647932"
+      }
+    },
+    {
+      "id": "PO-00108",
+      "name": "De Klimop",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.425762,
+        "lng": 5.431214
+      },
+      "students": 423,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647938"
+      }
+    },
+    {
+      "id": "PO-00109",
+      "name": "De Horizon",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.43198,
+        "lng": 5.471563
+      },
+      "students": 270,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647944"
+      }
+    },
+    {
+      "id": "PO-00110",
+      "name": "De Springplank",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.472052,
+        "lng": 5.414641
+      },
+      "students": 442,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647948"
+      }
+    },
+    {
+      "id": "PO-00111",
+      "name": "Het Mozaïek",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.460399,
+        "lng": 5.439321
+      },
+      "students": 450,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647951"
+      }
+    },
+    {
+      "id": "PO-00112",
+      "name": "Het Kompas",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.398091,
+        "lng": 5.431692
+      },
+      "students": 460,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647957"
+      }
+    },
+    {
+      "id": "PO-00113",
+      "name": "De Wilg",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.436514,
+        "lng": 5.47467
+      },
+      "students": 185,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647960"
+      }
+    },
+    {
+      "id": "PO-00114",
+      "name": "De Tweemaster",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.428425,
+        "lng": 5.442722
+      },
+      "students": 147,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647964"
+      }
+    },
+    {
+      "id": "PO-00115",
+      "name": "Het Klaverblad",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.472513,
+        "lng": 5.469777
+      },
+      "students": 293,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647967"
+      }
+    },
+    {
+      "id": "PO-00116",
+      "name": "De Klimop",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.47791,
+        "lng": 5.528301
+      },
+      "students": 348,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647971"
+      }
+    },
+    {
+      "id": "PO-00117",
+      "name": "Het Kompas",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.481486,
+        "lng": 5.499085
+      },
+      "students": 240,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647974"
+      }
+    },
+    {
+      "id": "PO-00118",
+      "name": "Het Kompas",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.403358,
+        "lng": 5.430319
+      },
+      "students": 392,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647978"
+      }
+    },
+    {
+      "id": "PO-00119",
+      "name": "De Horizon",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.448894,
+        "lng": 5.430786
+      },
+      "students": 306,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647981"
+      }
+    },
+    {
+      "id": "PO-00120",
+      "name": "Het Spectrum",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.424932,
+        "lng": 5.514976
+      },
+      "students": 369,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647985"
+      }
+    },
+    {
+      "id": "PO-00121",
+      "name": "De Kameleon",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.416872,
+        "lng": 5.436535
+      },
+      "students": 303,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647989"
+      }
+    },
+    {
+      "id": "PO-00122",
+      "name": "De Vuurtoren",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.442399,
+        "lng": 5.494924
+      },
+      "students": 396,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.647992"
+      }
+    },
+    {
+      "id": "PO-00123",
+      "name": "De Boomhut",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.432981,
+        "lng": 5.463065
+      },
+      "students": 222,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648005"
+      }
+    },
+    {
+      "id": "PO-00124",
+      "name": "Het Mozaïek",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.427679,
+        "lng": 5.439545
+      },
+      "students": 326,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648014"
+      }
+    },
+    {
+      "id": "PO-00125",
+      "name": "Het Mozaïek",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.473323,
+        "lng": 5.528038
+      },
+      "students": 192,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648020"
+      }
+    },
+    {
+      "id": "PO-00126",
+      "name": "Het Palet",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.258688,
+        "lng": 6.621858
+      },
+      "students": 388,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648026"
+      }
+    },
+    {
+      "id": "PO-00127",
+      "name": "De Horizon",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.179511,
+        "lng": 6.583054
+      },
+      "students": 434,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648032"
+      }
+    },
+    {
+      "id": "PO-00128",
+      "name": "De Tweemaster",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.245597,
+        "lng": 6.552758
+      },
+      "students": 463,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648037"
+      }
+    },
+    {
+      "id": "PO-00129",
+      "name": "De Tweemaster",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.211305,
+        "lng": 6.547527
+      },
+      "students": 257,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648064"
+      }
+    },
+    {
+      "id": "PO-00130",
+      "name": "Het Spectrum",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.241092,
+        "lng": 6.534499
+      },
+      "students": 102,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648071"
+      }
+    },
+    {
+      "id": "PO-00131",
+      "name": "De Wereldbol",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.226338,
+        "lng": 6.623831
+      },
+      "students": 139,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648076"
+      }
+    },
+    {
+      "id": "PO-00132",
+      "name": "Het Anker",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.203543,
+        "lng": 6.540931
+      },
+      "students": 419,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648082"
+      }
+    },
+    {
+      "id": "PO-00133",
+      "name": "Het Klaverblad",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.211658,
+        "lng": 6.57877
+      },
+      "students": 244,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648088"
+      }
+    },
+    {
+      "id": "PO-00134",
+      "name": "De Regenboog",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.258278,
+        "lng": 6.583848
+      },
+      "students": 166,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648093"
+      }
+    },
+    {
+      "id": "PO-00135",
+      "name": "Het Palet",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.241901,
+        "lng": 6.60455
+      },
+      "students": 271,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648099"
+      }
+    },
+    {
+      "id": "PO-00136",
+      "name": "De Tweemaster",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.236394,
+        "lng": 6.56359
+      },
+      "students": 245,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648104"
+      }
+    },
+    {
+      "id": "PO-00137",
+      "name": "Het Kompas",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.192067,
+        "lng": 6.560686
+      },
+      "students": 430,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648110"
+      }
+    },
+    {
+      "id": "PO-00138",
+      "name": "Het Palet",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.241419,
+        "lng": 6.526146
+      },
+      "students": 399,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648116"
+      }
+    },
+    {
+      "id": "PO-00139",
+      "name": "Het Mozaïek",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.225669,
+        "lng": 6.608239
+      },
+      "students": 484,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648124"
+      }
+    },
+    {
+      "id": "PO-00140",
+      "name": "De Klimop",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.212462,
+        "lng": 6.618685
+      },
+      "students": 168,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648131"
+      }
+    },
+    {
+      "id": "PO-00141",
+      "name": "Het Mozaïek",
+      "type": "primary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.250356,
+        "lng": 6.525534
+      },
+      "students": 286,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648134"
+      }
+    },
+    {
+      "id": "PO-00142",
+      "name": "De Triangel",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.184936,
+        "lng": 6.519971
+      },
+      "students": 126,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648142"
+      }
+    },
+    {
+      "id": "PO-00143",
+      "name": "De Zonnewijzer",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.198783,
+        "lng": 6.618871
+      },
+      "students": 431,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648146"
+      }
+    },
+    {
+      "id": "PO-00144",
+      "name": "De Tweemaster",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.237372,
+        "lng": 6.585887
+      },
+      "students": 160,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648149"
+      }
+    },
+    {
+      "id": "PO-00145",
+      "name": "De Boomhut",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.264015,
+        "lng": 6.518653
+      },
+      "students": 133,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648153"
+      }
+    },
+    {
+      "id": "PO-00146",
+      "name": "De Regenboog",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.220692,
+        "lng": 6.514314
+      },
+      "students": 382,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648156"
+      }
+    },
+    {
+      "id": "PO-00147",
+      "name": "De Zonnewijzer",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.240384,
+        "lng": 6.53232
+      },
+      "students": 452,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648160"
+      }
+    },
+    {
+      "id": "PO-00148",
+      "name": "De Springplank",
+      "type": "primary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.260195,
+        "lng": 6.596557
+      },
+      "students": 163,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648165"
+      }
+    },
+    {
+      "id": "PO-00149",
+      "name": "Het Klaverblad",
+      "type": "primary",
+      "denomination": "Openbaar",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.207778,
+        "lng": 6.537184
+      },
+      "students": 487,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648169"
+      }
+    },
+    {
+      "id": "PO-00150",
+      "name": "De Triangel",
+      "type": "primary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.217222,
+        "lng": 6.533448
+      },
+      "students": 330,
+      "grades": "1-8",
+      "age_range": "4-12",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648173"
+      }
+    },
+    {
+      "id": "VO-00001",
+      "name": "Gymnasium Barlaeus",
+      "type": "secondary",
+      "denomination": "Openbaar",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.388521,
+        "lng": 4.854058
+      },
+      "students": 1469,
+      "levels": [
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648182"
+      }
+    },
+    {
+      "id": "VO-00002",
+      "name": "College Johannes Calvijn",
+      "type": "secondary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.325355,
+        "lng": 4.905693
+      },
+      "students": 1620,
+      "levels": [
+        "VMBO",
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648187"
+      }
+    },
+    {
+      "id": "VO-00003",
+      "name": "Lyceum Christelijk",
+      "type": "secondary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.365855,
+        "lng": 4.912021
+      },
+      "students": 1815,
+      "levels": [
+        "VMBO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648192"
+      }
+    },
+    {
+      "id": "VO-00004",
+      "name": "Lyceum Het Baarnsch Lyceum",
+      "type": "secondary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.396003,
+        "lng": 4.910934
+      },
+      "students": 1499,
+      "levels": [
+        "VMBO",
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648200"
+      }
+    },
+    {
+      "id": "VO-00005",
+      "name": "Gymnasium Stedelijk",
+      "type": "secondary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.348037,
+        "lng": 4.910272
+      },
+      "students": 1844,
+      "levels": [
+        "VMBO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648207"
+      }
+    },
+    {
+      "id": "VO-00006",
+      "name": "Atheneum Montessori",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.403776,
+        "lng": 4.902887
+      },
+      "students": 566,
+      "levels": [
+        "VMBO",
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648211"
+      }
+    },
+    {
+      "id": "VO-00007",
+      "name": "Gymnasium Erasmus",
+      "type": "secondary",
+      "denomination": "Openbaar",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.396018,
+        "lng": 4.90232
+      },
+      "students": 582,
+      "levels": [
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648218"
+      }
+    },
+    {
+      "id": "VO-00008",
+      "name": "Atheneum Christelijk",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.380095,
+        "lng": 4.874229
+      },
+      "students": 1471,
+      "levels": [
+        "VMBO",
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648263"
+      }
+    },
+    {
+      "id": "VO-00009",
+      "name": "Atheneum Stedelijk",
+      "type": "secondary",
+      "denomination": "Openbaar",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.898274,
+        "lng": 4.518732
+      },
+      "students": 1404,
+      "levels": [
+        "VMBO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648269"
+      }
+    },
+    {
+      "id": "VO-00010",
+      "name": "Lyceum Montessori",
+      "type": "secondary",
+      "denomination": "Openbaar",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.8872,
+        "lng": 4.471199
+      },
+      "students": 1552,
+      "levels": [
+        "VMBO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648274"
+      }
+    },
+    {
+      "id": "VO-00011",
+      "name": "Lyceum Johannes Calvijn",
+      "type": "secondary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.887968,
+        "lng": 4.509901
+      },
+      "students": 540,
+      "levels": [
+        "VMBO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648279"
+      }
+    },
+    {
+      "id": "VO-00012",
+      "name": "Lyceum Erasmus",
+      "type": "secondary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.906504,
+        "lng": 4.464095
+      },
+      "students": 900,
+      "levels": [
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648283"
+      }
+    },
+    {
+      "id": "VO-00013",
+      "name": "Lyceum Montessori",
+      "type": "secondary",
+      "denomination": "Openbaar",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.964121,
+        "lng": 4.495539
+      },
+      "students": 649,
+      "levels": [
+        "VMBO",
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648288"
+      }
+    },
+    {
+      "id": "VO-00014",
+      "name": "Scholengemeenschap Christelijk",
+      "type": "secondary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.9227,
+        "lng": 4.52793
+      },
+      "students": 1960,
+      "levels": [
+        "VMBO",
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648293"
+      }
+    },
+    {
+      "id": "VO-00015",
+      "name": "Scholengemeenschap Stedelijk",
+      "type": "secondary",
+      "denomination": "Openbaar",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.883985,
+        "lng": 4.439809
+      },
+      "students": 972,
+      "levels": [
+        "VMBO",
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648297"
+      }
+    },
+    {
+      "id": "VO-00016",
+      "name": "Lyceum Christelijk",
+      "type": "secondary",
+      "denomination": "Openbaar",
+      "city": "Rotterdam",
+      "coordinates": {
+        "lat": 51.93667,
+        "lng": 4.464603
+      },
+      "students": 1151,
+      "levels": [
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648301"
+      }
+    },
+    {
+      "id": "VO-00017",
+      "name": "Gymnasium Erasmus",
+      "type": "secondary",
+      "denomination": "Openbaar",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.101022,
+        "lng": 5.067861
+      },
+      "students": 1805,
+      "levels": [
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648306"
+      }
+    },
+    {
+      "id": "VO-00018",
+      "name": "Gymnasium Johannes Calvijn",
+      "type": "secondary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.053253,
+        "lng": 5.122385
+      },
+      "students": 838,
+      "levels": [
+        "VMBO",
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648312"
+      }
+    },
+    {
+      "id": "VO-00019",
+      "name": "College Vossius",
+      "type": "secondary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.046911,
+        "lng": 5.068745
+      },
+      "students": 1946,
+      "levels": [
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648317"
+      }
+    },
+    {
+      "id": "VO-00020",
+      "name": "Scholengemeenschap Stedelijk",
+      "type": "secondary",
+      "denomination": "Openbaar",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.076608,
+        "lng": 5.091328
+      },
+      "students": 1267,
+      "levels": [
+        "VMBO",
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648321"
+      }
+    },
+    {
+      "id": "VO-00021",
+      "name": "Lyceum Montessori",
+      "type": "secondary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.124679,
+        "lng": 5.098411
+      },
+      "students": 1970,
+      "levels": [
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648325"
+      }
+    },
+    {
+      "id": "VO-00022",
+      "name": "College Christelijk",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.086864,
+        "lng": 5.124991
+      },
+      "students": 1076,
+      "levels": [
+        "VMBO",
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648333"
+      }
+    },
+    {
+      "id": "VO-00023",
+      "name": "College Vossius",
+      "type": "secondary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.120944,
+        "lng": 5.13443
+      },
+      "students": 1589,
+      "levels": [
+        "VMBO",
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648337"
+      }
+    },
+    {
+      "id": "VO-00024",
+      "name": "Atheneum Montessori",
+      "type": "secondary",
+      "denomination": "Openbaar",
+      "city": "Utrecht",
+      "coordinates": {
+        "lat": 52.0958,
+        "lng": 5.133556
+      },
+      "students": 922,
+      "levels": [
+        "VMBO",
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648341"
+      }
+    },
+    {
+      "id": "VO-00025",
+      "name": "College Vossius",
+      "type": "secondary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.115189,
+        "lng": 4.283571
+      },
+      "students": 1746,
+      "levels": [
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648346"
+      }
+    },
+    {
+      "id": "VO-00026",
+      "name": "College Barlaeus",
+      "type": "secondary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.080511,
+        "lng": 4.344146
+      },
+      "students": 669,
+      "levels": [
+        "VMBO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648350"
+      }
+    },
+    {
+      "id": "VO-00027",
+      "name": "Scholengemeenschap Erasmus",
+      "type": "secondary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.037674,
+        "lng": 4.274479
+      },
+      "students": 1181,
+      "levels": [
+        "VMBO",
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648354"
+      }
+    },
+    {
+      "id": "VO-00028",
+      "name": "Lyceum Montessori",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.040446,
+        "lng": 4.357285
+      },
+      "students": 1980,
+      "levels": [
+        "VMBO",
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648358"
+      }
+    },
+    {
+      "id": "VO-00029",
+      "name": "Lyceum Het Baarnsch Lyceum",
+      "type": "secondary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.035128,
+        "lng": 4.285461
+      },
+      "students": 1545,
+      "levels": [
+        "VMBO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648362"
+      }
+    },
+    {
+      "id": "VO-00030",
+      "name": "Gymnasium Barlaeus",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.107855,
+        "lng": 4.270945
+      },
+      "students": 1037,
+      "levels": [
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648366"
+      }
+    },
+    {
+      "id": "VO-00031",
+      "name": "Gymnasium Barlaeus",
+      "type": "secondary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.077101,
+        "lng": 4.301528
+      },
+      "students": 1936,
+      "levels": [
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648370"
+      }
+    },
+    {
+      "id": "VO-00032",
+      "name": "Gymnasium Christelijk",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Den Haag",
+      "coordinates": {
+        "lat": 52.065203,
+        "lng": 4.337851
+      },
+      "students": 1285,
+      "levels": [
+        "VMBO",
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648375"
+      }
+    },
+    {
+      "id": "VO-00033",
+      "name": "Lyceum Johannes Calvijn",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.401531,
+        "lng": 5.490107
+      },
+      "students": 1589,
+      "levels": [
+        "VMBO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648379"
+      }
+    },
+    {
+      "id": "VO-00034",
+      "name": "Gymnasium Erasmus",
+      "type": "secondary",
+      "denomination": "Openbaar",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.45465,
+        "lng": 5.445498
+      },
+      "students": 665,
+      "levels": [
+        "VMBO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648385"
+      }
+    },
+    {
+      "id": "VO-00035",
+      "name": "Gymnasium Johannes Calvijn",
+      "type": "secondary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.429277,
+        "lng": 5.427391
+      },
+      "students": 841,
+      "levels": [
+        "VMBO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648390"
+      }
+    },
+    {
+      "id": "VO-00036",
+      "name": "Gymnasium Het Baarnsch Lyceum",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.481467,
+        "lng": 5.525944
+      },
+      "students": 1797,
+      "levels": [
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648394"
+      }
+    },
+    {
+      "id": "VO-00037",
+      "name": "College Het Baarnsch Lyceum",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.472286,
+        "lng": 5.512401
+      },
+      "students": 1900,
+      "levels": [
+        "VMBO",
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648400"
+      }
+    },
+    {
+      "id": "VO-00038",
+      "name": "College Christelijk",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.463256,
+        "lng": 5.48125
+      },
+      "students": 748,
+      "levels": [
+        "VMBO",
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648406"
+      }
+    },
+    {
+      "id": "VO-00039",
+      "name": "Lyceum Het Baarnsch Lyceum",
+      "type": "secondary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.449387,
+        "lng": 5.4752
+      },
+      "students": 1921,
+      "levels": [
+        "VMBO",
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648410"
+      }
+    },
+    {
+      "id": "VO-00040",
+      "name": "Scholengemeenschap Vossius",
+      "type": "secondary",
+      "denomination": "Openbaar",
+      "city": "Eindhoven",
+      "coordinates": {
+        "lat": 51.479816,
+        "lng": 5.487611
+      },
+      "students": 1072,
+      "levels": [
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648419"
+      }
+    },
+    {
+      "id": "VO-00041",
+      "name": "Atheneum Vossius",
+      "type": "secondary",
+      "denomination": "Openbaar",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.241603,
+        "lng": 6.58078
+      },
+      "students": 1778,
+      "levels": [
+        "VMBO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648423"
+      }
+    },
+    {
+      "id": "VO-00042",
+      "name": "Atheneum Vossius",
+      "type": "secondary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.217947,
+        "lng": 6.600991
+      },
+      "students": 1266,
+      "levels": [
+        "VMBO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648428"
+      }
+    },
+    {
+      "id": "VO-00043",
+      "name": "Lyceum Christelijk",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.228353,
+        "lng": 6.512509
+      },
+      "students": 594,
+      "levels": [
+        "VMBO",
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648432"
+      }
+    },
+    {
+      "id": "VO-00044",
+      "name": "Scholengemeenschap Christelijk",
+      "type": "secondary",
+      "denomination": "Algemeen bijzonder",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.263361,
+        "lng": 6.524084
+      },
+      "students": 802,
+      "levels": [
+        "VMBO",
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648436"
+      }
+    },
+    {
+      "id": "VO-00045",
+      "name": "Atheneum Montessori",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.2349,
+        "lng": 6.606552
+      },
+      "students": 1594,
+      "levels": [
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648440"
+      }
+    },
+    {
+      "id": "VO-00046",
+      "name": "Atheneum Montessori",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.203154,
+        "lng": 6.564494
+      },
+      "students": 957,
+      "levels": [
+        "VMBO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648444"
+      }
+    },
+    {
+      "id": "VO-00047",
+      "name": "Atheneum Stedelijk",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.227687,
+        "lng": 6.602386
+      },
+      "students": 873,
+      "levels": [
+        "VMBO",
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648450"
+      }
+    },
+    {
+      "id": "VO-00048",
+      "name": "College Barlaeus",
+      "type": "secondary",
+      "denomination": "Rooms-Katholiek",
+      "city": "Groningen",
+      "coordinates": {
+        "lat": 53.235748,
+        "lng": 6.518253
+      },
+      "students": 1609,
+      "levels": [
+        "VMBO",
+        "HAVO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648454"
+      }
+    },
+    {
+      "id": "VO-00049",
+      "name": "Scholengemeenschap Erasmus",
+      "type": "secondary",
+      "denomination": "Openbaar",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.371756,
+        "lng": 4.961132
+      },
+      "students": 1913,
+      "levels": [
+        "VMBO",
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648459"
+      }
+    },
+    {
+      "id": "VO-00050",
+      "name": "Gymnasium Barlaeus",
+      "type": "secondary",
+      "denomination": "Protestants-Christelijk",
+      "city": "Amsterdam",
+      "coordinates": {
+        "lat": 52.32537,
+        "lng": 4.862237
+      },
+      "students": 1307,
+      "levels": [
+        "VMBO",
+        "HAVO",
+        "VWO"
+      ],
+      "age_range": "12-18",
+      "metadata": {
+        "generated": true,
+        "generated_at": "2025-11-06T19:32:42.648463"
+      }
+    }
+  ]
+}

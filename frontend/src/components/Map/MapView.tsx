@@ -4,23 +4,28 @@ import { useEffect, useRef, useState } from 'react'
 import maplibregl from 'maplibre-gl'
 import type { Destination } from '@/app/page'
 import type { Property, PropertyFilters } from '@/types/property'
+import type { School } from '@/types/school'
 import { formatPrice, formatAddress, getPropertyTypeLabel } from '@/types/property'
+import { getSchoolTypeLabel, getSchoolIcon } from '@/types/school'
 import { createCircle, calculateRadius, getModeColor, getModeBorderColor } from '@/lib/isochrones'
 import { approximateIntersectionPolygon } from '@/lib/intersections'
 
 interface MapViewProps {
   destinations: Destination[]
   showProperties?: boolean
+  showSchools?: boolean
   propertyFilters?: PropertyFilters
 }
 
-export default function MapView({ destinations, showProperties = true, propertyFilters = {} }: MapViewProps) {
+export default function MapView({ destinations, showProperties = true, showSchools = true, propertyFilters = {} }: MapViewProps) {
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<maplibregl.Map | null>(null)
   const markers = useRef<Map<string, maplibregl.Marker>>(new Map())
   const [mapLoaded, setMapLoaded] = useState(false)
   const [properties, setProperties] = useState<Property[]>([])
   const [propertiesLoading, setPropertiesLoading] = useState(false)
+  const [schools, setSchools] = useState<School[]>([])
+  const [schoolsLoading, setSchoolsLoading] = useState(false)
 
   useEffect(() => {
     if (!mapContainer.current || map.current) return
@@ -290,6 +295,95 @@ export default function MapView({ destinations, showProperties = true, propertyF
       map.current!.on('mouseleave', 'property-clusters', () => {
         map.current!.getCanvas().style.cursor = ''
       })
+
+      // Add source for schools
+      map.current!.addSource('schools', {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [],
+        },
+      })
+
+      // Add layer for primary schools
+      map.current!.addLayer({
+        id: 'primary-schools',
+        type: 'circle',
+        source: 'schools',
+        filter: ['==', 'type', 'primary'],
+        paint: {
+          'circle-color': '#f59e0b',
+          'circle-radius': 6,
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#ffffff',
+        },
+      })
+
+      // Add layer for secondary schools
+      map.current!.addLayer({
+        id: 'secondary-schools',
+        type: 'circle',
+        source: 'schools',
+        filter: ['==', 'type', 'secondary'],
+        paint: {
+          'circle-color': '#8b5cf6',
+          'circle-radius': 7,
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#ffffff',
+        },
+      })
+
+      // Add click handler for schools
+      const handleSchoolClick = (e: maplibregl.MapLayerMouseEvent) => {
+        if (!e.features || e.features.length === 0) return
+
+        const feature = e.features[0]
+        const props = feature.properties
+
+        if (!props) return
+
+        const school: School = JSON.parse(props.school)
+
+        const popup = new maplibregl.Popup({ offset: 15 })
+          .setLngLat([school.coordinates.lng, school.coordinates.lat])
+          .setHTML(
+            `<div style="padding: 12px; min-width: 200px;">
+              <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">
+                ${getSchoolIcon(school.type)} ${school.name}
+              </div>
+              <div style="font-size: 12px; color: #666; margin-bottom: 4px;">
+                ${getSchoolTypeLabel(school.type)}
+              </div>
+              <div style="font-size: 11px; color: #999; margin-bottom: 4px;">
+                ${school.city} • ${school.denomination}
+              </div>
+              <div style="font-size: 11px; color: #999;">
+                ${school.students} leerlingen • ${school.age_range} jaar
+              </div>
+              ${school.levels ? `<div style="font-size: 11px; color: #999; margin-top: 4px;">
+                ${school.levels.join(', ')}
+              </div>` : ''}
+            </div>`
+          )
+          .addTo(map.current!)
+      }
+
+      map.current!.on('click', 'primary-schools', handleSchoolClick)
+      map.current!.on('click', 'secondary-schools', handleSchoolClick)
+
+      // Change cursor on hover
+      map.current!.on('mouseenter', 'primary-schools', () => {
+        map.current!.getCanvas().style.cursor = 'pointer'
+      })
+      map.current!.on('mouseleave', 'primary-schools', () => {
+        map.current!.getCanvas().style.cursor = ''
+      })
+      map.current!.on('mouseenter', 'secondary-schools', () => {
+        map.current!.getCanvas().style.cursor = 'pointer'
+      })
+      map.current!.on('mouseleave', 'secondary-schools', () => {
+        map.current!.getCanvas().style.cursor = ''
+      })
     })
 
     // Cleanup
@@ -546,6 +640,75 @@ export default function MapView({ destinations, showProperties = true, propertyF
     }
   }, [mapLoaded, showProperties, propertyFilters])
 
+  // Fetch and display schools
+  useEffect(() => {
+    if (!map.current || !mapLoaded || !showSchools) return
+
+    const fetchSchools = async () => {
+      setSchoolsLoading(true)
+
+      try {
+        // Get current map bounds
+        const bounds = map.current!.getBounds()
+
+        const params = new URLSearchParams({
+          minLat: bounds.getSouth().toString(),
+          maxLat: bounds.getNorth().toString(),
+          minLng: bounds.getWest().toString(),
+          maxLng: bounds.getEast().toString(),
+          limit: '200',
+        })
+
+        const response = await fetch(`/api/schools?${params.toString()}`)
+        const data = await response.json()
+
+        if (data.success) {
+          setSchools(data.schools)
+
+          // Convert schools to GeoJSON features
+          const features = data.schools.map((school: School) => ({
+            type: 'Feature' as const,
+            geometry: {
+              type: 'Point' as const,
+              coordinates: [school.coordinates.lng, school.coordinates.lat],
+            },
+            properties: {
+              school: JSON.stringify(school),
+              type: school.type,
+              name: school.name,
+            },
+          }))
+
+          // Update schools source
+          const source = map.current!.getSource('schools') as maplibregl.GeoJSONSource
+          if (source) {
+            source.setData({
+              type: 'FeatureCollection',
+              features,
+            })
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching schools:', error)
+      } finally {
+        setSchoolsLoading(false)
+      }
+    }
+
+    // Fetch schools on load and on map move
+    fetchSchools()
+
+    const handleMoveEnd = () => {
+      fetchSchools()
+    }
+
+    map.current!.on('moveend', handleMoveEnd)
+
+    return () => {
+      map.current?.off('moveend', handleMoveEnd)
+    }
+  }, [mapLoaded, showSchools])
+
   return (
     <div className="relative w-full h-full">
       <div ref={mapContainer} className="map-container" />
@@ -584,6 +747,18 @@ export default function MapView({ destinations, showProperties = true, propertyF
                 <div className="w-4 h-4 rounded-full bg-yellow-400 border-2 border-white"></div>
                 <span>🏠 Properties ({properties.length})</span>
               </div>
+            )}
+            {showSchools && (
+              <>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-amber-500 border-2 border-white"></div>
+                  <span className="text-xs">🎒 Basisscholen ({schools.filter(s => s.type === 'primary').length})</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-purple-500 border-2 border-white"></div>
+                  <span className="text-xs">🎓 Middelbare scholen ({schools.filter(s => s.type === 'secondary').length})</span>
+                </div>
+              </>
             )}
             {destinations.filter(d => d.coordinates).length > 1 && (
               <div className="flex items-center gap-2">
