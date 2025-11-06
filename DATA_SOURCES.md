@@ -2,6 +2,33 @@
 
 Comprehensive list of data sources used in the platform, with importance ratings for expats.
 
+## 📋 Status Overview (As of 2025-11-06)
+
+**🎯 Scraper Build Status:**
+- ✅ **All 15+ scrapers built and ready**
+- ✅ **2 scrapers working**: Foundation Risk, Environmental Data
+- ⚠️ **11+ scrapers blocked**: Strong bot protection (403 errors)
+- 📝 **Sample data**: Removed (only real data shown)
+
+**✅ Currently Working:**
+1. Foundation Risk - Manual compilation (11 areas, 4.3 KB generated)
+2. Environmental Data - Manual fallback (Air/Noise/Flood, 5.4 KB generated)
+
+**⚠️ Built but 403 Errors:**
+1. NS Stations - GTFS blocked
+2. Public Transport - GTFS blocked
+3. All OSM Amenities - Overpass API blocked
+4. Schools (DUO) - Government API blocked
+5. Crime Statistics - CBS API blocked
+6. Leefbaarometer - WFS blocked
+7. CBS Demographics - OData blocked
+
+**🔧 Next Steps:**
+- Try manual downloads from web portals
+- Consider browser automation (Selenium/Playwright)
+- Request API keys where available
+- Alternative: Use different network/IP address
+
 ## 🏠 Core Housing Data
 
 ### BAG (Basisregistraties Adressen en Gebouwen)
@@ -29,10 +56,10 @@ Comprehensive list of data sources used in the platform, with importance ratings
 - **Importance**: ⭐⭐⭐⭐⭐ CRITICAL
 - **Script**: `scripts/etl/ingest/ns_stations.py`
 - **License**: Open Data
-- **Status**: ✅ Built and ready
+- **Status**: ⚠️ Built, GTFS returns 403 error
 - **Methods**:
   - `ns_api`: Official NS API (requires API key)
-  - `gtfs`: GTFS feed (no key needed)
+  - `gtfs`: GTFS feed (no key needed) - **403 error**
 - **Coverage**: ~400 train stations
 
 ### Public Transport Stops (Bus/Tram/Metro/Ferry)
@@ -41,7 +68,7 @@ Comprehensive list of data sources used in the platform, with importance ratings
 - **Importance**: ⭐⭐⭐⭐⭐ CRITICAL
 - **Script**: `scripts/etl/ingest/public_transport.py`
 - **License**: Open Data
-- **Status**: ✅ Built and ready
+- **Status**: ⚠️ Built, GTFS returns 403 error
 - **Coverage**: ~50,000+ stops nationwide
 - **Filters**: By region, by type (bus/tram/metro/ferry)
 
@@ -62,7 +89,7 @@ Comprehensive list of data sources used in the platform, with importance ratings
 - **Importance**: ⭐⭐⭐⭐⭐ CRITICAL (expat families)
 - **Script**: `scripts/etl/ingest/amenities_osm.py --amenity international_schools`
 - **License**: ODbL
-- **Status**: ✅ Built and ready
+- **Status**: ⚠️ Built, Overpass API returns 403 error
 
 ## 🛒 Daily Amenities
 
@@ -72,8 +99,8 @@ Comprehensive list of data sources used in the platform, with importance ratings
 - **Importance**: ⭐⭐⭐⭐ HIGH
 - **Script**: `scripts/etl/ingest/amenities_osm.py --amenity supermarkets`
 - **License**: ODbL (© OpenStreetMap contributors)
-- **Status**: ✅ Built and ready
-- **Coverage**: ~5,000+ supermarkets
+- **Status**: ⚠️ Built, Overpass API returns 403 error
+- **Coverage**: ~5,000+ supermarkets (when accessible)
 
 ### Healthcare
 - **What**: Hospitals, doctors, pharmacies
@@ -81,7 +108,7 @@ Comprehensive list of data sources used in the platform, with importance ratings
 - **Importance**: ⭐⭐⭐⭐ HIGH
 - **Script**: `scripts/etl/ingest/amenities_osm.py --amenity healthcare`
 - **License**: ODbL
-- **Status**: ✅ Built and ready
+- **Status**: ⚠️ Built, Overpass API returns 403 error
 
 ### Parks & Green Spaces
 - **What**: Parks, recreation areas
@@ -89,7 +116,7 @@ Comprehensive list of data sources used in the platform, with importance ratings
 - **Importance**: ⭐⭐⭐ MEDIUM
 - **Script**: `scripts/etl/ingest/amenities_osm.py --amenity parks`
 - **License**: ODbL
-- **Status**: ✅ Built and ready
+- **Status**: ⚠️ Built, Overpass API returns 403 error
 
 ### Restaurants & Cafes
 - **What**: Dining options
@@ -97,7 +124,7 @@ Comprehensive list of data sources used in the platform, with importance ratings
 - **Importance**: ⭐⭐ LOW
 - **Script**: `scripts/etl/ingest/amenities_osm.py --amenity restaurants`
 - **License**: ODbL
-- **Status**: ✅ Built and ready
+- **Status**: ⚠️ Built, Overpass API returns 403 error
 
 ### Sports Facilities
 - **What**: Gyms, pools, sports centers
@@ -105,7 +132,7 @@ Comprehensive list of data sources used in the platform, with importance ratings
 - **Importance**: ⭐⭐ LOW
 - **Script**: `scripts/etl/ingest/amenities_osm.py --amenity sports`
 - **License**: ODbL
-- **Status**: ✅ Built and ready
+- **Status**: ⚠️ Built, Overpass API returns 403 error
 
 ### Playgrounds
 - **What**: Playgrounds for children
@@ -113,7 +140,7 @@ Comprehensive list of data sources used in the platform, with importance ratings
 - **Importance**: ⭐⭐⭐⭐ HIGH (families)
 - **Script**: `scripts/etl/ingest/amenities_osm.py --amenity playgrounds`
 - **License**: ODbL
-- **Status**: ✅ Built and ready
+- **Status**: ⚠️ Built, Overpass API returns 403 error
 
 ## 🏘️ Neighborhood Quality
 
@@ -151,10 +178,11 @@ Comprehensive list of data sources used in the platform, with importance ratings
 - **Importance**: ⭐⭐⭐⭐⭐ CRITICAL
 - **Script**: `scripts/etl/ingest/foundation_risk.py`
 - **License**: Open Data / Manual compilation
-- **Status**: ✅ Built with known risk areas
+- **Status**: ✅ **WORKING** - Manual data, tested successfully
+- **Data Generated**: `data/raw/foundation_risk.json` (4.3 KB)
 - **Risk Areas**:
-  - **HIGH**: Amsterdam Jordaan/De Pijp, Gouda center, Delft center
-  - **MEDIUM**: Amsterdam Zuid, Rotterdam Kralingen, Den Haag Centrum
+  - **HIGH**: Amsterdam Jordaan/De Pijp, Gouda center, Delft center (4 areas)
+  - **MEDIUM**: Amsterdam Zuid, Rotterdam Kralingen, Den Haag Centrum (7 areas)
 - **Cost**: €50,000 - €150,000+ to repair
 - **Note**: Pre-1950 buildings = ALWAYS get professional inspection!
 
@@ -164,7 +192,8 @@ Comprehensive list of data sources used in the platform, with importance ratings
 - **Importance**: ⭐⭐⭐⭐ HIGH
 - **Script**: `scripts/etl/ingest/environmental_data.py`
 - **License**: Open Data
-- **Status**: ✅ Built with known problem areas
+- **Status**: ✅ **WORKING** - Manual fallback data, tested successfully
+- **Data Generated**: `data/raw/environmental_data.json` (5.4 KB)
 
 #### Air Quality
 - **Problem Areas**:
@@ -193,54 +222,63 @@ Comprehensive list of data sources used in the platform, with importance ratings
 |------------|-----------|--------|-----------|----------|
 | **BAG Addresses** | ⭐⭐⭐⭐⭐ | Built | Testing needed | 100% NL |
 | **WOZ Valuations** | ⭐⭐⭐⭐⭐ | Built | Testing needed | 100% NL |
-| **NS Stations** | ⭐⭐⭐⭐⭐ | ✅ Ready | None | ~400 stations |
-| **PT Stops** | ⭐⭐⭐⭐⭐ | ✅ Ready | None | ~50,000+ |
-| **Schools (DUO)** | ⭐⭐⭐⭐⭐ | Built | 403 error | ~8,000 |
-| **Int'l Schools** | ⭐⭐⭐⭐⭐ | ✅ Ready | None | OSM data |
-| **Supermarkets** | ⭐⭐⭐⭐ | ✅ Ready | None | ~5,000+ |
-| **Healthcare** | ⭐⭐⭐⭐ | ✅ Ready | None | OSM data |
-| **Foundation Risk** | ⭐⭐⭐⭐⭐ | ✅ Ready | None | Major cities |
-| **Environment** | ⭐⭐⭐⭐ | ✅ Ready | None | Key areas |
-| **Crime Stats** | ⭐⭐⭐⭐ | Built | 403 error | Neighborhoods |
-| **Leefbaarometer** | ⭐⭐⭐⭐ | Built | 403 error | Neighborhoods |
-| **Demographics** | ⭐⭐⭐ | Built | 403 error | Municipalities |
+| **NS Stations** | ⭐⭐⭐⭐⭐ | Built | ⚠️ 403 GTFS | ~400 stations |
+| **PT Stops** | ⭐⭐⭐⭐⭐ | Built | ⚠️ 403 GTFS | ~50,000+ |
+| **Schools (DUO)** | ⭐⭐⭐⭐⭐ | Built | ⚠️ 403 error | ~8,000 |
+| **Int'l Schools** | ⭐⭐⭐⭐⭐ | Built | ⚠️ 403 OSM | OSM data |
+| **Supermarkets** | ⭐⭐⭐⭐ | Built | ⚠️ 403 OSM | ~5,000+ |
+| **Healthcare** | ⭐⭐⭐⭐ | Built | ⚠️ 403 OSM | OSM data |
+| **Foundation Risk** | ⭐⭐⭐⭐⭐ | ✅ **WORKING** | ✅ None | 11 risk areas |
+| **Environment** | ⭐⭐⭐⭐ | ✅ **WORKING** | ✅ None | Key areas |
+| **Crime Stats** | ⭐⭐⭐⭐ | Built | ⚠️ 403 error | Neighborhoods |
+| **Leefbaarometer** | ⭐⭐⭐⭐ | Built | ⚠️ 403 error | Neighborhoods |
+| **Demographics** | ⭐⭐⭐ | Built | ⚠️ 403 error | Municipalities |
 
 ## 🚀 Usage Instructions
 
-### Working Scrapers (No Issues)
+### ✅ Working Scrapers (Tested Successfully)
 
 ```bash
-# Public transport (GTFS - no API key needed)
-python scripts/etl/ingest/ns_stations.py --method gtfs
-python scripts/etl/ingest/public_transport.py --region all
+# Foundation risk (manual data) - ✅ TESTED AND WORKING
+cd scripts/etl
+python -m ingest.foundation_risk
+# Output: data/raw/foundation_risk.json (4.3 KB)
+# Contains: 11 risk areas (4 high-risk, 7 medium-risk)
 
-# Amenities from OpenStreetMap
-python scripts/etl/ingest/amenities_osm.py --amenity supermarkets
-python scripts/etl/ingest/amenities_osm.py --amenity healthcare
-python scripts/etl/ingest/amenities_osm.py --amenity international_schools
-python scripts/etl/ingest/amenities_osm.py --amenity all  # Gets all amenities
-
-# Foundation risk (manual data)
-python scripts/etl/ingest/foundation_risk.py
-
-# Environmental data
-python scripts/etl/ingest/environmental_data.py
+# Environmental data (manual fallback) - ✅ TESTED AND WORKING
+python -m ingest.environmental_data --data-type all
+# Output: data/raw/environmental_data.json (5.4 KB)
+# Contains: Air quality, noise pollution, flood risk data
 ```
 
-### Scrapers with 403 Errors (Need Workaround)
+### ⚠️ Built Scrapers with 403 Bot Protection
+
+All other scrapers are **fully built and ready** but currently blocked by aggressive bot protection:
 
 ```bash
-# These work but hit 403 errors:
-python scripts/etl/ingest/crime.py --sample 100
-python scripts/etl/ingest/schools.py --sample 100
-python scripts/etl/ingest/leefbaarometer.py --sample 100
-python scripts/etl/ingest/cbs_demographics.py
+# Public transport - 403 on GTFS feeds
+python -m ingest.ns_stations --method gtfs  # ⚠️ 403 error
+python -m ingest.public_transport --region all  # ⚠️ 403 error
+
+# Amenities from OpenStreetMap - 403 on Overpass API
+python -m ingest.amenities_osm --amenity supermarkets  # ⚠️ 403 error
+python -m ingest.amenities_osm --amenity healthcare  # ⚠️ 403 error
+python -m ingest.amenities_osm --amenity international_schools  # ⚠️ 403 error
+python -m ingest.amenities_osm --amenity all  # ⚠️ 403 error
+
+# Government data sources
+python -m ingest.crime --sample 100  # ⚠️ 403 error
+python -m ingest.schools --sample 100  # ⚠️ 403 error
+python -m ingest.leefbaarometer --sample 100  # ⚠️ 403 error
+python -m ingest.cbs_demographics  # ⚠️ 403 error
 ```
 
-**Workarounds:**
-1. Manual download from portals
-2. Browser automation (Selenium/Playwright)
-3. Request API keys from data providers
+**Workarounds for 403 Errors:**
+1. **Manual download** from web portals (works but tedious)
+2. **Browser automation** (Selenium/Playwright) to mimic human interaction
+3. **Request API keys** from data providers (NS, DUO, CBS)
+4. **Different network/IP** - Try from different location
+5. **Use alternative endpoints** - Some providers have mirror URLs
 
 ## ⚠️ Critical Expat Warnings
 
