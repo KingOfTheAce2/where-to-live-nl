@@ -76,7 +76,6 @@ export default function MapView({ destinations }: MapViewProps) {
           enableHighAccuracy: true,
         },
         trackUserLocation: true,
-        showUserHeading: true,
       }),
       'top-right'
     )

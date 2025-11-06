@@ -14,9 +14,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "maplibre-gl": "^4.1.3",
-    "@types/maplibre-gl": "^4.0.2",
     "pmtiles": "^3.0.6",
-    "lucide-react": "^0.index": 378.0"
+    "lucide-react": "^0.378.0"
   },
   "devDependencies": {
     "typescript": "^5.4.5",
