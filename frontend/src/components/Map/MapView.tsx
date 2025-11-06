@@ -3,17 +3,22 @@
 import { useEffect, useRef, useState } from 'react'
 import maplibregl from 'maplibre-gl'
 import type { Destination } from '@/app/page'
+import type { Property } from '@/types/property'
+import { formatPrice, formatAddress, getPropertyTypeLabel } from '@/types/property'
 import { createCircle, calculateRadius, getModeColor, getModeBorderColor } from '@/lib/isochrones'
 
 interface MapViewProps {
   destinations: Destination[]
+  showProperties?: boolean
 }
 
-export default function MapView({ destinations }: MapViewProps) {
+export default function MapView({ destinations, showProperties = true }: MapViewProps) {
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<maplibregl.Map | null>(null)
   const markers = useRef<Map<string, maplibregl.Marker>>(new Map())
   const [mapLoaded, setMapLoaded] = useState(false)
+  const [properties, setProperties] = useState<Property[]>([])
+  const [propertiesLoading, setPropertiesLoading] = useState(false)
 
   useEffect(() => {
     if (!mapContainer.current || map.current) return
@@ -114,6 +119,143 @@ export default function MapView({ destinations }: MapViewProps) {
           'line-width': 2,
           'line-dasharray': [2, 2],
         },
+      })
+
+      // Add source for properties
+      map.current!.addSource('properties', {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [],
+        },
+        cluster: true,
+        clusterMaxZoom: 14,
+        clusterRadius: 50,
+      })
+
+      // Add layer for property clusters
+      map.current!.addLayer({
+        id: 'property-clusters',
+        type: 'circle',
+        source: 'properties',
+        filter: ['has', 'point_count'],
+        paint: {
+          'circle-color': [
+            'step',
+            ['get', 'point_count'],
+            '#fef3c7',
+            10,
+            '#fde047',
+            25,
+            '#facc15',
+            50,
+            '#eab308'
+          ],
+          'circle-radius': [
+            'step',
+            ['get', 'point_count'],
+            15,
+            10,
+            20,
+            25,
+            25,
+            50,
+            30
+          ],
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#ffffff',
+        },
+      })
+
+      // Add layer for cluster count labels
+      map.current!.addLayer({
+        id: 'property-cluster-count',
+        type: 'symbol',
+        source: 'properties',
+        filter: ['has', 'point_count'],
+        layout: {
+          'text-field': '{point_count_abbreviated}',
+          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': 12,
+        },
+        paint: {
+          'text-color': '#78350f',
+        },
+      })
+
+      // Add layer for individual property points
+      map.current!.addLayer({
+        id: 'property-points',
+        type: 'circle',
+        source: 'properties',
+        filter: ['!', ['has', 'point_count']],
+        paint: {
+          'circle-color': '#fbbf24',
+          'circle-radius': 8,
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#ffffff',
+        },
+      })
+
+      // Add click handlers for properties
+      map.current!.on('click', 'property-points', (e) => {
+        if (!e.features || e.features.length === 0) return
+
+        const feature = e.features[0]
+        const props = feature.properties
+
+        if (!props) return
+
+        const property: Property = JSON.parse(props.property)
+
+        const popup = new maplibregl.Popup({ offset: 25 })
+          .setLngLat([property.coordinates.lng, property.coordinates.lat])
+          .setHTML(
+            `<div style="padding: 12px; min-width: 250px;">
+              <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">${formatPrice(property.valuation.woz_value)}</div>
+              <div style="font-size: 12px; color: #666; margin-bottom: 8px;">${formatAddress(property.address)}</div>
+              <div style="font-size: 11px; color: #999; margin-bottom: 4px;">
+                ${getPropertyTypeLabel(property.property.type)} • ${property.property.rooms} kamers
+              </div>
+              <div style="font-size: 11px; color: #999;">
+                ${property.property.living_area_m2}m² woonoppervlak • Bouwjaar ${property.property.year_built}
+              </div>
+              <div style="font-size: 11px; color: #999; margin-top: 4px;">
+                €${property.valuation.price_per_m2}/m² • Energielabel ${property.property.energy_label}
+              </div>
+            </div>`
+          )
+          .addTo(map.current!)
+      })
+
+      // Add click handler for clusters (zoom in)
+      map.current!.on('click', 'property-clusters', (e) => {
+        if (!e.features || e.features.length === 0 || !e.lngLat) return
+
+        const features = e.features
+        const clusterId = features[0].properties?.cluster_id
+
+        if (!clusterId) return
+
+        // Simply zoom in 2 levels on cluster click
+        map.current!.easeTo({
+          center: e.lngLat,
+          zoom: map.current!.getZoom() + 2,
+        })
+      })
+
+      // Change cursor on hover
+      map.current!.on('mouseenter', 'property-points', () => {
+        map.current!.getCanvas().style.cursor = 'pointer'
+      })
+      map.current!.on('mouseleave', 'property-points', () => {
+        map.current!.getCanvas().style.cursor = ''
+      })
+      map.current!.on('mouseenter', 'property-clusters', () => {
+        map.current!.getCanvas().style.cursor = 'pointer'
+      })
+      map.current!.on('mouseleave', 'property-clusters', () => {
+        map.current!.getCanvas().style.cursor = ''
       })
     })
 
@@ -260,6 +402,69 @@ export default function MapView({ destinations }: MapViewProps) {
     })
   }, [destinations, mapLoaded])
 
+  // Fetch and display properties
+  useEffect(() => {
+    if (!map.current || !mapLoaded || !showProperties) return
+
+    const fetchProperties = async () => {
+      setPropertiesLoading(true)
+
+      try {
+        // Get current map bounds
+        const bounds = map.current!.getBounds()
+
+        const response = await fetch(
+          `/api/properties?minLat=${bounds.getSouth()}&maxLat=${bounds.getNorth()}&minLng=${bounds.getWest()}&maxLng=${bounds.getEast()}&limit=500`
+        )
+        const data = await response.json()
+
+        if (data.success) {
+          setProperties(data.properties)
+
+          // Convert properties to GeoJSON features
+          const features = data.properties.map((property: Property) => ({
+            type: 'Feature' as const,
+            geometry: {
+              type: 'Point' as const,
+              coordinates: [property.coordinates.lng, property.coordinates.lat],
+            },
+            properties: {
+              property: JSON.stringify(property),
+              price: property.valuation.woz_value,
+              type: property.property.type,
+            },
+          }))
+
+          // Update property source
+          const source = map.current!.getSource('properties') as maplibregl.GeoJSONSource
+          if (source) {
+            source.setData({
+              type: 'FeatureCollection',
+              features,
+            })
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching properties:', error)
+      } finally {
+        setPropertiesLoading(false)
+      }
+    }
+
+    // Fetch properties on load and on map move
+    fetchProperties()
+
+    const handleMoveEnd = () => {
+      fetchProperties()
+    }
+
+    map.current!.on('moveend', handleMoveEnd)
+
+    return () => {
+      map.current?.off('moveend', handleMoveEnd)
+    }
+  }, [mapLoaded, showProperties])
+
   return (
     <div className="relative w-full h-full">
       <div ref={mapContainer} className="map-container" />
@@ -293,6 +498,12 @@ export default function MapView({ destinations }: MapViewProps) {
               <div className="w-4 h-4 rounded-full bg-blue-500 border-2 border-white"></div>
               <span>Destinations</span>
             </div>
+            {showProperties && (
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-yellow-400 border-2 border-white"></div>
+                <span>🏠 Properties ({properties.length})</span>
+              </div>
+            )}
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 rounded" style={{ backgroundColor: 'rgba(34, 197, 94, 0.3)', border: '1px solid rgb(34, 197, 94)' }}></div>
               <span>🚴 Bike reachable</span>
@@ -307,7 +518,8 @@ export default function MapView({ destinations }: MapViewProps) {
             </div>
           </div>
           <div className="mt-2 pt-2 border-t border-gray-200 text-xs text-gray-500">
-            Approximate reachable areas
+            {propertiesLoading && 'Loading properties...'}
+            {!propertiesLoading && 'Approximate reachable areas'}
           </div>
         </div>
       )}
