@@ -109,35 +109,64 @@ class EnvironmentalDataClient:
             List of problem areas
         """
         return [
+            # AIRPORT EMISSIONS
             {
                 "area": "Schiphol area",
                 "city": "Amsterdam region",
-                "issue": "Aircraft emissions, PM2.5, NO2",
+                "issue": "Aircraft emissions, PM2.5, NO2, ultrafine particles",
                 "severity": "high",
+                "health_concern": "Avoid with respiratory issues or young children",
             },
+            {
+                "area": "Eindhoven Airport area",
+                "city": "Eindhoven",
+                "issue": "Aircraft emissions (commercial + military jets), NO2",
+                "severity": "medium",
+                "health_concern": "Growing concern with airport expansion",
+            },
+            # INDUSTRIAL EMISSIONS
             {
                 "area": "Maasvlakte",
                 "city": "Rotterdam",
-                "issue": "Port/industry emissions, PM10",
+                "issue": "Port/industry emissions, PM10, SO2",
                 "severity": "high",
+                "health_concern": "Highest PM10 levels in Netherlands",
             },
+            {
+                "area": "Chemelot",
+                "city": "Geleen/Sittard",
+                "issue": "Chemical industry emissions",
+                "severity": "medium",
+                "health_concern": "Industrial zone, occasional odor complaints",
+            },
+            {
+                "area": "IJmond (Tata Steel)",
+                "city": "IJmuiden/Beverwijk",
+                "issue": "Steel industry, metal dust, PM10",
+                "severity": "high",
+                "health_concern": "Ongoing health concerns, government investigations",
+            },
+            # TRAFFIC EMISSIONS
             {
                 "area": "A10 Ring",
                 "city": "Amsterdam",
                 "issue": "Traffic emissions, NO2",
                 "severity": "medium",
-            },
-            {
-                "area": "Chemelot",
-                "city": "Geleen/Sittard",
-                "issue": "Chemical industry",
-                "severity": "medium",
+                "health_concern": "Properties <500m from highway affected",
             },
             {
                 "area": "A4 Corridor",
                 "city": "Randstad",
-                "issue": "Highway traffic",
+                "issue": "Highway traffic, NO2, PM10",
                 "severity": "medium",
+                "health_concern": "Major traffic artery",
+            },
+            {
+                "area": "Randstad urban areas",
+                "city": "Amsterdam/Rotterdam/Den Haag/Utrecht",
+                "issue": "Urban traffic, NO2",
+                "severity": "medium",
+                "health_concern": "City centers can exceed EU limits",
             },
         ]
 
@@ -148,37 +177,84 @@ class EnvironmentalDataClient:
         Returns:
             List of noisy areas
         """
-        # Known noisy areas
+        # Known noisy areas - CRITICAL for expats!
         return [
+            # AIRPORTS (Major noise complaint source)
             {
-                "area": "Schiphol flight paths",
+                "area": "Schiphol Airport flight paths",
+                "city": "Amsterdam region",
                 "source": "aircraft",
                 "severity": "very_high",
-                "note": "24/7 operations, noise complaints common",
-            },
-            {
-                "area": "Rotterdam Port area",
-                "source": "industry",
-                "severity": "high",
-                "note": "24/7 port operations",
-            },
-            {
-                "area": "Major highways (A1, A2, A4, A10)",
-                "source": "road_traffic",
-                "severity": "high",
-                "note": "Properties within 500m affected",
+                "note": "24/7 operations, #1 expat noise complaint in NL",
+                "affected_areas": "Hoofddorp, Amstelveen, Uithoorn, Aalsmeer, parts of Amsterdam",
+                "distance_concern": "<10km heavily affected, 10-20km moderately affected",
             },
             {
                 "area": "Eindhoven Airport",
+                "city": "Eindhoven",
                 "source": "aircraft",
                 "severity": "high",
-                "note": "Growing budget airline hub",
+                "note": "Growing budget airline hub (Ryanair, Wizz Air), military base",
+                "affected_areas": "Eindhoven South, Best, Veldhoven",
+                "distance_concern": "<5km heavily affected, military jets can be very loud",
             },
             {
                 "area": "Rotterdam The Hague Airport",
+                "city": "Rotterdam",
                 "source": "aircraft",
                 "severity": "medium",
-                "note": "Limited operations",
+                "note": "Smaller regional airport, limited commercial flights",
+                "affected_areas": "Rotterdam North, parts of Schiedam",
+                "distance_concern": "<3km affected, fewer flights than Schiphol/Eindhoven",
+            },
+            {
+                "area": "Maastricht Aachen Airport",
+                "city": "Maastricht",
+                "source": "aircraft",
+                "severity": "medium",
+                "note": "Regional airport, cargo flights",
+                "affected_areas": "Beek, parts of Maastricht",
+                "distance_concern": "<5km affected",
+            },
+            {
+                "area": "Groningen Airport Eelde",
+                "city": "Groningen",
+                "source": "aircraft",
+                "severity": "low",
+                "note": "Small regional airport, limited flights",
+                "affected_areas": "Eelde, Paterswolde",
+                "distance_concern": "<3km affected",
+            },
+            {
+                "area": "Lelystad Airport",
+                "city": "Lelystad",
+                "source": "aircraft",
+                "severity": "medium",
+                "note": "Currently small, planned expansion controversial (overflow for Schiphol)",
+                "affected_areas": "Lelystad, potentially Almere if expanded",
+                "distance_concern": "Expansion blocked due to noise concerns - check latest status!",
+            },
+            # INDUSTRIAL NOISE
+            {
+                "area": "Rotterdam Port (Maasvlakte)",
+                "city": "Rotterdam",
+                "source": "industry",
+                "severity": "high",
+                "note": "24/7 port operations, trucks, cranes",
+                "affected_areas": "Hook of Holland, Maassluis",
+            },
+            # ROAD TRAFFIC
+            {
+                "area": "A10 Ring Amsterdam",
+                "source": "road_traffic",
+                "severity": "high",
+                "note": "Heavy traffic 24/7, properties <500m heavily affected",
+            },
+            {
+                "area": "Major highways (A1, A2, A4, A12, A13, A16)",
+                "source": "road_traffic",
+                "severity": "high",
+                "note": "Properties within 500m affected, <200m very loud",
             },
         ]
 
