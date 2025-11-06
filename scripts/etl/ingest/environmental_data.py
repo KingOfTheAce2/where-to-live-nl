@@ -234,6 +234,15 @@ class EnvironmentalDataClient:
                 "affected_areas": "Lelystad, potentially Almere if expanded",
                 "distance_concern": "Expansion blocked due to noise concerns - check latest status!",
             },
+            {
+                "area": "Gilze-Rijen Air Base (Breda International Airport)",
+                "city": "Breda region",
+                "source": "aircraft",
+                "severity": "medium",
+                "note": "Military air base with civilian operations, helicopters and fighter jets",
+                "affected_areas": "Gilze, Rijen, Molenschot, Chaam, parts of Breda",
+                "distance_concern": "<5km affected, military exercises can be very loud",
+            },
             # INDUSTRIAL NOISE
             {
                 "area": "Rotterdam Port (Maasvlakte)",
