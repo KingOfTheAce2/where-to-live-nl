@@ -6,6 +6,7 @@ import type { Destination } from '@/app/page'
 import type { Property, PropertyFilters } from '@/types/property'
 import { formatPrice, formatAddress, getPropertyTypeLabel } from '@/types/property'
 import { createCircle, calculateRadius, getModeColor, getModeBorderColor } from '@/lib/isochrones'
+import { approximateIntersectionPolygon } from '@/lib/intersections'
 
 interface MapViewProps {
   destinations: Destination[]
@@ -119,6 +120,37 @@ export default function MapView({ destinations, showProperties = true, propertyF
           'line-color': ['get', 'strokeColor'],
           'line-width': 2,
           'line-dasharray': [2, 2],
+        },
+      })
+
+      // Add source for intersection area (where ALL destinations are reachable)
+      map.current!.addSource('intersection', {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [],
+        },
+      })
+
+      // Add layer for intersection fill
+      map.current!.addLayer({
+        id: 'intersection-fill',
+        type: 'fill',
+        source: 'intersection',
+        paint: {
+          'fill-color': '#10b981',
+          'fill-opacity': 0.4,
+        },
+      })
+
+      // Add layer for intersection border
+      map.current!.addLayer({
+        id: 'intersection-border',
+        type: 'line',
+        source: 'intersection',
+        paint: {
+          'line-color': '#059669',
+          'line-width': 3,
         },
       })
 
@@ -377,6 +409,7 @@ export default function MapView({ destinations, showProperties = true, propertyF
 
     // Create circle features for each destination
     const features: GeoJSON.Feature[] = []
+    const circles: Array<{ center: [number, number]; radius: number }> = []
 
     destinations.forEach((dest) => {
       if (!dest.coordinates) return
@@ -394,13 +427,42 @@ export default function MapView({ destinations, showProperties = true, propertyF
       })
 
       features.push(circle)
+      circles.push({ center: dest.coordinates, radius })
     })
 
-    // Update source data
+    // Update isochrones source data
     source.setData({
       type: 'FeatureCollection',
       features,
     })
+
+    // Calculate and update intersection area
+    const intersectionSource = map.current.getSource('intersection') as maplibregl.GeoJSONSource
+    if (intersectionSource && circles.length > 1) {
+      // Calculate intersection polygon
+      const intersectionPolygon = approximateIntersectionPolygon(circles, 40)
+
+      if (intersectionPolygon) {
+        intersectionSource.setData({
+          type: 'FeatureCollection',
+          features: [intersectionPolygon],
+        })
+      } else {
+        // No intersection - clear the layer
+        intersectionSource.setData({
+          type: 'FeatureCollection',
+          features: [],
+        })
+      }
+    } else {
+      // Less than 2 destinations - clear intersection layer
+      if (intersectionSource) {
+        intersectionSource.setData({
+          type: 'FeatureCollection',
+          features: [],
+        })
+      }
+    }
   }, [destinations, mapLoaded])
 
   // Fetch and display properties
@@ -521,6 +583,12 @@ export default function MapView({ destinations, showProperties = true, propertyF
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 rounded-full bg-yellow-400 border-2 border-white"></div>
                 <span>🏠 Properties ({properties.length})</span>
+              </div>
+            )}
+            {destinations.filter(d => d.coordinates).length > 1 && (
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded" style={{ backgroundColor: 'rgba(16, 185, 129, 0.4)', border: '2px solid rgb(5, 150, 105)' }}></div>
+                <span className="font-semibold">✓ Overlap Area</span>
               </div>
             )}
             <div className="flex items-center gap-2">
