@@ -1,0 +1,188 @@
+{
+  "app": {
+    "title": "Waar te Wonen NL",
+    "subtitle": "vind jouw perfecte Nederlandse thuis",
+    "builtWith": "gemaakt met ❤️  voor expats"
+  },
+  "woz": {
+    "title": "WOZ-waarde woning",
+    "available": "beschikbaar",
+    "limitedData": "beperkte gegevens",
+    "currentValue": "huidige waarde",
+    "historicalTrend": "historische trend (2014-2024)",
+    "change": "verandering"
+  },
+  "energy": {
+    "title": "gemiddelde energiekosten",
+    "perYear": "/jaar",
+    "perMonth": "/maand",
+    "total": "totaal",
+    "gas": "gas",
+    "electricity": "elektriciteit",
+    "water": "water",
+    "districtHeating": "stadsverwarming info",
+    "districtHeatingPct": "van de woningen hier gebruikt stadsverwarming",
+    "pricingInfo": "prijsinformatie"
+  },
+  "facilities": {
+    "title": "afstand tot voorzieningen (CBS 2024)",
+    "transport": "vervoer",
+    "trainStation": "treinstation",
+    "majorTrainStation": "groot treinstation (IC)",
+    "highwayOnramp": "snelwegoprit",
+    "healthcareTitle": "gezondheidszorg",
+    "gp": "huisarts",
+    "pharmacy": "apotheek",
+    "hospital": "ziekenhuis",
+    "shopping": "winkelen",
+    "supermarket": "supermarkt",
+    "dailyGroceries": "dagelijkse boodschappen",
+    "education": "onderwijs & kinderopvang",
+    "primarySchool": "basisschool",
+    "daycare": "kinderopvang",
+    "culture": "cultuur & recreatie",
+    "library": "bibliotheek",
+    "restaurant": "restaurant"
+  },
+  "services": {
+    "emergencyServices": "hulpdiensten in de buurt",
+    "culturalAmenities": "culturele voorzieningen in de buurt",
+    "healthcareFacilities": "zorginstellingen",
+    "localGovernment": "lokale overheid",
+    "municipality": "gemeente"
+  },
+  "trainStation": {
+    "title": "dichtstbijzijnde treinstation",
+    "distance": "afstand"
+  },
+  "comparison": {
+    "maxReached": "Maximum {count} {type} bereikt!",
+    "alreadyAdded": "Deze locatie staat al in de vergelijking!",
+    "switchToHouses": "Wisselen naar Woningen",
+    "switchToNeighborhoods": "Wisselen naar Buurten",
+    "addToNeighborhood": "Toevoegen aan Buurtvergelijking",
+    "addToHouse": "Toevoegen aan Woningvergelijking",
+    "neighborhoods": "buurten",
+    "houses": "woningen"
+  },
+  "search": {
+    "title": "zoek woningadres",
+    "description": "voer een adres in om gedetailleerde buurtinformatie, WOZ-waarde, criminaliteitsstatistieken, nabijgelegen voorzieningen en meer te zien.",
+    "placeholder": "voer straatnaam, plaats in...",
+    "selected": "geselecteerd:"
+  },
+  "snapshot": {
+    "title": "buurt momentopname",
+    "loading": "laden...",
+    "startSearch": "begin je zoekopdracht",
+    "startSearchDescription": "voer hierboven een adres in om uitgebreide buurtinformatie, woningwaarden en leefbaarheidsgegevens te zien.",
+    "discover": "wat je zult ontdekken:",
+    "discoverItems": {
+      "crime": "veiligheid & criminaliteit - buurtcriminaliteitsgegevens van Politie.nl",
+      "amenities": "nabijgelegen voorzieningen - supermarkten, gezondheidszorg, scholen, speeltuinen",
+      "environment": "milieukwaliteit - groene ruimtes, parken, leefbaarheidsscores",
+      "demographics": "demografie - bevolking, leeftijdsverdeling, huishoudtypes"
+    }
+  },
+  "amenities": {
+    "title": "nabijgelegen voorzieningen (2km)",
+    "supermarkets": "supermarkten",
+    "healthcare": "gezondheidszorg",
+    "playgrounds": "speeltuinen",
+    "parks": "parken",
+    "nearest": "dichtstbijzijnde:",
+    "away": "verderop"
+  },
+  "crime": {
+    "title": "veiligheid & criminaliteit",
+    "crimeRate": "criminaliteitscijfer:",
+    "notAvailable": "niet beschikbaar",
+    "nlAverage": "NL gemiddelde: {average} per 1.000 inwoners (CBS {year})",
+    "dataFrom": "gegevens van Politie.nl en CBS"
+  },
+  "wijkagent": {
+    "title": "Jouw Wijkagent",
+    "whatIs": "Wat is een Wijkagent?",
+    "explanation": "Een wijkagent is jouw lokale politiecontact die verantwoordelijk is voor de veiligheid in jouw specifieke buurt. Ze richten zich op het voorkomen van criminaliteit, het opbouwen van vertrouwen met bewoners en het aanpakken van lokale zorgen.",
+    "whatTheyDo": "Wat ze doen:",
+    "roles": {
+      "safety": "Handhaaft de veiligheid in de buurt",
+      "knowledge": "Kent het gebied en de bewoners",
+      "prevention": "Voorkomt criminaliteit door zichtbaarheid",
+      "problems": "Pakt lokale problemen en zorgen aan"
+    },
+    "findYours": "Vind Jouw Wijkagent:",
+    "enterPostal": "Voer je postcode in om contactgegevens te vinden",
+    "tipsForExpats": "💡 Tips voor Expats:",
+    "tips": {
+      "english": "De meeste wijkagenten kunnen Engels communiceren",
+      "email": "Email ze met niet-urgente buurtvragen",
+      "approachable": "Ze zijn benaderbaar en er om je veilig te laten voelen",
+      "emergency": "Bij noodgevallen, bel altijd 112 (niet je wijkagent)"
+    }
+  },
+  "environment": {
+    "title": "milieu en risico's",
+    "parksNearby": "parken in de buurt (3km)",
+    "greenSpace": "kwaliteit groene ruimte",
+    "floodRisk": "overstromingsrisico",
+    "foundationRisk": "funderingsrisico",
+    "airQuality": "luchtkwaliteit",
+    "viewOnMap": "bekijk op kaart",
+    "dataVisible": "milieugegevens zichtbaar op kaart"
+  },
+  "livability": {
+    "title": "leefbaarheidsscore",
+    "dataUnavailable": "gegevens niet beschikbaar",
+    "breakdown": "score uitsplitsing",
+    "physical": "fysieke omgeving",
+    "social": "sociale cohesie",
+    "safety": "veiligheid",
+    "facilities": "voorzieningen",
+    "housing": "woningkwaliteit"
+  },
+  "demographics": {
+    "title": "demografie",
+    "population": "bevolking",
+    "households": "huishoudens",
+    "avgHouseholdSize": "gem. huishoudgrootte",
+    "persons": "personen",
+    "ageDistribution": "leeftijdsverdeling",
+    "ageRanges": {
+      "0-15": "0-15 jaar",
+      "15-25": "15-25 jaar",
+      "25-45": "25-45 jaar",
+      "45-65": "45-65 jaar",
+      "65+": "65+ jaar"
+    },
+    "housing": "woningen",
+    "ownerOccupied": "eigen bezit",
+    "rental": "huur",
+    "avgWozValue": "gem. WOZ-waarde"
+  },
+  "travelTime": {
+    "title": "optioneel: voeg werkadres toe",
+    "description": "bereken de reistijd van deze woning naar je werkplek. Routes worden gecached om herhaalde vragen sneller te maken.",
+    "addCommute": "+ voeg reistijdberekening toe",
+    "cancel": "annuleren",
+    "workAddress": "werkadres:",
+    "estimatedCommute": "geschatte reistijd:",
+    "byBike": "met de fiets",
+    "byCar": "met de auto",
+    "calculating": "reistijden berekenen...",
+    "actualRoutes": "werkelijke routetijden via OpenRouteService",
+    "changeAddress": "verander werkadres"
+  },
+  "footer": {
+    "dataSources": "gegevensbronnen",
+    "sources": {
+      "demographics": "demografie:",
+      "crime": "criminaliteit:",
+      "livability": "leefbaarheid:",
+      "amenities": "voorzieningen:",
+      "foundationRisk": "funderingsrisico:",
+      "airQuality": "luchtkwaliteit:",
+      "travelTimes": "reistijden:"
+    }
+  }
+}

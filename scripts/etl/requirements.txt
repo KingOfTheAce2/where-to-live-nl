@@ -4,10 +4,14 @@ pyarrow==14.0.1          # Parquet file format
 numpy==1.26.2            # Numerical computing
 
 # HTTP & Web scraping
-httpx==0.25.2            # Async HTTP client
+httpx==0.25.2            # Async HTTP client (supports async/await)
 beautifulsoup4==4.12.2   # HTML parsing
 lxml==4.9.3              # XML/HTML parser
 tenacity==8.2.3          # Retry logic
+
+# Async support (for turbo scraper)
+asyncio                  # Built-in async library
+aiofiles==23.2.1         # Async file operations
 
 # Data validation
 pydantic==2.5.2          # Data validation

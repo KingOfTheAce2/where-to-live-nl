@@ -2,6 +2,24 @@
 
 > Extract, Transform, Load scripts for Dutch government data sources
 
+## 🚀 Quick Start
+
+```bash
+# 1. Setup
+cd scripts/etl
+python -m venv venv
+venv\Scripts\activate  # Windows
+pip install -r requirements.txt
+
+# 2. Run WOZ scraper (main long-running task)
+python scrape_all_woz.py --rate-limit 2.5
+
+# 3. See detailed guide
+cat WOZ_SCRAPER_GUIDE.md
+```
+
+**Current Status**: WOZ scraper running - 15,000 values scraped, ~4 days remaining at 2.5 req/sec
+
 ---
 
 ## 🎯 Overview
@@ -79,18 +97,23 @@ scripts/etl/
 │
 ├── ingest/
 │   ├── __init__.py
-│   ├── bag.py            # BAG addresses & buildings
-│   ├── woz.py            # WOZ values scraper
-│   ├── cbs.py            # CBS demographics
-│   ├── leefbaarometer.py # Livability scores
-│   ├── crime.py          # Crime statistics
-│   └── schools.py        # School locations
+│   ├── bag.py                    # BAG addresses & buildings
+│   ├── woz.py                    # WOZ values scraper
+│   ├── cbs_demographics.py       # CBS demographics
+│   ├── leefbaarometer.py         # Livability scores
+│   ├── crime.py                  # Crime statistics
+│   ├── duo_schools.py            # School locations (DUO API)
+│   ├── duo_schools_complete.py   # ✅ Complete schools ingestion (ALL levels)
+│   ├── energielabel.py           # Energy labels
+│   └── energieverbruik.py        # Energy consumption
 │
 ├── transform/
 │   ├── __init__.py
-│   ├── bag_to_parquet.py # BAG → Parquet
-│   ├── merge_woz.py      # Merge WOZ with BAG
-│   └── spatial_index.py  # Create spatial indexes
+│   ├── bag_to_parquet.py        # BAG → Parquet
+│   ├── merge_woz.py             # Merge WOZ with BAG
+│   ├── spatial_index.py         # Create spatial indexes
+│   ├── schools_to_parquet.py    # ✅ Schools JSON → Parquet
+│   └── addresses_to_parquet.py  # BAG addresses → Parquet
 │
 └── pipelines/
     ├── __init__.py
@@ -444,7 +467,7 @@ python -m pipelines.full_refresh
 | CBS | Annually | 30 min |
 | Leefbaarometer | Annually | 1 hour |
 | Crime stats | Quarterly | 20 min |
-| Schools | Annually | 10 min |
+| Schools (DUO) | Monthly | 2 min | ✅ Complete |
 
 **Recommended schedule**:
 ```yaml
@@ -509,5 +532,42 @@ headers = {"User-Agent": random.choice(USER_AGENTS)}
 
 ---
 
-**Last Updated**: November 3, 2025
-**Next Review**: December 3, 2025
+## 🎓 Schools Data (NEW!)
+
+### Complete Schools Ingestion
+
+We now have a complete schools data ingestion pipeline that downloads ALL school types from the Dutch Ministry of Education's DUO portal.
+
+**Script**: `ingest/duo_schools_complete.py`
+
+**Usage**:
+```bash
+# Download all school types (Primary, Secondary, Vocational, Higher Ed)
+python -m ingest.duo_schools_complete
+
+# Download specific types only
+python -m ingest.duo_schools_complete --types po,vo
+
+# Convert to Parquet
+python transform/schools_to_parquet.py
+```
+
+**Results**:
+- ✅ **14,374 schools** ingested successfully
+- ✅ **12,107 primary schools** (Basisonderwijs - PO)
+- ✅ **2,267 secondary schools** (Voortgezet Onderwijs - VO)
+- ✅ Output: `data/processed/schools.parquet` (0.6 MB)
+- ✅ 100% have valid postal codes and addresses
+- ⏳ Coordinates need to be enriched (see `enrich_addresses_with_coordinates.py`)
+
+**Data Source**:
+- Portal: https://onderwijsdata.duo.nl/
+- License: CC-BY 4.0
+- Update Frequency: Monthly
+
+**See detailed guide**: [docs/DUO_SCHOOLS_COMPLETE.md](../../docs/DUO_SCHOOLS_COMPLETE.md)
+
+---
+
+**Last Updated**: November 22, 2025
+**Next Review**: December 22, 2025

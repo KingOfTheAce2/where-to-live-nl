@@ -8,7 +8,7 @@ import { parseCoordinates } from '@/lib/pdok'
 interface AddressAutocompleteProps {
   value: string
   onChange: (value: string) => void
-  onSelect: (address: string, coordinates: [number, number]) => void
+  onSelect: (address: string, coordinates: [number, number], details?: any) => void
   placeholder?: string
   className?: string
 }
@@ -58,7 +58,7 @@ export default function AddressAutocomplete({
   }
 
   const handleSelectResult = async (id: string, displayName: string) => {
-    // Look up full details to get coordinates
+    // Look up full details to get coordinates and neighborhood code
     const address = await lookup(id)
 
     if (address && address.centroide_ll) {
@@ -66,7 +66,7 @@ export default function AddressAutocomplete({
 
       if (coords) {
         onChange(displayName)
-        onSelect(displayName, coords)
+        onSelect(displayName, coords, address)  // Pass full address details
         setIsOpen(false)
         inputRef.current?.blur()
       }

@@ -63,7 +63,26 @@ def append_to_parquet(new_data: list[dict], output_path: Path):
     if output_path.exists():
         # Load existing and concatenate
         existing_df = pl.read_parquet(output_path)
-        combined_df = pl.concat([existing_df, new_df])
+
+        # Align columns: get all unique columns from both dataframes
+        all_columns = set(existing_df.columns) | set(new_df.columns)
+
+        # Add missing columns to existing_df with null values
+        for col in all_columns:
+            if col not in existing_df.columns:
+                existing_df = existing_df.with_columns(pl.lit(None).alias(col))
+
+        # Add missing columns to new_df with null values
+        for col in all_columns:
+            if col not in new_df.columns:
+                new_df = new_df.with_columns(pl.lit(None).alias(col))
+
+        # Ensure both dataframes have columns in the same order
+        sorted_columns = sorted(all_columns)
+        existing_df = existing_df.select(sorted_columns)
+        new_df = new_df.select(sorted_columns)
+
+        combined_df = pl.concat([existing_df, new_df], how="vertical_relaxed")
         combined_df.write_parquet(
             output_path,
             compression="snappy",

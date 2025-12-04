@@ -1,0 +1,25 @@
+{
+  "name": "where-to-live-nl",
+  "version": "1.0.0",
+  "description": "Where to Live in the Netherlands - Property and neighborhood analysis tool",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && python api_server.py",
+    "frontend": "cd frontend && npm run dev",
+    "install:all": "cd frontend && npm install",
+    "type-check": "cd frontend && npm run type-check",
+    "build": "cd frontend && npm run build"
+  },
+  "keywords": [
+    "netherlands",
+    "housing",
+    "real-estate",
+    "neighborhood-analysis"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

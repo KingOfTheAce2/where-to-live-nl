@@ -27,14 +27,14 @@ from common.logger import log
 # Leefbaarometer WFS endpoint
 LBM_WFS_BASE = "https://geo.leefbaarometer.nl/lbm3/ows"
 
-# Available layers (measurements)
+# Available layers (measurements) - Updated January 2025
+# Layer naming convention: {level}score{year}
 LAYERS = {
-    "grid_100m": "lbm3:v_lbm_2024_100m",  # 100x100m grid (most detailed)
-    "postal_code_4": "lbm3:v_lbm_2024_pc4",  # 4-digit postal code areas
-    "postal_code_6": "lbm3:v_lbm_2024_pc6",  # 6-digit postal code areas
-    "neighborhood": "lbm3:v_lbm_2024_buurt",  # Neighborhood (buurt)
-    "district": "lbm3:v_lbm_2024_wijk",  # District (wijk)
-    "municipality": "lbm3:v_lbm_2024_gemeente"  # Municipality (gemeente)
+    "grid_100m": "lbm3:clippedgridscore24",  # 100x100m grid (most detailed) - LARGE!
+    "postal_code_4": "lbm3:pc4score24",  # 4-digit postal code areas
+    "neighborhood": "lbm3:buurtscore24",  # Neighborhood (buurt) - RECOMMENDED
+    "district": "lbm3:wijkscore24",  # District (wijk)
+    "municipality": "lbm3:gemeentescore24"  # Municipality (gemeente)
 }
 
 
@@ -222,24 +222,37 @@ def transform_feature(feature: Dict) -> Dict:
     props = feature.get("properties", {})
     geometry = feature.get("geometry", {})
 
-    # Extract key fields (field names may vary by layer)
+    # Field mapping for 2024 data:
+    # kscore = categorical score (1-9, where 5=average)
+    # kafw/kfys/konv/ksoc/kvrz/kwon = categorical scores for dimensions
+    # afw/fys/onv/soc/vrz/won = continuous deviation from national average
+
     return {
-        "id": props.get("id") or props.get("gml_id"),
-        "score_total": props.get("totaalscore") or props.get("lbm_score"),
-        "score_physical": props.get("fysieke_omgeving"),
-        "score_social": props.get("sociale_cohesie") or props.get("sociaal"),
-        "score_safety": props.get("veiligheid"),
-        "score_facilities": props.get("voorzieningen"),
-        "score_housing": props.get("woningen"),
-        "class": props.get("lbm_klasse"),  # Category (very positive, positive, etc.)
-        "area_code": props.get("gebiedscode") or props.get("postcode") or props.get("gemeentecode"),
-        "area_name": props.get("gebiedsnaam") or props.get("gemeentenaam"),
-        "geometry": geometry,
-        "metadata": {
-            "measurement_year": props.get("metingjaar", 2024),
-            "population": props.get("inwoners"),
-            "households": props.get("huishoudens")
-        }
+        "id": props.get("id"),
+        "area_code": props.get("id"),  # BU/WK/GM code
+        "area_name": props.get("name"),
+        "municipality": props.get("gemeente"),
+        "scale": props.get("scale"),  # buurt/wijk/gemeente
+        "year": props.get("year", "2024"),
+
+        # Categorical scores (1-9, where 5 is national average)
+        "score_total": props.get("kscore"),  # Overall livability
+        "score_deviation": props.get("kafw"),  # Overall deviation category
+        "score_physical": props.get("kfys"),  # Physical environment
+        "score_nuisance": props.get("konv"),  # Nuisance/safety (overlast/veiligheid)
+        "score_social": props.get("ksoc"),  # Social cohesion
+        "score_facilities": props.get("kvrz"),  # Facilities (voorzieningen)
+        "score_housing": props.get("kwon"),  # Housing stock
+
+        # Continuous deviation scores (from national average)
+        "deviation_total": props.get("afw"),
+        "deviation_physical": props.get("fys"),
+        "deviation_nuisance": props.get("onv"),
+        "deviation_social": props.get("soc"),
+        "deviation_facilities": props.get("vrz"),
+        "deviation_housing": props.get("won"),
+
+        "geometry": geometry
     }
 
 
@@ -357,13 +370,17 @@ def main(
 
     # Show sample
     if features:
-        log.info("Sample feature:")
+        log.info("\n=== Sample Feature ===")
         sample_feature = features[0]
         props = sample_feature.get("properties", {})
-        log.info(f"  ID: {props.get('id') or props.get('gml_id')}")
-        log.info(f"  Total score: {props.get('totaalscore') or props.get('lbm_score')}")
-        log.info(f"  Class: {props.get('lbm_klasse')}")
-        log.info(f"  Area: {props.get('gebiedsnaam') or props.get('gemeentenaam')}")
+        log.info(f"  Area: {props.get('name')} ({props.get('id')})")
+        log.info(f"  Municipality: {props.get('gemeente')}")
+        log.info(f"  Total score: {props.get('kscore')} (1=worst, 5=average, 9=best)")
+        log.info(f"  Physical environment: {props.get('kfys')}")
+        log.info(f"  Nuisance/Safety: {props.get('konv')}")
+        log.info(f"  Social cohesion: {props.get('ksoc')}")
+        log.info(f"  Facilities: {props.get('kvrz')}")
+        log.info(f"  Housing: {props.get('kwon')}")
 
     # File size
     file_size_mb = output_path.stat().st_size / 1024 / 1024

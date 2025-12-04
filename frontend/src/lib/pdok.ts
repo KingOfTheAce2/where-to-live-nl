@@ -24,6 +24,10 @@ export interface PDOKAddress {
   woonplaatsnaam?: string
   gemeentenaam?: string
   provincienaam?: string
+  buurtcode?: string // Neighborhood code (e.g., "BU05990110")
+  buurtnaam?: string // Neighborhood name
+  wijkcode?: string // District code
+  wijknaam?: string // District name
 }
 
 export interface GeocodedLocation {

@@ -134,15 +134,19 @@ def main(output: str, resume: bool, batch_save: int):
 
                     # Process addresses
                     for doc in docs:
+                        # Extract coordinates from POINT(lon lat) format
                         centroide = doc.get("centroide_ll", "")
                         lat, lon = None, None
-                        if centroide and "," in centroide:
+                        if centroide and centroide.startswith("POINT("):
                             try:
-                                parts = centroide.split(",")
-                                if len(parts) >= 2:
-                                    lat = parts[0].strip()
-                                    lon = parts[1].strip()
-                            except:
+                                # Format: "POINT(4.8942242 52.37302144)"
+                                coords = centroide.replace("POINT(", "").replace(")", "").strip()
+                                parts = coords.split()
+                                if len(parts) == 2:
+                                    lon = float(parts[0])  # Longitude first in POINT format
+                                    lat = float(parts[1])  # Latitude second
+                            except Exception as e:
+                                log.debug(f"Failed to parse coordinates: {centroide} - {e}")
                                 pass
 
                         addr = {

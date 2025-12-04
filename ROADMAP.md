@@ -4,6 +4,10 @@
 > **Project Status**: Planning Phase
 > **Target Launch**: Q2 2026 (MVP)
 
+  To test, you need to:
+  1. Start the backend: cd backend && python api_server.py
+  2. Start the frontend: cd frontend && npm run dev
+
 ---
 
 ## 📋 Table of Contents

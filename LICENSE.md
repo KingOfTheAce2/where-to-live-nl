@@ -1,30 +1,33 @@
-# MIT License
+# Proprietary License
 
-Copyright (c) 2025 Where-to-Live-NL Contributors
+Copyright (c) 2025 Where-to-Live-NL. All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+## Software License
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This software and associated documentation files (the "Software") are the proprietary property of the copyright holder. All rights are reserved.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+**NO PERMISSION IS GRANTED** to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, or to permit persons to whom the Software is furnished to do so.
+
+### Restrictions
+
+- ❌ No commercial use without explicit written permission
+- ❌ No modification or derivative works
+- ❌ No redistribution in any form
+- ❌ No reverse engineering or decompilation
+- ❌ No public deployment without authorization
+
+### Limited Use
+
+This Software is provided for:
+- ✅ Personal evaluation only
+- ✅ Internal development by authorized developers
+- ✅ Review purposes only
 
 ---
 
 ## Data Licenses
 
-This project incorporates data from various sources, each with their own licenses:
+This project incorporates data from various public sources. The data remains under their original licenses:
 
 ### Government Data Sources
 
@@ -32,10 +35,10 @@ This project incorporates data from various sources, each with their own license
    - Source: Kadaster
    - License: https://creativecommons.org/publicdomain/zero/1.0/
 
-2. **CBS (Demographics)** - CC-BY 4.0
+2. **CBS (Demographics & Crime Statistics)** - CC-BY 4.0
    - Source: Statistics Netherlands
    - License: https://creativecommons.org/licenses/by/4.0/
-   - Attribution required
+   - Attribution: "Statistics Netherlands (CBS)"
 
 3. **PDOK (Geospatial Data)** - CC0 1.0 (Public Domain)
    - Source: Dutch Government
@@ -43,13 +46,13 @@ This project incorporates data from various sources, each with their own license
 
 4. **WOZ Values** - Public Information
    - Source: Kadaster via WOZ Waardeloket
-   - Public tax valuation data
+   - Public tax valuation data (individual lookups permitted)
 
 5. **OpenStreetMap** - ODbL 1.0
    - License: https://opendatacommons.org/licenses/odbl/
-   - Attribution required
+   - Attribution: "© OpenStreetMap contributors"
 
-For complete data attribution, see [ATTRIBUTION.md](ATTRIBUTION.md).
+**Note**: While the underlying public data may be freely used under their respective licenses, this software implementation for accessing and processing that data is proprietary.
 
 ---
 
@@ -64,16 +67,10 @@ This project uses open-source libraries with their respective licenses:
 - **PyArrow** - Apache 2.0
 - **tqdm** - MIT License
 - **Pydantic** - MIT License
+- **BeautifulSoup4** - MIT License
+- **lxml** - BSD License
 
 See `scripts/etl/requirements.txt` for complete list.
-
-### Frontend Dependencies (when implemented)
-- **Next.js** - MIT License
-- **React** - MIT License
-- **MapLibre GL JS** - BSD 3-Clause
-- **Tailwind CSS** - MIT License
-
-See `package.json` for complete list.
 
 ---
 
@@ -83,15 +80,23 @@ See `package.json` for complete list.
 
 This tool provides informational estimates based on public data sources. It is NOT:
 - ❌ A substitute for professional housing advice
-- ❌ A guarantee of property conditions
+- ❌ A guarantee of property conditions or valuations
 - ❌ Legal advice regarding contracts or obligations
 - ❌ Real-time data (updates vary by source)
+- ❌ Investment advice
 
 **Always verify critical information with:**
 - Official Kadaster records
 - Professional property inspections
 - Legal professionals
 - Municipal authorities
+- Licensed real estate agents
+
+---
+
+## Liability
+
+THE COPYRIGHT HOLDER SHALL NOT BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ---
 
@@ -101,25 +106,15 @@ Users of this software are responsible for:
 - Complying with all applicable laws (GDPR, copyright, etc.)
 - Respecting data source Terms of Service
 - Implementing proper data protection measures
-- Obtaining necessary legal counsel before commercial use
-
-See [LEGAL.md](LEGAL.md) for detailed compliance guidance.
-
----
-
-## Contributing
-
-By contributing to this project, you agree that your contributions will be licensed under the same MIT License.
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+- Obtaining necessary permissions for commercial use
+- Following rate limits and API usage guidelines
 
 ---
 
 ## Contact
 
-For licensing questions:
+For licensing inquiries and permission requests:
 - **GitHub Issues**: https://github.com/yourusername/where-to-live-nl/issues
-- **Email**: [your-email]
 
 ---
 

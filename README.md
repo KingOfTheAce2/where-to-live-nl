@@ -1,8 +1,10 @@
 # where-to-live-nl - Dutch Housing Intelligence Platform
 
-> *Empowering expats and internationals with comprehensive housing insights across the Netherlands*
+> *Comprehensive housing insights across the Netherlands*
 
-**Where-to-live-nl** consolidates fragmented Dutch government data sources into a single, intuitive platform that helps you make informed decisions about where to live in the Netherlands. No more juggling 10+ Dutch-only websites or missing critical information about neighborhoods, property characteristics, and livability factors.
+**Where-to-live-nl** consolidates fragmented Dutch government data sources into a single platform that helps you make informed decisions about where to live in the Netherlands. No more juggling 10+ Dutch-only websites or missing critical information about neighborhoods, property characteristics, and livability factors.
+
+**⚠️ PROPRIETARY SOFTWARE** - See [LICENSE.md](LICENSE.md) for usage restrictions.
 
 ---
 
@@ -281,60 +283,61 @@ where-to-live-nl/
 
 ## 📖 Documentation
 
-Comprehensive guides for understanding and contributing to the project:
+### Essential Documentation (Root)
+- **[README.md](README.md)** - Project overview (you are here!)
+- **[ROADMAP.md](ROADMAP.md)** - Development roadmap
+- **[LEGAL.md](LEGAL.md)** - ⚖️ Kadaster, GDPR & compliance guide
+- **[LICENSE.md](LICENSE.md)** - Software license
 
-- **[GETTING_STARTED.md](GETTING_STARTED.md)** - Your first steps (10-minute setup)
-- **[LEGAL.md](LEGAL.md)** - ⚖️ Kadaster, GDPR & compliance guide (READ FIRST!)
-- **[ROADMAP.md](ROADMAP.md)** - 52-week development plan with detailed tasks
-- **[PRICING.md](PRICING.md)** - Complete cost analysis ($0-5/month hosting!)
-- **[DATA_STORAGE.md](DATA_STORAGE.md)** - JSON vs Parquet vs PostgreSQL guide
-- **[MAPPING.md](MAPPING.md)** - How to use PDOK + MapLibre (free, no vendor lock-in)
-- **[scripts/etl/QUICKSTART.md](scripts/etl/QUICKSTART.md)** - ETL pipeline setup guide
+### Getting Started
+- **[docs/QUICK_START.md](docs/QUICK_START.md)** - Your first steps (10-minute setup)
+- **[docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)** - Comprehensive setup guide
+- **[docs/DEV_SETUP.md](docs/DEV_SETUP.md)** - Development environment configuration
 
----
+### Deployment & Production
+- **[docs/DEPLOYMENT_GUIDE.md](docs/DEPLOYMENT_GUIDE.md)** - Complete deployment instructions (Vercel + Railway)
+- **[docs/PRODUCTION_READY.md](docs/PRODUCTION_READY.md)** - Production launch checklist
+- **[docs/KADASTER_AND_STRIPE_SETUP.md](docs/KADASTER_AND_STRIPE_SETUP.md)** - Premium feature setup
 
-## 🤝 Contributing
+### Features & Data
+- **[docs/KADASTER_PREMIUM_FEATURE.md](docs/KADASTER_PREMIUM_FEATURE.md)** - Premium Kadaster integration design
+- **[docs/DUO_SCHOOLS_INGESTION.md](docs/DUO_SCHOOLS_INGESTION.md)** - Official school data (7,325 schools)
+- **[docs/DATA_ACCURACY_AUDIT.md](docs/DATA_ACCURACY_AUDIT.md)** - Data quality audit & fixes
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+### Data & ETL
+- **[scripts/etl/README.md](scripts/etl/README.md)** - ETL pipeline documentation
+- **[docs/guides/](docs/guides/)** - Detailed guides
+  - [COORDINATE_ENRICHMENT_GUIDE.md](docs/guides/COORDINATE_ENRICHMENT_GUIDE.md)
+  - [FRONTEND_DEVELOPMENT_GUIDE.md](docs/guides/FRONTEND_DEVELOPMENT_GUIDE.md)
+  - [QUICKSTART_WOZ_HISTORICAL.md](docs/guides/QUICKSTART_WOZ_HISTORICAL.md)
 
-### Ways to Contribute
+### Technical Documentation
+- **[docs/technical/](docs/technical/)** - Technical specifications
+  - [DATA_STORAGE.md](docs/technical/DATA_STORAGE.md) - JSON vs Parquet vs PostgreSQL
+  - [KADASTER_INTEGRATION.md](docs/technical/KADASTER_INTEGRATION.md)
+  - [MAPPING.md](docs/technical/MAPPING.md) - PDOK + MapLibre implementation
+  - [WOZ_HISTORICAL_DATA.md](docs/technical/WOZ_HISTORICAL_DATA.md)
 
-1. **Data quality**: Report inaccuracies or outdated information
-2. **Foundation problems**: Submit known areas with wooden pile issues
-3. **Translations**: Help translate to Dutch, Spanish, French, etc.
-4. **Code**: Submit PRs for features or bug fixes
-5. **Documentation**: Improve guides and explanations
-
-### Development Guidelines
-
-- Write tests for new features
-- Follow existing code style (Prettier + ESLint)
-- Update documentation with changes
-- Keep commits atomic and well-described
-
----
-
-## 📊 Data Attribution
-
-This project uses open data from Dutch government sources. We comply with all licensing requirements:
-
-- **BAG**: Kadaster - CC0 License
-- **CBS**: Centraal Bureau voor de Statistiek - CC-BY 4.0
-- **Crime Data**: Politie Nederland - Open Data
-- **Leefbaarometer**: Ministerie van Binnenlandse Zaken
-
-Full attribution details: [ATTRIBUTION.md](ATTRIBUTION.md)
+### Session Summaries
+- **[docs/summaries/](docs/summaries/)** - Development session notes and data source fixes
 
 ---
 
-## 🔒 Privacy & GDPR
+## 📊 Data Sources
 
-- **No personal data collection** without explicit consent
-- **No tracking** beyond anonymous analytics (optional)
-- **Local-first**: Searches happen client-side when possible
-- **Transparent**: Open-source codebase
+This project uses public data from Dutch government sources:
 
-See [PRIVACY.md](PRIVACY.md) for full policy.
+- **BAG (Addresses & Buildings)**: Kadaster - CC0 License
+- **WOZ (Property Valuations)**: Kadaster - Public Information
+- **CBS (Demographics & Crime)**: Statistics Netherlands - CC-BY 4.0
+- **Leefbaarometer (Livability)**: Ministerie van Binnenlandse Zaken - Open Data
+- **OpenStreetMap (Amenities)**: OSM Contributors - ODbL
+
+For detailed information about all data sources and how to ingest them:
+- **[DATA_SOURCES_SUMMARY.md](DATA_SOURCES_SUMMARY.md)** - Complete guide to all available data
+- **[scripts/etl/README.md](scripts/etl/README.md)** - ETL pipeline documentation
+
+**Note**: While the underlying public data may be freely used under their respective licenses, this software implementation is proprietary. See [LICENSE.md](LICENSE.md).
 
 ---
 
@@ -368,37 +371,28 @@ See the [GitHub Issues](https://github.com/yourusername/where-to-live-nl/issues)
 
 ## 📞 Support
 
-- **Documentation**: [GitHub Wiki](https://github.com/yourusername/where-to-live-nl/wiki) (coming soon)
 - **Issues**: [GitHub Issues](https://github.com/yourusername/where-to-live-nl/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/where-to-live-nl/discussions)
-- **Documentation Index**: [DOCS_INDEX.md](DOCS_INDEX.md)
+- **Data Sources Guide**: [DATA_SOURCES_SUMMARY.md](DATA_SOURCES_SUMMARY.md)
 
 ---
 
 ## 📜 License
 
-This project is licensed under the **MIT License** - see [LICENSE.md](LICENSE.md) for details.
+This software is **proprietary** - see [LICENSE.md](LICENSE.md) for usage restrictions.
 
-Data sources may have different licenses - see [ATTRIBUTION.md](ATTRIBUTION.md).
+The underlying public data sources remain under their original open licenses.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Dutch government for open data initiatives
+- Dutch government for open data initiatives (BAG, CBS, PDOK)
 - OpenStreetMap contributors
-- TravelTime Platform for algorithm inspiration
-- I amsterdam for MapitOut concept
-- All contributors and beta testers
+- Statistics Netherlands (CBS) for demographics and crime data
+- Kadaster for WOZ and property data
 
 ---
 
-## 🌟 Star History
-
-If this project helps you, please consider giving it a ⭐️!
-
----
-
-**Built with ❤️ for expats navigating the Dutch housing market**
+**Built for navigating the Dutch housing market**
 
 *Last updated: November 2025*

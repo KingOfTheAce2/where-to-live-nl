@@ -25,9 +25,10 @@ from common.logger import log
 CBS_API_BASE = "https://opendata.cbs.nl/ODataApi/odata"
 
 # Key demographic datasets
+# Updated January 2025 - verified working table IDs
 DATASETS = {
+    "neighborhoods": "85984NED",  # Kerncijfers wijken en buurten 2024 - RECOMMENDED
     "population": "85039NED",  # Bevolking; kerncijfers per gemeente
-    "neighborhoods": "84799NED",  # Kerncijfers wijken en buurten 2023
     "income": "84641NED",  # Inkomen van huishoudens; gemeente
     "households": "71486NED",  # Huishoudens; grootte, samenstelling, positie in het huishouden
 }
@@ -68,26 +69,53 @@ class CBSDemographicsClient:
         table_id: str,
         filters: Optional[Dict[str, str]] = None,
         select: Optional[List[str]] = None,
-        page_size: int = 10000
+        page_size: int = 1000,
+        max_records: Optional[int] = None
     ) -> List[Dict]:
-        """Fetch data with pagination."""
+        """
+        Fetch data with pagination.
+
+        Args:
+            table_id: CBS table identifier
+            filters: OData filters
+            select: Columns to select
+            page_size: Records per page (reduced to 1000 to avoid 10k limit)
+            max_records: Maximum total records to fetch (for sampling)
+
+        Returns:
+            List of all records
+        """
         all_records = []
         skip = 0
 
         with tqdm(desc=f"Fetching {table_id}", unit=" records") as pbar:
             while True:
+                # Stop if we've reached max_records
+                if max_records and len(all_records) >= max_records:
+                    break
+
                 url = f"{CBS_API_BASE}/{table_id}/TypedDataSet"
+
+                # Adjust page size if approaching max_records
+                current_page_size = page_size
+                if max_records:
+                    remaining = max_records - len(all_records)
+                    current_page_size = min(page_size, remaining)
+
                 params = {
                     "$skip": skip,
-                    "$top": page_size
+                    "$top": current_page_size
                 }
 
                 if filters:
                     filter_parts = []
                     for key, value in filters.items():
-                        if isinstance(value, str):
+                        # Handle special function filters (like startswith)
+                        if key.startswith("startswith("):
+                            filter_parts.append(key)  # Use key as-is (it's the full filter expression)
+                        elif isinstance(value, str) and value:
                             filter_parts.append(f"{key} eq '{value}'")
-                        else:
+                        elif not isinstance(value, str):
                             filter_parts.append(f"{key} eq {value}")
                     if filter_parts:
                         params["$filter"] = " and ".join(filter_parts)
@@ -108,11 +136,12 @@ class CBSDemographicsClient:
                     all_records.extend(records)
                     pbar.update(len(records))
 
-                    if len(records) < page_size:
+                    # Check if there are more records
+                    if len(records) < current_page_size:
                         break
 
-                    skip += page_size
-                    time.sleep(0.1)
+                    skip += len(records)
+                    time.sleep(0.1)  # Be nice to the server
 
                 except Exception as e:
                     log.error(f"Error at skip={skip}: {e}")
@@ -141,7 +170,7 @@ class CBSDemographicsClient:
 @click.option(
     "--year",
     type=str,
-    default="2023",
+    default="2024",
     help="Year (if applicable)"
 )
 @click.option(
@@ -191,19 +220,26 @@ def main(
 
         # Build filters based on dataset
         filters = {}
+
+        # For neighborhoods dataset, filter to only buurt (neighborhood) level
+        # This avoids the 10k record limit by excluding national/province/municipality/district levels
+        if dataset == "neighborhoods":
+            log.info("Filtering for neighborhood-level data only (BU* codes)...")
+            # Use startswith filter to get only neighborhoods (codes starting with "BU")
+            # This is implemented in the OData query as: startswith(WijkenEnBuurten,'BU')
+            filters["startswith(WijkenEnBuurten,'BU')"] = ""  # Special filter syntax
+
         if "Perioden" in str(table_info):
             # Try to filter by year if the table supports it
             year_code = f"{year}JJ00"  # CBS yearly format
             filters["Perioden"] = year_code
 
-        # Fetch data
+        # Fetch data with pagination
         records = client.get_data_paginated(
             table_id=table_id,
-            filters=filters if filters else None
+            filters=filters if filters else None,
+            max_records=sample  # Pass sample as max_records to stop early
         )
-
-        if sample:
-            records = records[:sample]
 
     log.info(f"Downloaded {len(records)} records")
 

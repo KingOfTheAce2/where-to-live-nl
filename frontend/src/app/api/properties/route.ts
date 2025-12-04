@@ -37,21 +37,28 @@ export async function GET(request: NextRequest) {
 
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : 100
 
-    // Load sample data
-    const dataPath = path.join(process.cwd(), '..', 'data', 'samples', 'sample_properties.json')
-    const fileContent = fs.readFileSync(dataPath, 'utf-8')
-    const data = JSON.parse(fileContent)
+    // Fetch from Python backend API
+    const backendUrl = new URL('http://localhost:8000/api/properties')
+    if (filters.minLat) backendUrl.searchParams.set('minLat', filters.minLat.toString())
+    if (filters.maxLat) backendUrl.searchParams.set('maxLat', filters.maxLat.toString())
+    if (filters.minLng) backendUrl.searchParams.set('minLng', filters.minLng.toString())
+    if (filters.maxLng) backendUrl.searchParams.set('maxLng', filters.maxLng.toString())
+    backendUrl.searchParams.set('limit', limit.toString())
 
+    const backendResponse = await fetch(backendUrl.toString(), {
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (!backendResponse.ok) {
+      throw new Error(`Backend API returned ${backendResponse.status}`)
+    }
+
+    const data = await backendResponse.json()
+
+    // Apply additional frontend filters (price, property type, rooms, area)
     let properties = data.properties
 
-    // Apply filters
     properties = properties.filter((property: any) => {
-      // Geographic bounds
-      if (filters.minLat !== undefined && property.coordinates.lat < filters.minLat) return false
-      if (filters.maxLat !== undefined && property.coordinates.lat > filters.maxLat) return false
-      if (filters.minLng !== undefined && property.coordinates.lng < filters.minLng) return false
-      if (filters.maxLng !== undefined && property.coordinates.lng > filters.maxLng) return false
-
       // Price range
       if (filters.minPrice !== undefined && property.valuation.woz_value < filters.minPrice) return false
       if (filters.maxPrice !== undefined && property.valuation.woz_value > filters.maxPrice) return false
@@ -72,13 +79,10 @@ export async function GET(request: NextRequest) {
       return true
     })
 
-    // Limit results
-    properties = properties.slice(0, limit)
-
     return NextResponse.json({
       success: true,
       count: properties.length,
-      total: data.properties.length,
+      total: data.total,
       properties: properties,
     })
   } catch (error) {

@@ -1,0 +1,92 @@
+  // Add crime overlay to map
+  useEffect(() => {
+    if (!map.current || !mapLoaded) return
+
+    if (showCrimeOverlay && crimeData.length > 0) {
+      console.log('🗺️ Adding crime overlay to map with', crimeData.length, 'data points')
+
+      // Add source and layers if they don't exist
+      if (!map.current.getSource('crime-overlay')) {
+        // Add GeoJSON source
+        map.current.addSource('crime-overlay', {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: crimeData.map(item => ({
+              type: 'Feature',
+              properties: {
+                area_code: item.area_code,
+                area_name: item.area_name,
+                crime_rate: item.crime_rate_per_1000,
+                total_crimes: item.total_crimes,
+                population: item.population,
+              },
+              geometry: {
+                type: 'Point',
+                coordinates: [item.lng, item.lat]
+              }
+            }))
+          }
+        })
+
+        // Add circle layer
+        map.current.addLayer({
+          id: 'crime-circles',
+          type: 'circle',
+          source: 'crime-overlay',
+          paint: {
+            'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 3, 12, 8, 16, 15],
+            'circle-color': ['interpolate', ['linear'], ['get', 'crime_rate'], 0, '#dbeafe', 50, '#93c5fd', 100, '#3b82f6', 200, '#1e40af'],
+            'circle-opacity': 0.6,
+            'circle-stroke-width': 1,
+            'circle-stroke-color': '#ffffff'
+          }
+        })
+
+        // Add text labels
+        map.current.addLayer({
+          id: 'crime-labels',
+          type: 'symbol',
+          source: 'crime-overlay',
+          layout: {
+            'text-field': ['get', 'area_name'],
+            'text-font': ['Open Sans Regular'],
+            'text-size': 10,
+            'text-offset': [0, 2],
+            'text-anchor': 'top'
+          },
+          paint: {
+            'text-color': '#1e3a8a',
+            'text-halo-color': '#ffffff',
+            'text-halo-width': 1.5
+          }
+        })
+
+        // Add event handlers
+        const crimeClickHandler = (e: maplibregl.MapMouseEvent) => {
+          if (!e.features || e.features.length === 0) return
+          const props = e.features[0].properties
+          new maplibregl.Popup({ offset: 15 })
+            .setLngLat(e.lngLat)
+            .setHTML(`<div style="padding: 12px; min-width: 200px;">
+              <div style="font-weight: 600; font-size: 14px; margin-bottom: 6px;">${props.area_name}</div>
+              <div style="font-size: 13px; color: #666; margin-bottom: 4px;">Crime Rate: <strong>${props.crime_rate.toFixed(1)}</strong> per 1,000 residents</div>
+              <div style="font-size: 12px; color: #999;">${props.total_crimes} crimes | Pop: ${props.population.toLocaleString()}</div>
+            </div>`)
+            .addTo(map.current!)
+        }
+
+        map.current.on('click', 'crime-circles', crimeClickHandler)
+        map.current.on('mouseenter', 'crime-circles', () => { map.current!.getCanvas().style.cursor = 'pointer' })
+        map.current.on('mouseleave', 'crime-circles', () => { map.current!.getCanvas().style.cursor = '' })
+      }
+    } else {
+      // Remove layers when overlay is turned off
+      if (map.current.getLayer('crime-circles')) {
+        console.log('🗺️ Removing crime overlay from map')
+        map.current.removeLayer('crime-circles')
+        map.current.removeLayer('crime-labels')
+        map.current.removeSource('crime-overlay')
+      }
+    }
+  }, [mapLoaded, showCrimeOverlay, crimeData])

@@ -2,6 +2,9 @@
 node_modules/
 npm-cache/
 
+# Claude AI
+.claude/
+
 # Environment variables
 .env
 .env.local
@@ -52,3 +55,7 @@ __pycache__/
 env/
 venv/
 *.egg-info/
+NUL
+nul
+frontend/NUL
+scripts/etl/nul

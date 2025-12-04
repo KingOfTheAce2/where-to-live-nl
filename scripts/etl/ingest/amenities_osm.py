@@ -74,7 +74,14 @@ AMENITY_QUERIES = {
     (
       node["leisure"="park"](area);
       way["leisure"="park"](area);
+      relation["leisure"="park"](area);
+      node["leisure"="garden"](area);
+      way["leisure"="garden"](area);
       way["landuse"="recreation_ground"](area);
+      way["landuse"="village_green"](area);
+      node["leisure"="nature_reserve"](area);
+      way["leisure"="nature_reserve"](area);
+      relation["leisure"="nature_reserve"](area);
     );
     out center;
     """,

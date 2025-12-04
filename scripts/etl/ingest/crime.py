@@ -21,13 +21,16 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 from common.logger import log
 
-# CBS Open Data API for Police statistics
-CBS_API_BASE = "https://opendata.cbs.nl/ODataApi/odata"
+# CBS/Politie.nl OData API (hosted on CBS infrastructure)
+# Data source: https://data.politie.nl/
+# Dashboard: https://www.cbs.nl/nl-nl/visualisaties/politie/dashboard-misdrijven-in-de-buurt
+CBS_API_BASE = "https://dataderden.cbs.nl/ODataApi/odata"
 
 # Available crime datasets (OData table IDs)
+# Updated January 2025 - verified working endpoints
 DATASETS = {
-    "neighborhood": "85452NED",  # Geregistreerde misdrijven; soort misdrijf, wijk, buurt
-    "municipality": "85540NED",  # Geregistreerde misdrijven en aangiften; soort misdrijf, gemeente
+    "neighborhood": "47018NED",  # Geregistreerde misdrijven; wijk, buurt (neighborhood level) - RECOMMENDED
+    "municipality": "47022NED",  # Geregistreerde misdrijven; soort misdrijf, gemeente (municipality level)
 }
 
 # Crime categories we're interested in
@@ -141,7 +144,8 @@ class CrimeDataClient:
         table_id: str,
         filters: Optional[Dict[str, str]] = None,
         select: Optional[List[str]] = None,
-        page_size: int = 10000
+        page_size: int = 10000,
+        max_records: Optional[int] = None
     ) -> List[Dict]:
         """
         Fetch data with pagination.
@@ -151,6 +155,7 @@ class CrimeDataClient:
             filters: OData filters
             select: Columns to select
             page_size: Records per page
+            max_records: Maximum total records to fetch (for sampling)
 
         Returns:
             List of all records
@@ -160,11 +165,21 @@ class CrimeDataClient:
 
         with tqdm(desc=f"Fetching {table_id}", unit=" records") as pbar:
             while True:
+                # Stop if we've reached max_records
+                if max_records and len(all_records) >= max_records:
+                    break
+
                 url = f"{CBS_API_BASE}/{table_id}/TypedDataSet"
+
+                # Adjust page size if approaching max_records
+                current_page_size = page_size
+                if max_records:
+                    remaining = max_records - len(all_records)
+                    current_page_size = min(page_size, remaining)
 
                 params = {
                     "$skip": skip,
-                    "$top": page_size
+                    "$top": current_page_size
                 }
 
                 # Add filters
@@ -197,10 +212,10 @@ class CrimeDataClient:
                     pbar.update(len(records))
 
                     # Check if there are more records
-                    if len(records) < page_size:
+                    if len(records) < current_page_size:
                         break
 
-                    skip += page_size
+                    skip += len(records)
                     time.sleep(0.1)  # Be nice to the server
 
                 except Exception as e:
@@ -231,8 +246,8 @@ class CrimeDataClient:
 @click.option(
     "--year",
     type=str,
-    default="2023",
-    help="Year to download (e.g., 2023)"
+    default="2024",
+    help="Year to download (e.g., 2024). Available: 2012-2024"
 )
 @click.option(
     "--output",
@@ -297,22 +312,13 @@ def main(
             "Perioden": year_code
         }
 
-        if sample and sample < 10000:
-            # Single request for small samples
-            records = client.get_typed_data(
-                table_id=table_id,
-                filters=filters
-            )
-            records = records[:sample]
-        else:
-            # Paginated fetch
-            records = client.get_data_paginated(
-                table_id=table_id,
-                filters=filters
-            )
-
-            if sample:
-                records = records[:sample]
+        # Always use paginated fetch to respect API's 10k limit
+        records = client.get_data_paginated(
+            table_id=table_id,
+            filters=filters,
+            page_size=200,  # Use smaller pages to be nice to the server
+            max_records=sample  # Pass sample as max_records to stop early
+        )
 
     log.info(f"Downloaded {len(records)} records")
 

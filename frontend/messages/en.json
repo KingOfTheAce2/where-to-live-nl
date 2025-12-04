@@ -1,0 +1,188 @@
+{
+  "app": {
+    "title": "Where to Live NL",
+    "subtitle": "find your perfect Dutch home",
+    "builtWith": "built with ❤️  for expats"
+  },
+  "woz": {
+    "title": "WOZ property value",
+    "available": "available",
+    "limitedData": "limited data",
+    "currentValue": "current value",
+    "historicalTrend": "historical trend (2014-2024)",
+    "change": "change"
+  },
+  "energy": {
+    "title": "average utility costs",
+    "perYear": "/year",
+    "perMonth": "/mo",
+    "total": "total",
+    "gas": "gas",
+    "electricity": "electricity",
+    "water": "water",
+    "districtHeating": "district heating notice",
+    "districtHeatingPct": "of homes here use district heating (stadsverwarming)",
+    "pricingInfo": "pricing info"
+  },
+  "facilities": {
+    "title": "distance to facilities (CBS 2024)",
+    "transport": "transport",
+    "trainStation": "train station",
+    "majorTrainStation": "major train station (IC)",
+    "highwayOnramp": "highway on-ramp",
+    "healthcareTitle": "healthcare",
+    "gp": "GP (huisarts)",
+    "pharmacy": "pharmacy",
+    "hospital": "hospital",
+    "shopping": "shopping",
+    "supermarket": "supermarket",
+    "dailyGroceries": "daily groceries",
+    "education": "education & childcare",
+    "primarySchool": "primary school",
+    "daycare": "daycare",
+    "culture": "culture & recreation",
+    "library": "library",
+    "restaurant": "restaurant"
+  },
+  "services": {
+    "emergencyServices": "emergency services nearby",
+    "culturalAmenities": "cultural amenities nearby",
+    "healthcareFacilities": "healthcare facilities",
+    "localGovernment": "local government",
+    "municipality": "municipality"
+  },
+  "trainStation": {
+    "title": "nearest train station",
+    "distance": "distance"
+  },
+  "comparison": {
+    "maxReached": "Maximum {count} {type} reached!",
+    "alreadyAdded": "This location is already in the comparison!",
+    "switchToHouses": "Switch to Houses",
+    "switchToNeighborhoods": "Switch to Neighborhoods",
+    "addToNeighborhood": "Add to Neighborhood Comparison",
+    "addToHouse": "Add to House Comparison",
+    "neighborhoods": "neighborhoods",
+    "houses": "houses"
+  },
+  "search": {
+    "title": "search property address",
+    "description": "enter an address to see detailed neighborhood information, WOZ value, crime stats, nearby amenities, and more.",
+    "placeholder": "enter street address, city...",
+    "selected": "selected:"
+  },
+  "snapshot": {
+    "title": "neighborhood snapshot",
+    "loading": "loading...",
+    "startSearch": "start your search",
+    "startSearchDescription": "enter an address above to see comprehensive neighborhood information, property values, and livability data.",
+    "discover": "what you'll discover:",
+    "discoverItems": {
+      "crime": "safety & crime stats - neighborhood crime data from Politie.nl",
+      "amenities": "nearby amenities - supermarkets, healthcare, schools, playgrounds",
+      "environment": "environment quality - green spaces, parks, livability scores",
+      "demographics": "demographics - population, age distribution, household types"
+    }
+  },
+  "amenities": {
+    "title": "nearby amenities (2km)",
+    "supermarkets": "supermarkets",
+    "healthcare": "healthcare",
+    "playgrounds": "playgrounds",
+    "parks": "parks",
+    "nearest": "nearest:",
+    "away": "away"
+  },
+  "crime": {
+    "title": "safety & crime",
+    "crimeRate": "crime rate:",
+    "notAvailable": "not available",
+    "nlAverage": "NL average: {average} per 1,000 residents (CBS {year})",
+    "dataFrom": "data from Politie.nl and CBS"
+  },
+  "wijkagent": {
+    "title": "Your Neighborhood Police Officer",
+    "whatIs": "What is a Wijkagent?",
+    "explanation": "A wijkagent (neighborhood police officer) is your local police contact responsible for safety in your specific area. They focus on preventing crime, building trust with residents, and addressing local concerns.",
+    "whatTheyDo": "What they do:",
+    "roles": {
+      "safety": "Maintain safety in your neighborhood",
+      "knowledge": "Know the area and its residents",
+      "prevention": "Prevent crime through visibility",
+      "problems": "Address local problems and concerns"
+    },
+    "findYours": "Find Your Wijkagent:",
+    "enterPostal": "Enter your postal code to find contact details",
+    "tipsForExpats": "💡 Tips for Expats:",
+    "tips": {
+      "english": "Most wijkagenten can communicate in English",
+      "email": "Email them with non-urgent neighborhood questions",
+      "approachable": "They're approachable and there to help you feel safe",
+      "emergency": "For emergencies, always call 112 (not your wijkagent)"
+    }
+  },
+  "environment": {
+    "title": "environment and risks",
+    "parksNearby": "parks nearby (3km)",
+    "greenSpace": "green space quality",
+    "floodRisk": "flood risk",
+    "foundationRisk": "foundation risk",
+    "airQuality": "air quality",
+    "viewOnMap": "view on map",
+    "dataVisible": "environmental data visible on map"
+  },
+  "livability": {
+    "title": "livability score",
+    "dataUnavailable": "data unavailable",
+    "breakdown": "score breakdown",
+    "physical": "physical environment",
+    "social": "social cohesion",
+    "safety": "safety",
+    "facilities": "facilities",
+    "housing": "housing quality"
+  },
+  "demographics": {
+    "title": "demographics",
+    "population": "population",
+    "households": "households",
+    "avgHouseholdSize": "avg household size",
+    "persons": "persons",
+    "ageDistribution": "age distribution",
+    "ageRanges": {
+      "0-15": "0-15 years",
+      "15-25": "15-25 years",
+      "25-45": "25-45 years",
+      "45-65": "45-65 years",
+      "65+": "65+ years"
+    },
+    "housing": "housing",
+    "ownerOccupied": "owner-occupied",
+    "rental": "rental",
+    "avgWozValue": "avg WOZ value"
+  },
+  "travelTime": {
+    "title": "optional: add work address",
+    "description": "calculate travel time from this property to your workplace. Routes are cached in a database to make repeated queries faster and minimize API costs.",
+    "addCommute": "+ add commute calculation",
+    "cancel": "cancel",
+    "workAddress": "work address:",
+    "estimatedCommute": "estimated commute time:",
+    "byBike": "by bike",
+    "byCar": "by car",
+    "calculating": "calculating travel times...",
+    "actualRoutes": "actual route times via OpenRouteService",
+    "changeAddress": "change work address"
+  },
+  "footer": {
+    "dataSources": "data sources",
+    "sources": {
+      "demographics": "demographics:",
+      "crime": "crime:",
+      "livability": "livability:",
+      "amenities": "amenities:",
+      "foundationRisk": "foundation risk:",
+      "airQuality": "air quality:",
+      "travelTimes": "travel times:"
+    }
+  }
+}

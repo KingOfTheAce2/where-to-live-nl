@@ -1,0 +1,70 @@
+🏷️  EP-Online Energy Labels Converter
+============================================================
+
+📂 Step 1: Reading CSV file (1.5 GB)...
+   File: D:\GitHub\where-to-live-nl\data\raw\energielabels_raw.csv
+⚠️  UTF-8 failed, trying with Windows-1252 encoding...
+Traceback (most recent call last):
+  File "D:\GitHub\where-to-live-nl\scripts\etl\convert_energielabels.py", line 42, in main
+    df = pl.read_csv(
+        CSV_FILE,
+    ...<4 lines>...
+        null_values=['', 'NULL', 'null']
+    )
+  File "C:\Users\evgga\AppData\Roaming\Python\Python313\site-packages\polars\_utils\deprecation.py", line 92, in wrapper
+    return function(*args, **kwargs)
+  File "C:\Users\evgga\AppData\Roaming\Python\Python313\site-packages\polars\_utils\deprecation.py", line 92, in wrapper
+    return function(*args, **kwargs)
+  File "C:\Users\evgga\AppData\Roaming\Python\Python313\site-packages\polars\_utils\deprecation.py", line 92, in wrapper
+    return function(*args, **kwargs)
+  File "C:\Users\evgga\AppData\Roaming\Python\Python313\site-packages\polars\io\csv\functions.py", line 520, in read_csv
+    with prepare_file_arg(
+         ~~~~~~~~~~~~~~~~^
+        source,
+        ^^^^^^^
+    ...<3 lines>...
+        storage_options=storage_options,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as data:
+    ^
+  File "C:\Users\evgga\AppData\Roaming\Python\Python313\site-packages\polars\io\_utils.py", line 200, in prepare_file_arg
+    BytesIO(file.read_bytes().decode(encoding_str).encode("utf8")),
+            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+LookupError: unknown encoding: utf-8-lossy
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\GitHub\where-to-live-nl\scripts\etl\convert_energielabels.py", line 237, in <module>
+    main()
+    ~~~~^^
+  File "D:\GitHub\where-to-live-nl\scripts\etl\convert_energielabels.py", line 52, in main
+    df = pl.read_csv(
+        CSV_FILE,
+    ...<4 lines>...
+        null_values=['', 'NULL', 'null']
+    )
+  File "C:\Users\evgga\AppData\Roaming\Python\Python313\site-packages\polars\_utils\deprecation.py", line 92, in wrapper
+    return function(*args, **kwargs)
+  File "C:\Users\evgga\AppData\Roaming\Python\Python313\site-packages\polars\_utils\deprecation.py", line 92, in wrapper
+    return function(*args, **kwargs)
+  File "C:\Users\evgga\AppData\Roaming\Python\Python313\site-packages\polars\_utils\deprecation.py", line 92, in wrapper
+    return function(*args, **kwargs)
+  File "C:\Users\evgga\AppData\Roaming\Python\Python313\site-packages\polars\io\csv\functions.py", line 520, in read_csv
+    with prepare_file_arg(
+         ~~~~~~~~~~~~~~~~^
+        source,
+        ^^^^^^^
+    ...<3 lines>...
+        storage_options=storage_options,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as data:
+    ^
+  File "C:\Users\evgga\AppData\Roaming\Python\Python313\site-packages\polars\io\_utils.py", line 200, in prepare_file_arg
+    BytesIO(file.read_bytes().decode(encoding_str).encode("utf8")),
+            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 15, in decode
+    return codecs.charmap_decode(input,errors,decoding_table)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'charmap' codec can't decode byte 0x9d in position 1408003133: character maps to <undefined>
+decoding with 'windows-1252' codec failed

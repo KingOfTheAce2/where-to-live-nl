@@ -1,0 +1,188 @@
+{
+  "app": {
+    "title": "Dónde vivir en Países Bajos",
+    "subtitle": "encuentra tu hogar holandés perfecto",
+    "builtWith": "construido con ❤️ para expatriados"
+  },
+  "woz": {
+    "title": "valor WOZ de la propiedad",
+    "available": "disponible",
+    "limitedData": "datos limitados",
+    "currentValue": "valor actual",
+    "historicalTrend": "tendencia histórica (2014-2024)",
+    "change": "cambio"
+  },
+  "energy": {
+    "title": "costos promedio de servicios",
+    "perYear": "/año",
+    "perMonth": "/mes",
+    "total": "total",
+    "gas": "gas",
+    "electricity": "electricidad",
+    "water": "agua",
+    "districtHeating": "aviso de calefacción urbana",
+    "districtHeatingPct": "de las viviendas aquí utilizan calefacción urbana",
+    "pricingInfo": "información de precios"
+  },
+  "facilities": {
+    "title": "distancia a instalaciones (CBS 2024)",
+    "transport": "transporte",
+    "trainStation": "estación de tren",
+    "majorTrainStation": "estación de tren principal (IC)",
+    "highwayOnramp": "rampa de autopista",
+    "healthcareTitle": "atención médica",
+    "gp": "médico de cabecera",
+    "pharmacy": "farmacia",
+    "hospital": "hospital",
+    "shopping": "compras",
+    "supermarket": "supermercado",
+    "dailyGroceries": "compras diarias",
+    "education": "educación y guardería",
+    "primarySchool": "escuela primaria",
+    "daycare": "guardería",
+    "culture": "cultura y recreación",
+    "library": "biblioteca",
+    "restaurant": "restaurante"
+  },
+  "services": {
+    "emergencyServices": "servicios de emergencia cercanos",
+    "culturalAmenities": "servicios culturales cercanos",
+    "healthcareFacilities": "instalaciones de salud",
+    "localGovernment": "gobierno local",
+    "municipality": "municipio"
+  },
+  "trainStation": {
+    "title": "estación de tren más cercana",
+    "distance": "distancia"
+  },
+  "comparison": {
+    "maxReached": "¡Máximo {count} {type} alcanzado!",
+    "alreadyAdded": "¡Esta ubicación ya está en la comparación!",
+    "switchToHouses": "cambiar a casas",
+    "switchToNeighborhoods": "cambiar a vecindarios",
+    "addToNeighborhood": "añadir a comparación de vecindarios",
+    "addToHouse": "añadir a comparación de casas",
+    "neighborhoods": "vecindarios",
+    "houses": "casas"
+  },
+  "search": {
+    "title": "buscar dirección de propiedad",
+    "description": "ingrese una dirección para ver información detallada del vecindario, estadísticas de criminalidad, servicios cercanos y más.",
+    "placeholder": "ingrese dirección, ciudad...",
+    "selected": "seleccionado:"
+  },
+  "snapshot": {
+    "title": "resumen del vecindario",
+    "loading": "cargando...",
+    "startSearch": "iniciar búsqueda",
+    "startSearchDescription": "ingrese una dirección arriba para ver información completa del vecindario, valores de propiedad y datos de calidad de vida.",
+    "discover": "lo que descubrirás:",
+    "discoverItems": {
+      "crime": "seguridad y estadísticas de criminalidad - datos de criminalidad del vecindario de Politie.nl",
+      "amenities": "servicios cercanos - supermercados, atención médica, escuelas, parques infantiles",
+      "environment": "calidad ambiental - espacios verdes, parques, puntuaciones de calidad de vida",
+      "demographics": "demografía - población, distribución de edad, tipos de hogares"
+    }
+  },
+  "amenities": {
+    "title": "servicios cercanos (2km)",
+    "supermarkets": "supermercados",
+    "healthcare": "atención médica",
+    "playgrounds": "parques infantiles",
+    "parks": "parques",
+    "nearest": "más cercano:",
+    "away": "de distancia"
+  },
+  "crime": {
+    "title": "seguridad y criminalidad",
+    "crimeRate": "tasa de criminalidad:",
+    "notAvailable": "no disponible",
+    "nlAverage": "promedio NL: {average} por 1.000 habitantes (CBS {year})",
+    "dataFrom": "datos de Politie.nl y CBS"
+  },
+  "wijkagent": {
+    "title": "tu agente de barrio",
+    "whatIs": "¿qué es un Wijkagent?",
+    "explanation": "un Wijkagent (agente de barrio) es tu contacto policial local responsable de la seguridad en tu área específica. Se enfocan en la prevención del crimen, construir confianza con los residentes y abordar preocupaciones locales.",
+    "whatTheyDo": "lo que hacen:",
+    "roles": {
+      "safety": "mantener la seguridad en tu vecindario",
+      "knowledge": "conocer el área y sus residentes",
+      "prevention": "prevenir el crimen mediante visibilidad",
+      "problems": "abordar problemas y preocupaciones locales"
+    },
+    "findYours": "encuentra tu Wijkagent:",
+    "enterPostal": "ingresa tu código postal para encontrar detalles de contacto",
+    "tipsForExpats": "💡 consejos para expatriados:",
+    "tips": {
+      "english": "la mayoría de los Wijkagents pueden comunicarse en inglés",
+      "email": "envíales correos electrónicos con preguntas del vecindario no urgentes",
+      "approachable": "son accesibles y están ahí para ayudarte a sentirte seguro",
+      "emergency": "para emergencias, siempre llama al 112 (no a tu Wijkagent)"
+    }
+  },
+  "environment": {
+    "title": "medio ambiente y riesgos",
+    "parksNearby": "parques cercanos (3km)",
+    "greenSpace": "calidad de espacios verdes",
+    "floodRisk": "riesgo de inundación",
+    "foundationRisk": "riesgo de cimientos",
+    "airQuality": "calidad del aire",
+    "viewOnMap": "ver en el mapa",
+    "dataVisible": "datos ambientales visibles en el mapa"
+  },
+  "livability": {
+    "title": "puntuación de calidad de vida",
+    "dataUnavailable": "datos no disponibles",
+    "breakdown": "desglose de puntuación",
+    "physical": "entorno físico",
+    "social": "cohesión social",
+    "safety": "seguridad",
+    "facilities": "instalaciones",
+    "housing": "calidad de vivienda"
+  },
+  "demographics": {
+    "title": "demografía",
+    "population": "población",
+    "households": "hogares",
+    "avgHouseholdSize": "tamaño promedio del hogar",
+    "persons": "personas",
+    "ageDistribution": "distribución de edad",
+    "ageRanges": {
+      "0-15": "0-15 años",
+      "15-25": "15-25 años",
+      "25-45": "25-45 años",
+      "45-65": "45-65 años",
+      "65+": "65+ años"
+    },
+    "housing": "vivienda",
+    "ownerOccupied": "propiedad ocupada",
+    "rental": "alquiler",
+    "avgWozValue": "valor WOZ promedio"
+  },
+  "travelTime": {
+    "title": "opcional: agregar dirección de trabajo",
+    "description": "calcule el tiempo de viaje desde esta propiedad hasta su lugar de trabajo",
+    "addCommute": "+ agregar cálculo de tiempo de viaje",
+    "cancel": "cancelar",
+    "workAddress": "dirección de trabajo:",
+    "estimatedCommute": "tiempo de viaje estimado:",
+    "byBike": "en bicicleta",
+    "byCar": "en coche",
+    "calculating": "calculando tiempos de viaje...",
+    "actualRoutes": "tiempos de ruta reales a través de OpenRouteService",
+    "changeAddress": "cambiar dirección de trabajo"
+  },
+  "footer": {
+    "dataSources": "fuentes de datos",
+    "sources": {
+      "demographics": "demografía:",
+      "crime": "criminalidad:",
+      "livability": "calidad de vida:",
+      "amenities": "servicios:",
+      "foundationRisk": "riesgo de cimientos:",
+      "airQuality": "calidad del aire:",
+      "travelTimes": "tiempos de viaje:"
+    }
+  }
+}
