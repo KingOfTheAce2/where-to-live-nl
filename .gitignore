@@ -43,6 +43,15 @@ data/raw/
 data/processed/
 data/tiles/
 
+# Scripts data directory (large raw data files)
+scripts/data/
+scripts/etl/data/
+
+# Large data files
+*.zip
+*.csv
+*buurten*.json
+
 # Temporary files
 *.tmp
 *.temp
