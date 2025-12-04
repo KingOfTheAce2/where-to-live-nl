@@ -37,11 +37,15 @@ OVERPASS_API_ALT = "https://lz4.overpass-api.de/api/interpreter"  # Alternative 
 # Amenity queries for Netherlands
 AMENITY_QUERIES = {
     "supermarkets": """
-    [out:json][timeout:90];
+    [out:json][timeout:120];
     area["ISO3166-1"="NL"][admin_level=2];
     (
       node["shop"="supermarket"](area);
       way["shop"="supermarket"](area);
+      node["shop"="convenience"]["brand"~"Albert Heijn|Jumbo|Lidl|Plus|Aldi|Dirk|Vomar|Hoogvliet|Coop|Spar|Deen|Boni|Jan Linders|Nettorama|Poiesz|DekaMarkt|Ekoplaza|Marqt",i](area);
+      way["shop"="convenience"]["brand"~"Albert Heijn|Jumbo|Lidl|Plus|Aldi|Dirk|Vomar|Hoogvliet|Coop|Spar|Deen|Boni|Jan Linders|Nettorama|Poiesz|DekaMarkt|Ekoplaza|Marqt",i](area);
+      node["shop"="grocery"](area);
+      way["shop"="grocery"](area);
     );
     out center;
     """,

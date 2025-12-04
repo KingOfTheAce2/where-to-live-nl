@@ -142,27 +142,6 @@ Government APIs → ETL Scripts → Processed Data → Cloudflare R2 → CDN →
 
 ---
 
-## 💰 Hosting Costs
-
-### Current Architecture (Near-Free)
-
-| Service | Tier | Cost |
-|---------|------|------|
-| Vercel (Frontend) | Free | $0 |
-| Cloudflare Workers | Free (100k req/day) | $0 |
-| Cloudflare R2 | 7 GB storage | ~$0.10/month |
-| PlanetScale | Free (5 GB) | $0 |
-| Domain | Annual | ~$10/year |
-| **Total** | | **~$1-2/month** |
-
-### Scaling Thresholds
-
-- **0-10k users/month**: Completely free ✅
-- **10k-100k users/month**: ~$1-5/month
-- **100k+ users/month**: ~$20-50/month (upgrade to professional tier)
-
----
-
 ## 🚀 Getting Started
 
 ### Quick Start (10 Minutes)
@@ -193,26 +172,30 @@ python -m transform.bag_to_parquet
 
 ---
 
-### Frontend Setup (Coming Soon)
+### Frontend Setup
 
 ```bash
 # Prerequisites
 node >= 18.x
 npm >= 9.x
 git
+python >= 3.9 (for backend)
 
 # Clone the repository
 git clone https://github.com/yourusername/where-to-live-nl.git
 cd where-to-live-nl
 
-# Install dependencies
+# Start the backend API
+cd backend
+pip install -r requirements.txt
+python api_server.py
+# Backend runs on http://localhost:8000
+
+# In another terminal, start the frontend
+cd frontend
 npm install
-
-# Set up environment variables
-cp .env.example .env.local
-
-# Start development server
 npm run dev
+# Frontend runs on http://localhost:3000
 ```
 
 Visit `http://localhost:3000`
@@ -257,27 +240,38 @@ where-to-live-nl/
 
 ## 🛠️ Development Roadmap
 
-### Phase 1: MVP (Current)
-- [x] Data ingestion pipeline
-- [x] Basic map interface
-- [x] Travel time calculator
-- [x] Livability scores display
-- [ ] Property search by address
-- [ ] Neighborhood comparison
+### Phase 1: MVP ✅ Complete
+- [x] Data ingestion pipeline (ETL scripts for all data sources)
+- [x] Basic map interface with MapLibre GL JS + PDOK tiles
+- [x] Travel time calculator (OpenRouteService integration)
+- [x] Livability scores display (Leefbaarometer)
+- [x] School data integration (15,269 schools from DUO)
+- [x] Supermarket locations (6,049 stores)
+- [x] Flood risk overlay
+- [x] Crime statistics overlay
+- [x] Address autocomplete with PDOK Locatieserver
+- [x] Neighborhood comparison panel
+- [x] Air quality overlay (NO2, PM10, PM2.5)
+- [x] Healthcare facilities map
+- [x] Foundation risk database
+- [x] Train stations layer
+- [x] Playgrounds layer
+- [x] Multi-language support (EN/NL)
+- [x] Property filters (price, type, year)
 
-### Phase 2: Enhanced Features
+### Phase 2: Enhanced Features (In Progress)
+- [x] WWS Calculator (rental points system)
 - [ ] User accounts (save searches)
-- [ ] Email alerts for new properties
-- [ ] Mobile app (React Native)
-- [ ] Multi-language support (EN/NL)
-- [ ] Foundation risk database (crowdsourced)
+- [ ] Neighborhood boundary highlighting
+- [ ] Export comparison as PDF
 
 ### Phase 3: Premium Features
 - [ ] Kadaster integration (paid API)
 - [ ] Historical price trends
 - [ ] Predictive pricing model
 - [ ] Erfpacht calculator
-- [ ] Community forum
+
+See **[ROADMAP.md](ROADMAP.md)** for detailed development plan and **[docs/PRICING.md](docs/PRICING.md)** for hosting costs.
 
 ---
 
@@ -395,4 +389,4 @@ The underlying public data sources remain under their original open licenses.
 
 **Built for navigating the Dutch housing market**
 
-*Last updated: November 2025*
+*Last updated: December 2025*

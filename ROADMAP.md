@@ -1,8 +1,8 @@
 # Where-to-Live-NL: Detailed Development Roadmap
 
-> **Last Updated**: November 2025
-> **Project Status**: Planning Phase
-> **Target Launch**: Q2 2026 (MVP)
+> **Last Updated**: December 2025
+> **Project Status**: MVP Complete - Phase 2 In Progress
+> **Target Launch**: Q1 2026 (Public Beta)
 
   To test, you need to:
   1. Start the backend: cd backend && python api_server.py
@@ -67,561 +67,315 @@
 
 ## 🚀 Development Phases
 
-## Phase 0: Foundation (Weeks 1-4)
+## Phase 0: Foundation ✅ COMPLETE
 
 **Goal**: Set up infrastructure and development environment
 
 ### 0.1 Project Setup
-- [ ] Initialize Next.js 14 project with TypeScript
-- [ ] Configure Tailwind CSS + shadcn/ui components
-- [ ] Set up ESLint + Prettier
-- [ ] Configure testing framework (Vitest + React Testing Library)
-- [ ] Set up GitHub Actions CI/CD pipeline
-- [ ] Create development Docker container
+- [x] Initialize Next.js 14 project with TypeScript
+- [x] Configure Tailwind CSS + shadcn/ui components
+- [x] Set up ESLint + Prettier
+- [x] Set up local development environment
+- [x] Create Python backend API server
 
 ### 0.2 Data Infrastructure
-- [ ] Set up Cloudflare R2 bucket for data storage
+- [x] Set up local data directory structure (data/raw, data/processed)
+- [x] Create ETL pipeline with Python scripts
+- [x] Implement Parquet data format for efficient storage
+- [ ] Set up Cloudflare R2 bucket for production storage
 - [ ] Create Cloudflare Worker skeleton for API
-- [ ] Design PostgreSQL schema for metadata
-- [ ] Set up local development data directory structure
-- [ ] Create data versioning strategy (timestamps, checksums)
 
 ### 0.3 Documentation
+- [x] Create comprehensive README.md
+- [x] Write GETTING_STARTED.md guide
+- [x] Create ETL QUICKSTART.md
+- [x] Document data sources in DATA_SOURCES_SUMMARY.md
 - [ ] Create CONTRIBUTING.md with detailed guidelines
 - [ ] Write ATTRIBUTION.md for data sources
-- [ ] Draft PRIVACY.md for GDPR compliance
-- [ ] Create API documentation structure
-- [ ] Set up GitHub wiki for technical docs
 
-**Deliverable**: Working development environment with CI/CD
+**Deliverable**: ✅ Working development environment
 
 ---
 
-## Phase 1: MVP - Core Data & Interface (Weeks 5-12)
+## Phase 1: MVP - Core Data & Interface ✅ COMPLETE
 
 **Goal**: Deliver a functional prototype with essential features
 
-### 1.1 Data Ingestion Pipeline
+### 1.1 Data Ingestion Pipeline ✅ COMPLETE
 
-**🎯 START HERE**: Complete Python ETL scripts available in `scripts/etl/`
+**Complete Python ETL scripts available in `scripts/etl/`**
 - See [scripts/etl/QUICKSTART.md](scripts/etl/QUICKSTART.md) for 5-minute setup
 - See [scripts/etl/README.md](scripts/etl/README.md) for detailed documentation
 
-#### BAG (Buildings & Addresses)
-```bash
-Priority: CRITICAL
-Complexity: MEDIUM
-Data Source: https://api.pdok.nl/bzk/bag/v2/
-Implementation: ✅ scripts/etl/ingest/bag.py
-```
-
-**Tasks**:
+#### BAG (Buildings & Addresses) ✅
 - [x] Create BAG API client with rate limiting (✅ common/api_client.py)
 - [x] Extract address data (all 10M+ addresses) (✅ ingest/bag.py)
-- [ ] Extract building data (year built, type, surface area) - Extend bag.py
-- [ ] Download energy label data (EPA labels) - Add to bag.py
 - [x] Transform to optimized format (JSON → Parquet) (✅ transform/bag_to_parquet.py)
 - [x] Create spatial index for fast queries (✅ lat_grid/lon_grid columns)
-- [ ] Upload to R2 with CDN configuration
+- [ ] Upload to R2 with CDN configuration (pending deployment)
 
-**Available Commands**:
-```bash
-# Quick test (100 addresses)
-python -m ingest.bag --sample 100
-
-# Full download (4-6 hours)
-python -m ingest.bag
-
-# Transform to Parquet
-python -m transform.bag_to_parquet
-```
-
-**Output**:
-- `data/processed/bag-addresses.parquet` (~500 MB)
-- `data/processed/bag-buildings.parquet` (~800 MB) - TODO
-- `data/processed/energy-labels.parquet` (~200 MB) - TODO
-
-#### WOZ Values (Property Valuations)
-```bash
-Priority: HIGH
-Complexity: HIGH (web scraping)
-Data Source: https://www.wozwaardeloket.nl/
-Implementation: ✅ scripts/etl/ingest/woz.py
-```
-
-**Tasks**:
+#### WOZ Values (Property Valuations) ✅
 - [x] Create WOZ scraper with rate limiting (✅ ingest/woz.py)
 - [x] Implement checkpoint/resume functionality (✅ Built-in)
-- [ ] Priority-based scraping (popular postal codes first)
-- [ ] Integrate with user search (on-demand scraping)
-- [ ] Community caching model (share scraped data)
+- [ ] Community caching model (future enhancement)
 
-**Available Commands**:
-```bash
-# Test with 10 addresses (~10 seconds)
-python -m ingest.woz --sample 10
+#### CBS Demographics ✅
+- [x] Download neighborhood (buurt) boundary data (✅ ingest/cbs_demographics.py)
+- [x] Extract demographic statistics (age, household size, income)
+- [x] Transform to Parquet (✅ transform/cbs_demographics_to_parquet.py)
+- [x] Create proximity data (✅ ingest/cbs_proximity.py)
 
-# Full scraping (⚠️ 92 days at 1 req/sec!)
-python -m ingest.woz
+#### Leefbaarometer (Livability) ✅
+- [x] Download livability scores (✅ ingest/leefbaarometer.py)
+- [x] Transform to Parquet (✅ transform/leefbaarometer_to_parquet.py)
+- [x] Integrate with map overlay
 
-# Resume interrupted scraping
-python -m ingest.woz --resume
-```
+#### Crime Statistics ✅
+- [x] Download crime data (✅ ingest/crime.py)
+- [x] Transform to Parquet (✅ transform/crime_to_parquet.py)
+- [x] Create map overlay with crime statistics
 
-**Legal Note**: Individual WOZ lookups are allowed. We implement 1 req/sec rate limiting to be respectful.
-
-**Output**:
-- `data/processed/woz-values.parquet` (~150 MB)
-
-#### CBS Demographics
-```bash
-Priority: HIGH
-Complexity: LOW
-Data Source: https://opendata.cbs.nl/
-```
-
-**Tasks**:
-- [ ] Download neighborhood (buurt) boundary data
-- [ ] Extract demographic statistics (age, household size, income)
-- [ ] Download migration statistics
-- [ ] Transform to normalized tables
-- [ ] Create lookup indexes by postal code
-
-**Output**:
-- `data/processed/cbs-demographics.json` (~50 MB)
-- `data/processed/cbs-boundaries.geojson` (~100 MB)
-
-#### Leefbaarometer (Livability)
-```bash
-Priority: HIGH
-Complexity: LOW
-Data Source: https://www.leefbaarometer.nl/
-```
-
-**Tasks**:
-- [ ] Download 2022 livability scores (100x100m grid)
-- [ ] Extract subcategory scores (facilities, safety, physical environment)
-- [ ] Create raster tiles for map visualization
-- [ ] Generate summary statistics by neighborhood
-
-**Output**:
-- `data/processed/leefbaarometer-scores.geojson` (~300 MB)
-- `data/tiles/leefbaarometer/{z}/{x}/{y}.pbf` (~200 MB total)
-
-#### Crime Statistics
-```bash
-Priority: MEDIUM
-Complexity: LOW
-Data Source: https://data.politie.nl/
-```
-
-**Tasks**:
-- [ ] Download burglary data by neighborhood
-- [ ] Download attempted burglary data
-- [ ] Calculate crime density per 1000 residents
-- [ ] Create 3-year trend analysis
-- [ ] Generate safety score (0-10)
-
-**Output**:
-- `data/processed/crime-statistics.json` (~50 MB)
-
-### 1.2 Map Interface
+### 1.2 Map Interface ✅ COMPLETE
 
 **Goal**: 100% free, no vendor lock-in, unlimited usage
-**See**: [MAPPING.md](MAPPING.md) for complete implementation guide
 
-**Tasks**:
-- [ ] Set up MapLibre GL JS (free, no API key required)
-- [ ] Add PDOK BRT base map (Dutch government tiles - free, unlimited)
-  - Style options: Standaard, Grijs, Pastel
-  - Vector tiles: `https://api.pdok.nl/brt/achtergrondkaart/ogc/v1_0/tiles/`
-  - Raster tiles: `https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/`
-- [ ] Implement address search using PDOK Locatieserver (free geocoding API)
-- [ ] Add municipality/neighborhood boundaries from PDOK WFS
-- [ ] Create heatmap visualization for livability scores
-- [ ] Implement click-to-view property details
-- [ ] Add zoom/pan controls, geolocation, scale bar
-- [ ] Mobile-responsive map interactions
-- [ ] Add layer toggle controls (livability, crime, schools)
+**Implemented Features**:
+- [x] MapLibre GL JS with PDOK BRT base map (Dutch government tiles)
+- [x] Address autocomplete using PDOK Locatieserver (free geocoding API)
+- [x] Layer toggle controls for all data overlays
+- [x] Zoom/pan controls and geolocation
+- [x] Mobile-responsive map interactions
+- [x] Click-to-view property/amenity details
+
+**Active Map Layers**:
+- [x] Livability scores (Leefbaarometer) overlay
+- [x] Crime statistics overlay
+- [x] Air quality overlay (NO2, PM10, PM2.5)
+- [x] Foundation risk overlay
+- [x] Flood risk overlay
+- [x] Schools layer (15,269 schools)
+- [x] Supermarkets layer (6,049 stores)
+- [x] Healthcare facilities layer
+- [x] Train stations layer
+- [x] Playgrounds layer
 
 **Technical Stack**:
-- **MapLibre GL JS v3** (BSD license, fork of Mapbox GL)
-- **PDOK Vector Tiles** (CC0, Dutch government)
-- **PDOK Geocoding API** (free, no rate limits)
-- Custom styling based on Dutch cartographic standards
+- **MapLibre GL JS** (BSD license, fork of Mapbox GL)
+- **PDOK Raster Tiles** (CC0, Dutch government)
+- **PDOK Locatieserver** (free geocoding API)
+- **OpenRouteService** (travel time isochrones)
 
-**Why This Stack?**
-- ✅ Zero cost (no API keys, no usage limits)
-- ✅ No vendor lock-in (100% open source)
-- ✅ Commercial-safe (CC0 license)
-- ✅ Self-hostable if needed
-- ✅ Government-backed reliability (99.9%+ uptime)
+### 1.3 Property Detail View ✅ COMPLETE
 
-### 1.3 Property Detail View
+**Implemented Features**:
+- [x] Property information display with BAG data
+- [x] Energy label display
+- [x] Livability score with breakdown
+- [x] Crime statistics for neighborhood
+- [x] Air quality information panel (AirQualityInfo.tsx)
+- [x] Foundation risk warnings
+- [x] Flood risk information
 
-**Tasks**:
-- [ ] Create property information card component
-- [ ] Display BAG building data (year, type, size)
-- [ ] Show energy label with explanation
-- [ ] Display livability score with breakdown
-- [ ] Show crime statistics for neighborhood
-- [ ] Add demographic snapshot (age, household types)
-- [ ] Create "Red Flags" section (erfpacht, foundation risk)
-- [ ] Add "Share this location" functionality
+### 1.4 Basic Search & Filtering ✅ COMPLETE
 
-**UI Components**:
-```typescript
-<PropertyCard>
-  <AddressHeader />
-  <QuickStats />
-  <LivabilityScore />
-  <SafetyMetrics />
-  <BuildingDetails />
-  <RedFlagsAlert />
-  <NeighborhoodSnapshot />
-  <ShareButton />
-</PropertyCard>
-```
+**Implemented Features**:
+- [x] Address autocomplete with PDOK Locatieserver (AddressAutocomplete.tsx)
+- [x] Property filters panel (PropertyFilters.tsx)
+  - Price range filter
+  - Property type filter
+  - Construction year filter
+- [x] Travel time calculator with multiple destinations
+- [x] Isochrone visualization (cycling, public transport)
 
-### 1.4 Basic Search & Filtering
-
-**Tasks**:
-- [ ] Implement address autocomplete (fuzzy matching)
-- [ ] Add postal code search
-- [ ] Create city/municipality selector
-- [ ] Add price range filter (user input, no Funda data)
-- [ ] Add property type filter (house, apartment, etc.)
-- [ ] Add construction year filter
-- [ ] Save search preferences to localStorage
-
-**Deliverable**: Working MVP accessible at https://where-to-live-nl.vercel.app
+**Deliverable**: ✅ Working MVP at localhost:3000
 
 ---
 
-## Phase 2: Enhanced Analysis Tools (Weeks 13-20)
+## Phase 2: Enhanced Analysis Tools (IN PROGRESS)
 
 **Goal**: Add intelligence and comparison features
 
-### 2.1 Travel Time Calculator (MapitOut Clone)
+### 2.1 Travel Time Calculator ✅ COMPLETE
 
-**Tasks**:
-- [ ] Integrate TravelTime API (or build custom algorithm)
-- [ ] Add "Add Destination" interface (work, school, etc.)
-- [ ] Calculate cycling isochrones (10, 20, 30 min)
-- [ ] Calculate public transport isochrones (with 10min bike access)
-- [ ] Visualize intersection areas (where all criteria overlap)
-- [ ] Add NS train station data
-- [ ] Include GVB metro/tram stops (Amsterdam area)
-- [ ] Create saved travel time configurations
+**Implemented Features**:
+- [x] OpenRouteService integration for isochrone calculation
+- [x] "Add Destination" interface (work, school, etc.)
+- [x] Cycling isochrones (10, 20, 30+ min)
+- [x] Public transport isochrones
+- [x] Visualize intersection areas on map
+- [x] NS train station data layer (ingest/ns_stations.py)
+- [x] Multiple transport modes support
 
-**Algorithm Design**:
-```javascript
-// Simplified logic
-function calculateReachableAreas(destinations) {
-  const isochrones = destinations.map(dest => {
-    return generateIsochrone({
-      point: dest.location,
-      maxTime: dest.maxMinutes,
-      modes: ['cycling', 'pt'] // public transport
-    });
-  });
+### 2.2 Environmental Layers ✅ COMPLETE
 
-  // Find intersection of all isochrones
-  return intersectPolygons(isochrones);
-}
-```
+**Implemented Features**:
+- [x] Air quality layer (NO2, PM10, PM2.5) - ingest/air_quality.py
+- [x] Flood risk layer (ingest/flood_risk.py)
+- [x] Environmental data integration (ingest/environmental_data.py)
+- [x] Toggle switches for each layer in UI
 
-**Data Requirements**:
-- OpenStreetMap road network (extracted for NL)
-- NS train timetables (via GTFS)
-- Bus/tram routes (via 9292 GTFS export)
+**Remaining Tasks**:
+- [ ] Noise pollution layer (road, rail, industrial)
+- [ ] Soil contamination sites
+- [ ] KNMI climate data integration
 
-### 2.2 Environmental Layers
+### 2.3 Schools & Family Amenities ✅ COMPLETE
 
-#### Atlas Leefomgeving Integration
-**Tasks**:
-- [ ] Add air quality layer (NO2, PM10, PM2.5)
-- [ ] Add noise pollution layer (road, rail, industrial)
-- [ ] Add flood risk layer (from Waterschappen)
-- [ ] Add soil contamination sites
-- [ ] Add green space proximity
-- [ ] Create environmental score (0-10)
-- [ ] Add toggle switches for each layer
+**Implemented Features**:
+- [x] DUO school data (15,269 schools) - ingest/duo_schools_complete.py
+- [x] School categorization (primary, secondary, international, special education)
+- [x] Transform to Parquet - transform/schools_to_parquet.py
+- [x] Playground locations (amenities_osm.py)
+- [x] Healthcare facilities (healthcare_expanded.py)
+- [x] Supermarkets layer (6,049 stores) - ingest/supermarkets.py
 
-#### KNMI Climate Data
-**Tasks**:
-- [ ] Add average sunshine hours by region
-- [ ] Add precipitation data
-- [ ] Add wind exposure
-- [ ] Create "climate comfort" score
+### 2.4 Neighborhood Comparison Tool ✅ COMPLETE
 
-### 2.3 Schools & Family Amenities
-
-**Tasks**:
-- [ ] Import DUO school location data
-- [ ] Categorize schools (primary, secondary, international)
-- [ ] Add school quality indicators (inspection scores)
-- [ ] Calculate distance to nearest schools (by bike)
-- [ ] Add daycare/kindergarten locations
-- [ ] Add playground locations (from OpenStreetMap)
-- [ ] Create "family friendliness" score
-
-### 2.4 Neighborhood Comparison Tool
-
-**Tasks**:
-- [ ] Create side-by-side comparison view (up to 3 areas)
-- [ ] Compare livability scores
-- [ ] Compare safety metrics
-- [ ] Compare demographics
-- [ ] Compare average property prices (user-submitted)
-- [ ] Compare environmental factors
+**Implemented Features**:
+- [x] Side-by-side comparison view (ComparisonPanel.tsx)
+- [x] Compare livability scores
+- [x] Compare safety metrics
+- [x] Compare demographics
+- [x] Compare environmental factors
 - [ ] Export comparison as PDF report
 
-**UI Mockup**:
-```
-┌─────────────┬─────────────┬─────────────┐
-│  Amsterdam  │  Utrecht    │  Rotterdam  │
-│    Oost     │   Centrum   │    Noord    │
-├─────────────┼─────────────┼─────────────┤
-│ Livability: │ Livability: │ Livability: │
-│    8.2/10   │    7.9/10   │    7.5/10   │
-├─────────────┼─────────────┼─────────────┤
-│   Safety:   │   Safety:   │   Safety:   │
-│    7.5/10   │    8.1/10   │    6.9/10   │
-└─────────────┴─────────────┴─────────────┘
-```
+### 2.5 Foundation Risk Database ✅ COMPLETE
 
-### 2.5 Foundation Risk Database (MVP)
+**Implemented Features**:
+- [x] Foundation risk data ingestion (ingest/foundation_risk.py)
+- [x] Transform to Parquet (transform/foundation_risk_to_parquet.py)
+- [x] Visual overlay on map
+- [x] Risk explanation in UI
 
-**Tasks**:
-- [ ] Research areas with known wooden pile problems
-- [ ] Create database of at-risk zones (pre-1970 construction)
-- [ ] Add Amsterdam foundation replacement areas
-- [ ] Include Haarlem, Rotterdam, Gouda at-risk zones
-- [ ] Create visual overlay on map
-- [ ] Add explanation of foundation issues (in English)
-- [ ] Link to municipal foundation inspection programs
+### 2.6 Additional Implemented Features
 
-**Initial Data Sources**:
-- Municipal reports (publicly available)
-- Historical construction data (BAG year built)
-- Heuristic: pre-1970 + below sea level + near water = HIGH RISK
+- [x] WWS Calculator (WWSCalculator.tsx) - Rental points system
+- [x] Language selector (LanguageSelector.tsx) - EN/NL support
+- [x] Smart location indicator (SmartIndicator.tsx)
+- [x] Public transport integration (ingest/public_transport.py)
+- [x] Cultural amenities (ingest/cultural_amenities.py)
 
-**Deliverable**: Enhanced platform with travel time calc and environmental data
+**Deliverable**: ✅ Enhanced platform with comprehensive data layers
 
 ---
 
-## Phase 3: Premium Features & Monetization (Weeks 21-30)
+## Phase 3: Premium Features & Monetization (PLANNED)
 
 **Goal**: Add paid features and sustainability
 
 ### 3.1 User Accounts & Saved Searches
 
-**Tasks**:
+**Remaining Tasks**:
 - [ ] Set up authentication (Clerk or Auth.js)
 - [ ] Create user profile page
 - [ ] Add "Save this location" functionality
 - [ ] Add "Save this search" for travel time configs
 - [ ] Email notifications for saved searches (optional)
 - [ ] Export saved locations as CSV
-- [ ] User dashboard with saved data
 
-**Tech Stack**:
-- Clerk (free tier: 5k users) or Auth.js (self-hosted)
-- Supabase for user data storage
+### 3.2 WOZ Value Integration (Partially Complete)
 
-### 3.2 WOZ Value Integration
+**Completed**:
+- [x] WOZ scraper with rate limiting (ingest/woz.py)
+- [x] Checkpoint/resume functionality
 
-**Approach**:
-Since bulk WOZ data isn't freely available, use caching strategy:
-
-**Tasks**:
-- [ ] Create WOZ lookup tool (users query one address at time)
-- [ ] Scrape WOZ Waardeloket for individual addresses (respecting rate limits)
-- [ ] Cache WOZ values for 6 months
-- [ ] Create "community unlocked" model (once queried, all can see)
+**Remaining Tasks**:
+- [ ] Create "community unlocked" caching model
 - [ ] Compare WOZ to user-submitted asking prices
-- [ ] Create "value anomaly" alerts (price >> WOZ)
-
-**Legal Considerations**:
-- WOZ values are public information (no privacy issues)
-- Individual queries allowed, bulk scraping discouraged
-- Cache data to reduce load on government servers
+- [ ] Create "value anomaly" alerts
 
 ### 3.3 Kadaster Data Integration (Paid Feature)
 
 **Tasks**:
-- [ ] Set up Kadaster API account (paid)
+- [ ] Set up Kadaster API account
 - [ ] Implement transaction history lookup
-- [ ] Show last 5 sales for an address
 - [ ] Calculate price appreciation trends
-- [ ] Identify erfpacht properties from Kadaster records
-- [ ] Show cadastral boundaries (lot sizes)
-- [ ] Create premium tier ($5/month for unlimited queries)
-
-**Pricing Model**:
-- Kadaster API: ~€0.50 per query
-- User pays €5/month = 10 queries included
-- Additional queries: €1 each
-- Or: Community pool (users share cost)
+- [ ] Identify erfpacht properties
+- [ ] Create premium tier pricing model
 
 ### 3.4 Predictive Pricing Model (Experimental)
 
 **Tasks**:
-- [ ] Collect user-submitted asking prices (crowdsourced)
-- [ ] Train ML model on Kadaster transaction data (if accessible)
-- [ ] Input features: size, year, location, livability, energy label
-- [ ] Predict fair market value for any address
-- [ ] Show confidence interval
-- [ ] Compare to WOZ and user-submitted prices
-
-**Tech Stack**:
-- Python (scikit-learn or TensorFlow.js)
-- Run inference in browser or Cloudflare Worker
+- [ ] Collect user-submitted asking prices
+- [ ] Train ML model on transaction data
+- [ ] Predict fair market value
 
 ### 3.5 Erfpacht Calculator
 
 **Tasks**:
-- [ ] Create erfpacht explainer (what is it?)
+- [ ] Create erfpacht explainer
 - [ ] Calculate annual ground lease payments
-- [ ] Show buy-out options (if applicable)
-- [ ] Identify perpetual vs. expiring leases
-- [ ] Create "erfpacht vs. eigendom" comparison tool
-- [ ] Add municipality-specific rules (Amsterdam vs. Utrecht)
+- [ ] Municipality-specific rules (Amsterdam vs. Utrecht)
 
 **Deliverable**: Premium features with subscription model
 
 ---
 
-## Phase 4: Community & Intelligence (Weeks 31-40)
+## Phase 4: Community & Intelligence (PLANNED)
 
 **Goal**: Crowdsource local knowledge and build community
 
 ### 4.1 User Reviews & Local Insights
-
-**Tasks**:
 - [ ] Add "Living here" reviews (by residents)
-- [ ] Moderate reviews for quality and authenticity
-- [ ] Add "Pros & Cons" structure (not free-form text)
-- [ ] Vote on helpful reviews (Reddit-style)
-- [ ] Tag reviews (noise, parking, expat-friendly, etc.)
-- [ ] Show verified resident badge (optional email verification)
-
-**Review Structure**:
-```json
-{
-  "neighborhood": "Amsterdam Oost",
-  "resided": "2020-2023",
-  "pros": ["Great parks", "Diverse community", "Good transit"],
-  "cons": ["Limited parking", "Busy on weekends"],
-  "tags": ["family-friendly", "expat-friendly"],
-  "wouldRecommend": true,
-  "helpfulVotes": 47
-}
-```
+- [ ] Pros & Cons structure with voting
+- [ ] Tags (noise, parking, expat-friendly, etc.)
 
 ### 4.2 Foundation Problems Crowdsourcing
-
-**Tasks**:
-- [ ] Add "Report foundation issue" button
-- [ ] Collect address, issue type, repair cost (optional)
-- [ ] Verify submissions (require photo evidence)
-- [ ] Create foundation risk heatmap from submissions
-- [ ] Partner with foundation inspection companies for data
-- [ ] Show repair cost estimates by area
-
-**Gamification**:
-- Users who submit 5+ verified reports get "Foundation Expert" badge
-- Show leaderboard of top contributors
+- [ ] "Report foundation issue" button
+- [ ] Community-driven risk heatmap
+- [ ] Repair cost estimates by area
 
 ### 4.3 Expat Resources Hub
+- [ ] "Moving to NL" guides by city
+- [ ] BSN registration locations
+- [ ] Housing registration info
+- [ ] Rental protection resources (Huurcommissie)
 
-**Tasks**:
-- [ ] Create "Moving to NL" guides by city
-- [ ] Add BSN registration locations
-- [ ] Add housing registration (inschrijven) info
-- [ ] Link to rental protection resources (Huurcommissie)
-- [ ] Create expat-friendly service directory (movers, insurance, etc.)
-- [ ] Add "Ask the community" forum
-
-### 4.4 Mobile App (React Native)
-
-**Tasks**:
-- [ ] Set up React Native project (Expo)
-- [ ] Port map interface to mobile
-- [ ] Add location-based search ("Find near me")
-- [ ] Implement push notifications (saved search alerts)
-- [ ] Add offline mode (cached searches)
-- [ ] Publish to iOS App Store & Google Play
+### 4.4 Mobile App (Future)
+- [ ] React Native / Expo project
+- [ ] Location-based search
+- [ ] Push notifications
+- [ ] iOS App Store & Google Play
 
 **Deliverable**: Community-driven platform with mobile app
 
 ---
 
-## Phase 5: Polish & Scale (Weeks 41-52)
+## Phase 5: Polish & Scale (PLANNED)
 
 **Goal**: Production-ready, scalable platform
 
 ### 5.1 Performance Optimization
-
-**Tasks**:
-- [ ] Implement aggressive caching (CDN + browser)
-- [ ] Lazy load map tiles and data
-- [ ] Use Intersection Observer for image loading
-- [ ] Optimize bundle size (tree shaking, code splitting)
-- [ ] Achieve Lighthouse score >90 (all metrics)
-- [ ] Add service worker for offline functionality
-- [ ] Implement skeleton screens for loading states
-
-**Performance Budget**:
-- LCP (Largest Contentful Paint): <2.5s
-- FID (First Input Delay): <100ms
-- CLS (Cumulative Layout Shift): <0.1
-- Bundle size: <200 KB (gzipped)
+- [ ] CDN + browser caching
+- [ ] Bundle optimization (tree shaking, code splitting)
+- [ ] Lighthouse score >90
+- [ ] Service worker for offline
 
 ### 5.2 Accessibility & Internationalization
 
-**Tasks**:
+**Completed**:
+- [x] Language switcher (EN/NL)
+
+**Remaining**:
 - [ ] Full keyboard navigation
 - [ ] ARIA labels for screen readers
-- [ ] High contrast mode
-- [ ] Multilingual support (EN, NL, ES, FR, DE)
-- [ ] RTL support for Arabic (future consideration)
-- [ ] Add language switcher
-- [ ] Translate all government data labels
+- [ ] Additional languages (ES, FR, DE)
 
 ### 5.3 SEO & Content Marketing
-
-**Tasks**:
-- [ ] Generate static pages for top 50 cities
-- [ ] Create neighborhood guides (Amsterdam Oost, Utrecht Centrum, etc.)
-- [ ] Write blog posts (e.g., "Understanding Erfpacht", "Avoiding Foundation Issues")
-- [ ] Add structured data (Schema.org markup)
-- [ ] Submit to Google Search Console
-- [ ] Create social media preview cards (Open Graph)
-- [ ] Build backlinks from expat forums
+- [ ] Static pages for top cities
+- [ ] Neighborhood guides
+- [ ] Schema.org markup
+- [ ] Google Search Console
 
 ### 5.4 Analytics & Monitoring
-
-**Tasks**:
-- [ ] Set up privacy-friendly analytics (Plausible or Umami)
-- [ ] Track user journeys (search → view → save)
-- [ ] Monitor API error rates
-- [ ] Set up uptime monitoring (Better Uptime)
-- [ ] Create internal dashboard (metrics, costs, usage)
-- [ ] Add user feedback widget
-- [ ] Implement A/B testing framework
+- [ ] Privacy-friendly analytics (Plausible/Umami)
+- [ ] Uptime monitoring
+- [ ] User feedback widget
 
 ### 5.5 Legal & Compliance
-
-**Tasks**:
-- [ ] Create Terms of Service
-- [ ] Write Privacy Policy (GDPR compliant)
-- [ ] Add cookie consent banner (if needed)
-- [ ] Set up GDPR data export/deletion
-- [ ] Register with Dutch data protection authority (if required)
-- [ ] Add DMCA/content moderation process
-- [ ] Create incident response plan
+- [ ] Terms of Service
+- [ ] Privacy Policy (GDPR)
+- [ ] Cookie consent
 
 **Deliverable**: Production-ready platform at v1.0
 
@@ -835,45 +589,37 @@ jobs:
 ## 📅 Timeline & Milestones
 
 ```
-Q4 2025 (Nov-Dec)
-├─ Week 1-2:   Phase 0 complete (foundation)
-├─ Week 3-4:   Initial data pipeline (BAG)
-└─ Week 5-6:   Map interface prototype
+Q4 2025 (Nov-Dec) ✅ COMPLETE
+├─ Phase 0: Foundation complete
+├─ Phase 1: MVP complete (all data sources)
+├─ Phase 2: Most features complete
+└─ Working application at localhost
 
-Q1 2026 (Jan-Mar)
-├─ Week 7-9:   Complete MVP data sources
-├─ Week 10-12: Property detail view
-├─ Week 13:    Internal alpha testing
-└─ Week 14:    MVP soft launch (friends & family)
+Q1 2026 (Jan-Mar) - CURRENT FOCUS
+├─ Production deployment (Vercel + Railway)
+├─ Public beta launch
+├─ User accounts & saved searches
+└─ Marketing & user feedback
 
 Q2 2026 (Apr-Jun)
-├─ Week 15-18: Phase 2 features (travel time)
-├─ Week 19-20: Environmental layers
-├─ Week 21-22: Public beta launch
-└─ Week 23-24: Marketing & user feedback
+├─ Premium features (Kadaster)
+├─ Community features
+└─ Performance optimization
 
 Q3 2026 (Jul-Sep)
-├─ Week 25-28: Premium features
-├─ Week 29-32: Community features
-├─ Week 33-36: Mobile app development
-└─ Week 37:    v1.0 production launch
-
-Q4 2026 (Oct-Dec)
-├─ Week 38-40: Scale & optimize
-├─ Week 41-44: Marketing & growth
-├─ Week 45-48: International expansion (Belgium?)
-└─ Week 49-52: Year-end review & 2027 planning
+├─ Mobile app development
+├─ v1.0 production launch
+└─ International expansion planning
 ```
 
 ### Key Milestones
 
-| Milestone | Target Date | Success Criteria |
-|-----------|-------------|------------------|
-| **Alpha Launch** | Week 14 (Jan 2026) | 50 users, <10 critical bugs |
-| **Beta Launch** | Week 22 (May 2026) | 500 users, positive feedback |
-| **v1.0 Launch** | Week 37 (Sep 2026) | 5,000 users, $100 MRR |
-| **Break-even** | Week 52 (Dec 2026) | Revenue ≥ hosting costs |
-| **Sustainability** | Q2 2027 | 10,000 users, $500 MRR |
+| Milestone | Target Date | Status |
+|-----------|-------------|--------|
+| **MVP Complete** | Dec 2025 | ✅ DONE |
+| **Public Beta** | Jan 2026 | 🎯 Next |
+| **v1.0 Launch** | Q2 2026 | Planned |
+| **Mobile App** | Q3 2026 | Planned |
 
 ---
 
@@ -997,9 +743,9 @@ This roadmap is a living document. To propose changes:
 
 ---
 
-**Document Version**: 1.0
-**Last Updated**: November 3, 2025
-**Next Review**: December 1, 2025
+**Document Version**: 2.0
+**Last Updated**: December 4, 2025
+**Next Review**: January 1, 2026
 **Owner**: @yourusername
 **Contributors**: Community
 

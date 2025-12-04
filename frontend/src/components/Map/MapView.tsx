@@ -37,10 +37,12 @@ export default function MapView({ destinations, showProperties = true, showSchoo
   const [showAirQualityOverlay, setShowAirQualityOverlay] = useState(false)
   const [showFoundationRiskOverlay, setShowFoundationRiskOverlay] = useState(false)
   const [showLeefbaarometer, setShowLeefbaarometer] = useState(false)
+  const [showFloodingRisk, setShowFloodingRisk] = useState(false)
   const [airQualityPollutant, setAirQualityPollutant] = useState<'NO2' | 'PM10' | 'PM25'>('NO2')
   const [crimeData, setCrimeData] = useState<any[]>([])
   const [airQualityData, setAirQualityData] = useState<any[]>([])
   const [foundationRiskData, setFoundationRiskData] = useState<any>(null)
+  const [floodingRiskData, setFloodingRiskData] = useState<any>(null)
 
   // Amenity layer toggles - enabled by default for direct visibility
   const [showHealthcare, setShowHealthcare] = useState(true)
@@ -1522,21 +1524,31 @@ export default function MapView({ destinations, showProperties = true, showSchoo
           }
         })
 
-        // Add circle layer (don't use insertBefore as target layer may not exist)
+        // Find the first symbol layer to insert before (ensures visibility above base map)
+        const layers = map.current.getStyle().layers
+        let firstSymbolId: string | undefined
+        for (const layer of layers) {
+          if (layer.type === 'symbol' && layer.id !== 'property-cluster-count') {
+            firstSymbolId = layer.id
+            break
+          }
+        }
+
+        // Add circle layer with proper z-index (above base map, below markers)
         map.current.addLayer({
           id: 'crime-circles',
           type: 'circle',
           source: 'crime-overlay',
           paint: {
-            'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 3, 12, 8, 16, 15],
+            'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 5, 12, 12, 16, 20],
             'circle-color': ['interpolate', ['linear'], ['get', 'crime_rate'], 0, '#dbeafe', 50, '#93c5fd', 100, '#3b82f6', 200, '#1e40af'],
-            'circle-opacity': 0.6,
-            'circle-stroke-width': 1,
+            'circle-opacity': 0.7,
+            'circle-stroke-width': 2,
             'circle-stroke-color': '#ffffff'
           }
-        })
+        }, firstSymbolId)
 
-        // Add text labels
+        // Add text labels (above circles)
         map.current.addLayer({
           id: 'crime-labels',
           type: 'symbol',
@@ -1544,14 +1556,14 @@ export default function MapView({ destinations, showProperties = true, showSchoo
           layout: {
             'text-field': ['get', 'area_name'],
             'text-font': ['Open Sans Regular'],
-            'text-size': 10,
+            'text-size': 11,
             'text-offset': [0, 2],
             'text-anchor': 'top'
           },
           paint: {
             'text-color': '#1e3a8a',
             'text-halo-color': '#ffffff',
-            'text-halo-width': 1.5
+            'text-halo-width': 2
           }
         })
 
@@ -1675,28 +1687,40 @@ export default function MapView({ destinations, showProperties = true, showSchoo
           data: foundationRiskData
         })
 
-        // Add fill layer
+        // Find a good insertion point (after base layers but before amenities)
+        const layers = map.current.getStyle().layers
+        let insertBeforeId: string | undefined
+        for (const layer of layers) {
+          if (layer.id.startsWith('healthcare-') || layer.id.startsWith('supermarkets') ||
+              layer.id.startsWith('playgrounds') || layer.id.startsWith('train-stations') ||
+              layer.id.startsWith('primary-') || layer.id.startsWith('secondary-')) {
+            insertBeforeId = layer.id
+            break
+          }
+        }
+
+        // Add fill layer with higher opacity for visibility
         map.current.addLayer({
           id: 'foundation-risk-fill',
           type: 'fill',
           source: 'foundation-risk-overlay',
           paint: {
             'fill-color': '#f97316',
-            'fill-opacity': 0.4
+            'fill-opacity': 0.5
           }
-        })
+        }, insertBeforeId)
 
-        // Add outline layer
+        // Add outline layer with higher visibility
         map.current.addLayer({
           id: 'foundation-risk-outline',
           type: 'line',
           source: 'foundation-risk-overlay',
           paint: {
-            'line-color': '#ea580c',
-            'line-width': 2,
-            'line-opacity': 0.8
+            'line-color': '#c2410c',
+            'line-width': 3,
+            'line-opacity': 0.9
           }
-        })
+        }, insertBeforeId)
 
         // Add event handlers
         const foundationClickHandler = (e: maplibregl.MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
@@ -1725,6 +1749,139 @@ export default function MapView({ destinations, showProperties = true, showSchoo
       }
     }
   }, [mapLoaded, showFoundationRiskOverlay, foundationRiskData])
+
+  // Load flooding risk overlay data
+  useEffect(() => {
+    if (!showFloodingRisk) return
+
+    console.log('🔍 Fetching flooding risk overlay data...')
+    fetch(`${BACKEND_URL}/api/map-overlays/flooding-risk`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          console.log('✅ Flooding risk data loaded:', data.data?.regions ? Object.keys(data.data.regions).length : 0, 'regions')
+          setFloodingRiskData(data.data)
+        } else {
+          console.error('❌ Flooding risk data fetch failed:', data)
+        }
+      })
+      .catch(err => console.error('❌ Error loading flooding risk data:', err))
+  }, [showFloodingRisk])
+
+  // Add flooding risk overlay to map
+  useEffect(() => {
+    if (!map.current || !mapLoaded) return
+
+    if (showFloodingRisk && floodingRiskData) {
+      console.log('🗺️ Adding flooding risk overlay to map')
+
+      // Add source and layers if they don't exist
+      if (!map.current.getSource('flooding-risk-overlay')) {
+        // Use GeoJSON data directly from API (now returns proper FeatureCollection)
+        const geojsonData = floodingRiskData.features ? floodingRiskData : {
+          type: 'FeatureCollection',
+          features: floodingRiskData.features || []
+        }
+
+        map.current.addSource('flooding-risk-overlay', {
+          type: 'geojson',
+          data: geojsonData
+        })
+
+        // Find insertion point
+        const layers = map.current.getStyle().layers
+        let insertBeforeId: string | undefined
+        for (const layer of layers) {
+          if (layer.id.startsWith('healthcare-') || layer.id.startsWith('supermarkets') ||
+              layer.id.startsWith('playgrounds') || layer.id.startsWith('train-stations') ||
+              layer.id.startsWith('primary-') || layer.id.startsWith('secondary-')) {
+            insertBeforeId = layer.id
+            break
+          }
+        }
+
+        // Add fill layer with risk-based coloring (5 levels: very_high to very_low)
+        map.current.addLayer({
+          id: 'flooding-risk-fill',
+          type: 'fill',
+          source: 'flooding-risk-overlay',
+          paint: {
+            'fill-color': [
+              'match',
+              ['coalesce', ['get', 'risk_level'], ['get', 'risk']],
+              'very_high', '#7f1d1d',  // Dark red for very high risk
+              'high', '#1e40af',        // Dark blue for high risk
+              'medium', '#3b82f6',      // Medium blue
+              'low', '#93c5fd',         // Light blue
+              'very_low', '#dbeafe',    // Very light blue
+              '#60a5fa'                 // Default blue
+            ],
+            'fill-opacity': 0.5
+          }
+        }, insertBeforeId)
+
+        // Add outline layer
+        map.current.addLayer({
+          id: 'flooding-risk-outline',
+          type: 'line',
+          source: 'flooding-risk-overlay',
+          paint: {
+            'line-color': '#1e3a8a',
+            'line-width': 2,
+            'line-opacity': 0.8
+          }
+        }, insertBeforeId)
+
+        // Add click handler
+        const floodingClickHandler = (e: maplibregl.MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
+          if (!e.features || e.features.length === 0) return
+          const props = e.features[0].properties
+          if (!props) return
+
+          const riskColors: Record<string, string> = {
+            high: '#dc2626',
+            medium: '#f59e0b',
+            low: '#22c55e'
+          }
+
+          const riskLevel = props.risk_level || props.risk || 'unknown'
+          const name = props.name || props.region || 'Unknown Area'
+          const notes = props.notes || props.reason || ''
+          const floodType = props.flood_type || ''
+
+          new maplibregl.Popup({ offset: 15 })
+            .setLngLat(e.lngLat)
+            .setHTML(`<div style="padding: 12px; min-width: 260px;">
+              <div style="font-weight: 600; font-size: 14px; margin-bottom: 6px; color: #1e40af;">🌊 ${name}</div>
+              <div style="font-size: 13px; margin-bottom: 6px;">
+                <span style="display: inline-block; padding: 2px 8px; border-radius: 4px; background: ${riskColors[riskLevel] || '#3b82f6'}; color: white; font-weight: 600;">
+                  ${riskLevel.toUpperCase()} RISK
+                </span>
+                ${floodType ? `<span style="margin-left: 6px; font-size: 11px; color: #666;">${floodType.replace('_', ' ')}</span>` : ''}
+              </div>
+              <div style="font-size: 12px; color: #666; margin-bottom: 8px;">${notes}</div>
+              <div style="font-size: 11px; color: #999; border-top: 1px solid #eee; padding-top: 8px; margin-top: 8px;">
+                ⚠️ Check flood insurance coverage<br/>
+                📍 Source: Risicokaart.nl / Rijkswaterstaat
+              </div>
+            </div>`)
+            .addTo(map.current!)
+        }
+
+        map.current.on('click', 'flooding-risk-fill', floodingClickHandler)
+        map.current.on('mouseenter', 'flooding-risk-fill', () => { map.current!.getCanvas().style.cursor = 'pointer' })
+        map.current.on('mouseleave', 'flooding-risk-fill', () => { map.current!.getCanvas().style.cursor = '' })
+      }
+    } else {
+      // Remove layers when overlay is turned off
+      if (map.current.getLayer('flooding-risk-fill')) {
+        console.log('🗺️ Removing flooding risk overlay from map')
+        map.current.removeLayer('flooding-risk-fill')
+        map.current.removeLayer('flooding-risk-outline')
+        map.current.removeSource('flooding-risk-overlay')
+      }
+    }
+  }, [mapLoaded, showFloodingRisk, floodingRiskData])
 
   // Load Leefbaarometer data from API
   const [leefbaarometerData, setLeefbaarometerData] = useState<any>(null)
@@ -1764,7 +1921,20 @@ export default function MapView({ destinations, showProperties = true, showSchoo
           data: leefbaarometerData
         })
 
-        // Add fill layer with color based on score
+        // Find a good insertion point (after isochrones but before amenities)
+        const layers = map.current.getStyle().layers
+        let insertBeforeId: string | undefined
+        for (const layer of layers) {
+          // Insert before any amenity or school layers
+          if (layer.id.startsWith('healthcare-') || layer.id.startsWith('supermarkets') ||
+              layer.id.startsWith('playgrounds') || layer.id.startsWith('train-stations') ||
+              layer.id.startsWith('primary-') || layer.id.startsWith('secondary-')) {
+            insertBeforeId = layer.id
+            break
+          }
+        }
+
+        // Add fill layer with color based on score - higher opacity and visibility
         map.current.addLayer({
           id: 'leefbaarometer-fill',
           type: 'fill',
@@ -1780,21 +1950,21 @@ export default function MapView({ destinations, showProperties = true, showSchoo
               7, '#84cc16',  // Lime
               9, '#22c55e'   // Green for high scores
             ],
-            'fill-opacity': 0.5
+            'fill-opacity': 0.6
           }
-        })
+        }, insertBeforeId)
 
-        // Add outline layer
+        // Add outline layer with better visibility
         map.current.addLayer({
           id: 'leefbaarometer-outline',
           type: 'line',
           source: 'leefbaarometer-overlay',
           paint: {
-            'line-color': '#64748b',
-            'line-width': 1,
-            'line-opacity': 0.3
+            'line-color': '#334155',
+            'line-width': 1.5,
+            'line-opacity': 0.7
           }
-        })
+        }, insertBeforeId)
 
         // Add click handler
         const leefbaarometerClickHandler = (e: maplibregl.MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
@@ -1991,6 +2161,15 @@ export default function MapView({ destinations, showProperties = true, showSchoo
               />
               <span className="text-xs text-gray-700">livability heat map</span>
             </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showFloodingRisk}
+                onChange={(e) => setShowFloodingRisk(e.target.checked)}
+                className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+              />
+              <span className="text-xs text-gray-700">🌊 flooding risk</span>
+            </label>
 
             <div className="border-t border-gray-200 mt-2 pt-2">
               <span className="text-xs font-medium text-gray-500 block mb-2">amenities</span>
@@ -2175,6 +2354,26 @@ export default function MapView({ destinations, showProperties = true, showSchoo
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded" style={{backgroundColor: '#f97316', opacity: 0.6}}></div>
                   <span>Risk Area (KCAF)</span>
+                </div>
+              </>
+            )}
+
+            {showFloodingRisk && (
+              <>
+                <div className="text-xs text-gray-500 mt-2 pt-2 border-t border-gray-100 font-medium">
+                  🌊 flooding risk (blue)
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded" style={{backgroundColor: '#1e40af', opacity: 0.6}}></div>
+                  <span>High Risk</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded" style={{backgroundColor: '#3b82f6', opacity: 0.6}}></div>
+                  <span>Medium Risk</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded" style={{backgroundColor: '#93c5fd', opacity: 0.6}}></div>
+                  <span>Low Risk</span>
                 </div>
               </>
             )}

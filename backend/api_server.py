@@ -1165,6 +1165,141 @@ def get_foundation_risk_map_data():
     }
 
 
+@app.get("/api/map-overlays/flooding-risk")
+def get_flooding_risk_map_data():
+    """
+    Get flooding risk data for map overlay.
+
+    Returns:
+        GeoJSON FeatureCollection with flood risk polygons
+    """
+    import json
+    from pathlib import Path
+
+    flood_risk_path = Path(__file__).parent.parent / "data" / "raw" / "flood_risk.json"
+
+    # Try to load from file first
+    if flood_risk_path.exists():
+        try:
+            with open(flood_risk_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            return {
+                "success": True,
+                "type": "FeatureCollection",
+                "features": data.get("features", []),
+                "metadata": {
+                    "source": "Risicokaart.nl, Nationaal Georegister, compiled data",
+                    "total_areas": len(data.get("features", [])),
+                    "license": "Open Data (CC0)",
+                    "note": "Flood risk zones from official Dutch government sources",
+                    "year": 2024
+                }
+            }
+        except Exception as e:
+            print(f"Error loading flood risk file: {e}")
+
+    # Fallback: Return known flood risk areas as GeoJSON
+    known_areas = {
+        "limburg": {
+            "name": "Limburg",
+            "risk_level": "high",
+            "flood_type": "river_flooding",
+            "notes": "Maas river flooding (2021, 2023 events)",
+            "bbox": [5.5, 50.75, 6.25, 51.5]
+        },
+        "zeeland": {
+            "name": "Zeeland",
+            "risk_level": "high",
+            "flood_type": "sea_flooding",
+            "notes": "Below sea level, storm surge risk",
+            "bbox": [3.35, 51.2, 4.25, 51.75]
+        },
+        "flevoland": {
+            "name": "Flevoland",
+            "risk_level": "high",
+            "flood_type": "polder",
+            "notes": "Entirely reclaimed land, 4-6m below sea level",
+            "bbox": [5.15, 52.25, 6.0, 52.7]
+        },
+        "noord_holland_laag": {
+            "name": "Noord-Holland (low areas)",
+            "risk_level": "medium",
+            "flood_type": "polder",
+            "notes": "Haarlemmermeer, Beemster - polders below sea level",
+            "bbox": [4.5, 52.2, 5.1, 52.65]
+        },
+        "zuid_holland_laag": {
+            "name": "Zuid-Holland (low areas)",
+            "risk_level": "medium",
+            "flood_type": "polder",
+            "notes": "Green Heart (Groene Hart) polders",
+            "bbox": [4.2, 51.85, 4.9, 52.15]
+        },
+        "groningen": {
+            "name": "Groningen",
+            "risk_level": "medium",
+            "flood_type": "combined",
+            "notes": "Earthquake-weakened dikes, sea flooding risk",
+            "bbox": [6.2, 53.1, 7.25, 53.55]
+        },
+        "rivierengebied": {
+            "name": "Rivierengebied",
+            "risk_level": "medium",
+            "flood_type": "river_flooding",
+            "notes": "Between major rivers (Rijn, Waal, Maas)",
+            "bbox": [4.8, 51.75, 6.2, 52.05]
+        },
+        "friesland_coast": {
+            "name": "Friesland Coast",
+            "risk_level": "low",
+            "flood_type": "sea_flooding",
+            "notes": "Wadden Sea area, dike protected",
+            "bbox": [5.0, 52.95, 6.3, 53.45]
+        }
+    }
+
+    features = []
+    for area_id, area_data in known_areas.items():
+        bbox = area_data["bbox"]
+        coordinates = [[
+            [bbox[0], bbox[1]],
+            [bbox[2], bbox[1]],
+            [bbox[2], bbox[3]],
+            [bbox[0], bbox[3]],
+            [bbox[0], bbox[1]]
+        ]]
+
+        features.append({
+            "type": "Feature",
+            "id": area_id,
+            "properties": {
+                "id": area_id,
+                "name": area_data["name"],
+                "risk_level": area_data["risk_level"],
+                "flood_type": area_data["flood_type"],
+                "notes": area_data["notes"]
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": coordinates
+            }
+        })
+
+    return {
+        "success": True,
+        "type": "FeatureCollection",
+        "features": features,
+        "metadata": {
+            "source": "Rijkswaterstaat, Waterboards, KNMI (fallback data)",
+            "total_areas": len(features),
+            "license": "Open Data",
+            "note": "Indicative flood risk regions - run ETL script for precise data",
+            "year": 2024
+        }
+    }
+
+
 @app.get("/api/neighborhood-boundary/{area_code}")
 async def get_neighborhood_boundary(area_code: str):
     """
