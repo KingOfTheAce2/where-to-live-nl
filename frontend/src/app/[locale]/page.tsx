@@ -2,14 +2,16 @@
 
 import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import { Search, Home, Loader2, GitCompare, X } from 'lucide-react'
+import { Search, Home, Loader2, GitCompare, X, Box } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import Link from 'next/link'
 import AddressAutocomplete from '@/components/AddressAutocomplete'
 import { useAddressSnapshot } from '@/hooks/useAddressSnapshot'
 import ComparisonPanel, { ComparisonItem, ComparisonType } from '@/components/ComparisonPanel'
 import SmartIndicator from '@/components/SmartIndicator'
 import WWSCalculator from '@/components/WWSCalculator'
 import LanguageSelector from '@/components/LanguageSelector'
+import RedFlagsCard from '@/components/RedFlagsCard'
 // Air Quality available in map overlays
 
 // Dynamically import Map component (MapLibre requires window object)
@@ -182,16 +184,29 @@ export default function HomePage() {
       <div className="w-96 bg-white shadow-xl flex flex-col overflow-hidden">
         {/* Header */}
         <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-          <div className="flex items-center gap-3 mb-3">
-            <Home className="w-8 h-8" />
-            <div>
-              <h1 className="text-2xl font-bold">
-                {t('app.title')}
-              </h1>
-              <p className="text-sm text-blue-100">
-                {t('app.subtitle')}
-              </p>
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-3">
+              <Home className="w-8 h-8" />
+              <div>
+                <h1 className="text-2xl font-bold">
+                  {t('app.title')}
+                </h1>
+                <p className="text-sm text-blue-100">
+                  {t('app.subtitle')}
+                </p>
+              </div>
             </div>
+            <Link
+              href={selectedAddress
+                ? `/3d-viewer?lat=${selectedAddress.coordinates[1]}&lng=${selectedAddress.coordinates[0]}&address=${encodeURIComponent(selectedAddress.address)}`
+                : "/3d-viewer"
+              }
+              className="flex items-center gap-2 px-3 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors text-sm font-medium"
+              title={t('viewer3d.title')}
+            >
+              <Box className="w-4 h-4" />
+              <span className="hidden sm:inline">3D</span>
+            </Link>
           </div>
         </div>
 
@@ -213,7 +228,7 @@ export default function HomePage() {
               value={searchAddress}
               onChange={setSearchAddress}
               onSelect={handleAddressSelect}
-              placeholder="Enter street address, city..."
+              placeholder={t('search.placeholder')}
             />
           </div>
 
@@ -223,7 +238,7 @@ export default function HomePage() {
                 <div className="flex items-start gap-2">
                   <div className="w-2 h-2 rounded-full bg-blue-600 mt-2"></div>
                   <div>
-                    <div className="font-medium text-gray-900 text-sm">Selected:</div>
+                    <div className="font-medium text-gray-900 text-sm">{t('search.selected')}</div>
                     <div className="text-sm text-gray-700">{selectedAddress.address}</div>
                     <div className="text-xs text-gray-500 mt-1">
                       {selectedAddress.coordinates[1].toFixed(4)}, {selectedAddress.coordinates[0].toFixed(4)}
@@ -235,7 +250,7 @@ export default function HomePage() {
               {/* Comparison Controls */}
               <div className="bg-white rounded-lg border border-gray-200 p-3 space-y-2">
                 <div className="flex items-center justify-between">
-                  <div className="text-xs font-semibold text-gray-600 uppercase">Compare</div>
+                  <div className="text-xs font-semibold text-gray-600 uppercase">{t('comparison.compare')}</div>
                   <button
                     onClick={handleToggleComparisonType}
                     className="text-xs text-blue-600 hover:text-blue-700 font-medium"
@@ -256,16 +271,25 @@ export default function HomePage() {
                 {comparisonItems.length > 0 && (
                   <div className="space-y-2">
                     <div className="text-xs text-gray-600">
-                      {comparisonItems.length} of {comparisonType === 'neighborhood' ? '2' : '3'} {comparisonType === 'neighborhood' ? 'neighborhoods' : 'houses'} added
+                      {comparisonItems.length} / {comparisonType === 'neighborhood' ? '2' : '3'} {comparisonType === 'neighborhood' ? t('comparison.neighborhoods') : t('comparison.houses')}
                     </div>
                     <button
                       onClick={() => setShowComparison(true)}
                       className="w-full px-4 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-700 transition-colors"
                     >
-                      View Comparison
+                      {t('comparison.viewComparison')}
                     </button>
                   </div>
                 )}
+
+                {/* View in 3D button */}
+                <Link
+                  href={`/3d-viewer?lat=${selectedAddress.coordinates[1]}&lng=${selectedAddress.coordinates[0]}&address=${encodeURIComponent(selectedAddress.address)}`}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gray-700 text-white text-sm font-medium rounded hover:bg-gray-800 transition-colors"
+                >
+                  <Box className="w-4 h-4" />
+                  {t('viewer3d.viewIn3D')}
+                </Link>
               </div>
             </div>
           )}
@@ -352,12 +376,19 @@ export default function HomePage() {
               </div>
             )}
 
+            {/* Red Flags & Warnings */}
+            <RedFlagsCard
+              coordinates={selectedAddress?.coordinates || null}
+              address={selectedAddress?.address}
+              isLoading={isLoading}
+            />
+
             {/* Nearby Amenities */}
             <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
               <div className="text-sm font-medium text-gray-900 mb-3">{t('amenities.title')}</div>
               <div className="space-y-2 text-sm text-gray-700">
                 <div className="flex items-center justify-between">
-                  <span>🏪 Supermarkets</span>
+                  <span>🏪 {t('amenities.supermarkets')}</span>
                   <div className="text-right">
                     {snapshot ? (
                       <>
@@ -369,46 +400,46 @@ export default function HomePage() {
                         )}
                       </>
                     ) : (
-                      <span className="text-gray-400">Loading...</span>
+                      <span className="text-gray-400">{t('snapshot.loading')}</span>
                     )}
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>🏥 Healthcare</span>
+                  <span>🏥 {t('amenities.healthcare')}</span>
                   <div className="text-right">
                     {snapshot ? (
                       <>
                         <span className="font-semibold text-gray-900">{snapshot.snapshot.amenities.healthcare.count}</span>
                         {snapshot.snapshot.amenities.healthcare.nearest && (
                           <div className="text-xs text-gray-500">
-                            {snapshot.snapshot.amenities.healthcare.nearest.distance}m away
+                            {snapshot.snapshot.amenities.healthcare.nearest.distance}m {t('amenities.away')}
                           </div>
                         )}
                       </>
                     ) : (
-                      <span className="text-gray-400">Loading...</span>
+                      <span className="text-gray-400">{t('snapshot.loading')}</span>
                     )}
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>🎮 Playgrounds</span>
+                  <span>🎮 {t('amenities.playgrounds')}</span>
                   <div className="text-right">
                     {snapshot ? (
                       <>
                         <span className="font-semibold text-gray-900">{snapshot.snapshot.amenities.playgrounds.count}</span>
                         {snapshot.snapshot.amenities.playgrounds.nearest && (
                           <div className="text-xs text-gray-500">
-                            Nearest: {snapshot.snapshot.amenities.playgrounds.nearest.distance}m
+                            {t('amenities.nearest')} {snapshot.snapshot.amenities.playgrounds.nearest.distance}m
                           </div>
                         )}
                       </>
                     ) : (
-                      <span className="text-gray-400">Loading...</span>
+                      <span className="text-gray-400">{t('snapshot.loading')}</span>
                     )}
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>🌳 Parks</span>
+                  <span>🌳 {t('amenities.parks')}</span>
                   <div className="text-right">
                     {snapshot ? (
                       <>
@@ -420,7 +451,7 @@ export default function HomePage() {
                         )}
                       </>
                     ) : (
-                      <span className="text-gray-400">Loading...</span>
+                      <span className="text-gray-400">{t('snapshot.loading')}</span>
                     )}
                   </div>
                 </div>
@@ -459,28 +490,28 @@ export default function HomePage() {
                   <details className="text-sm">
                     <summary className="cursor-pointer text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
                       <span>🚔</span>
-                      <span>Your Neighborhood Police Officer</span>
+                      <span>{t('wijkagent.title')}</span>
                     </summary>
                     <div className="mt-3 space-y-2 text-xs text-gray-700">
                       <div className="bg-blue-50 rounded p-3 border border-blue-100">
-                        <p className="font-medium text-blue-900 mb-2">What is a Wijkagent?</p>
+                        <p className="font-medium text-blue-900 mb-2">{t('wijkagent.whatIs')}</p>
                         <p className="text-blue-800">
-                          A <strong>wijkagent</strong> (neighborhood police officer) is your local police contact responsible for safety in your specific area. They focus on preventing crime, building trust with residents, and addressing local concerns.
+                          {t('wijkagent.explanation')}
                         </p>
                       </div>
 
                       <div className="space-y-1">
-                        <p className="font-medium text-gray-900">What they do:</p>
+                        <p className="font-medium text-gray-900">{t('wijkagent.whatTheyDo')}</p>
                         <ul className="list-disc list-inside space-y-1 text-gray-600">
-                          <li>Maintain safety in your neighborhood</li>
-                          <li>Know the area and its residents</li>
-                          <li>Prevent crime through visibility</li>
-                          <li>Address local problems and concerns</li>
+                          <li>{t('wijkagent.roles.safety')}</li>
+                          <li>{t('wijkagent.roles.knowledge')}</li>
+                          <li>{t('wijkagent.roles.prevention')}</li>
+                          <li>{t('wijkagent.roles.problems')}</li>
                         </ul>
                       </div>
 
                       <div className="bg-gray-50 rounded p-2 border border-gray-200">
-                        <p className="font-medium text-gray-900 mb-1">Find Your Wijkagent:</p>
+                        <p className="font-medium text-gray-900 mb-1">{t('wijkagent.findYours')}</p>
                         <a
                           href={`https://www.politie.nl/mijn-buurt/wijkagenten?geoquery=${encodeURIComponent(selectedAddress.address)}&distance=5.0`}
                           target="_blank"
@@ -490,17 +521,17 @@ export default function HomePage() {
                           politie.nl/mijn-buurt →
                         </a>
                         <p className="text-gray-600 mt-1 text-xs">
-                          View neighborhood police officers for this address
+                          {t('wijkagent.enterPostal')}
                         </p>
                       </div>
 
                       <div className="text-xs text-gray-500 mt-2">
-                        <p className="font-medium text-gray-700 mb-1">💡 Tips for Expats:</p>
+                        <p className="font-medium text-gray-700 mb-1">{t('wijkagent.tipsForExpats')}</p>
                         <ul className="space-y-1">
-                          <li>• Most wijkagenten can communicate in English</li>
-                          <li>• Email them with non-urgent neighborhood questions</li>
-                          <li>• They're approachable and there to help you feel safe</li>
-                          <li>• For emergencies, always call 112 (not your wijkagent)</li>
+                          <li>• {t('wijkagent.tips.english')}</li>
+                          <li>• {t('wijkagent.tips.email')}</li>
+                          <li>• {t('wijkagent.tips.approachable')}</li>
+                          <li>• {t('wijkagent.tips.emergency')}</li>
                         </ul>
                       </div>
                     </div>
@@ -514,43 +545,43 @@ export default function HomePage() {
               <div className="text-sm font-medium text-gray-900 mb-3">{t('environment.title')}</div>
               <div className="space-y-2 text-sm text-gray-700">
                 <div className="flex items-center justify-between">
-                  <span>🌳 Parks nearby (3km)</span>
+                  <span>🌳 {t('environment.parksNearby')}</span>
                   <span className={`font-semibold ${(snapshot?.snapshot.environment.parksNearby ?? 0) > 0 ? 'text-green-600' : 'text-gray-500'}`}>
                     {snapshot?.snapshot.environment.parksNearby ?? 0}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>🏞️ Green space quality</span>
+                  <span>🏞️ {t('environment.greenSpace')}</span>
                   <span className="text-gray-600">
-                    {snapshot?.snapshot.environment.greenSpaceQuality || 'Unknown'}
+                    {snapshot?.snapshot.environment.greenSpaceQuality || t('livability.dataUnavailable')}
                   </span>
                 </div>
                 {snapshot?.snapshot.environment.nearestPark && (
                   <div className="text-xs text-gray-500 pt-1 border-t border-gray-100">
-                    Nearest: {snapshot.snapshot.environment.nearestPark.name} ({snapshot.snapshot.environment.nearestPark.distance}m)
+                    {t('amenities.nearest')} {snapshot.snapshot.environment.nearestPark.name} ({snapshot.snapshot.environment.nearestPark.distance}m)
                   </div>
                 )}
                 <div className="pt-2 border-t border-gray-100">
                   <div className="flex items-center justify-between">
-                    <span>💧 Flood risk</span>
+                    <span>💧 {t('environment.floodRisk')}</span>
                     <span className="text-gray-600">
-                      {isLoading ? 'Loading...' : 'View on map'}
+                      {isLoading ? t('snapshot.loading') : t('environment.viewOnMap')}
                     </span>
                   </div>
                   <div className="flex items-center justify-between mt-2">
-                    <span>🏠 Foundation risk</span>
+                    <span>🏠 {t('environment.foundationRisk')}</span>
                     <span className="text-gray-600">
-                      {isLoading ? 'Loading...' : 'View on map'}
+                      {isLoading ? t('snapshot.loading') : t('environment.viewOnMap')}
                     </span>
                   </div>
                   <div className="flex items-center justify-between mt-2">
-                    <span>💨 Air quality</span>
+                    <span>💨 {t('environment.airQuality')}</span>
                     <span className="text-gray-600">
-                      {isLoading ? 'Loading...' : 'View on map'}
+                      {isLoading ? t('snapshot.loading') : t('environment.viewOnMap')}
                     </span>
                   </div>
                   <div className="text-xs text-gray-500 mt-2">
-                    Environmental data visible on map
+                    {t('environment.dataVisible')}
                   </div>
                 </div>
               </div>
@@ -712,34 +743,34 @@ export default function HomePage() {
               </div>
               {snapshot?.snapshot.livability.breakdown && (
                 <div className="mt-3 pt-3 border-t border-gray-100 space-y-2 text-xs">
-                  <div className="text-xs font-medium text-gray-700 mb-2">Score Breakdown</div>
+                  <div className="text-xs font-medium text-gray-700 mb-2">{t('livability.breakdown')}</div>
                   {snapshot.snapshot.livability.breakdown.physical !== null && snapshot.snapshot.livability.breakdown.physical !== undefined && (
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Physical environment</span>
+                      <span className="text-gray-600">{t('livability.physical')}</span>
                       <span className="font-semibold text-gray-900">{snapshot.snapshot.livability.breakdown.physical.toFixed(1)}</span>
                     </div>
                   )}
                   {snapshot.snapshot.livability.breakdown.social !== null && snapshot.snapshot.livability.breakdown.social !== undefined && (
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Social cohesion</span>
+                      <span className="text-gray-600">{t('livability.social')}</span>
                       <span className="font-semibold text-gray-900">{snapshot.snapshot.livability.breakdown.social.toFixed(1)}</span>
                     </div>
                   )}
                   {snapshot.snapshot.livability.breakdown.safety !== null && snapshot.snapshot.livability.breakdown.safety !== undefined && (
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Safety</span>
+                      <span className="text-gray-600">{t('livability.safety')}</span>
                       <span className="font-semibold text-gray-900">{snapshot.snapshot.livability.breakdown.safety.toFixed(1)}</span>
                     </div>
                   )}
                   {snapshot.snapshot.livability.breakdown.facilities !== null && snapshot.snapshot.livability.breakdown.facilities !== undefined && (
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Facilities</span>
+                      <span className="text-gray-600">{t('livability.facilities')}</span>
                       <span className="font-semibold text-gray-900">{snapshot.snapshot.livability.breakdown.facilities.toFixed(1)}</span>
                     </div>
                   )}
                   {snapshot.snapshot.livability.breakdown.housing !== null && snapshot.snapshot.livability.breakdown.housing !== undefined && (
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Housing quality</span>
+                      <span className="text-gray-600">{t('livability.housing')}</span>
                       <span className="font-semibold text-gray-900">{snapshot.snapshot.livability.breakdown.housing.toFixed(1)}</span>
                     </div>
                   )}
@@ -754,7 +785,7 @@ export default function HomePage() {
                 <div className="space-y-3 text-sm">
                   {snapshot.snapshot.demographics.population && (
                     <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Population</span>
+                      <span className="text-gray-600">{t('demographics.population')}</span>
                       <span className="font-semibold text-gray-900">
                         {snapshot.snapshot.demographics.population.toLocaleString('nl-NL')}
                       </span>
@@ -762,7 +793,7 @@ export default function HomePage() {
                   )}
                   {snapshot.snapshot.demographics.households_total && (
                     <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Households</span>
+                      <span className="text-gray-600">{t('demographics.households')}</span>
                       <span className="font-semibold text-gray-900">
                         {snapshot.snapshot.demographics.households_total.toLocaleString('nl-NL')}
                       </span>
@@ -770,15 +801,15 @@ export default function HomePage() {
                   )}
                   {snapshot.snapshot.demographics.avg_household_size && (
                     <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Avg household size</span>
+                      <span className="text-gray-600">{t('demographics.avgHouseholdSize')}</span>
                       <span className="font-semibold text-gray-900">
-                        {snapshot.snapshot.demographics.avg_household_size.toFixed(2)} persons
+                        {snapshot.snapshot.demographics.avg_household_size.toFixed(2)} {t('demographics.persons')}
                       </span>
                     </div>
                   )}
 
                   <div className="pt-2 border-t border-gray-100">
-                    <div className="text-xs font-medium text-gray-700 mb-2">Age distribution</div>
+                    <div className="text-xs font-medium text-gray-700 mb-2">{t('demographics.ageDistribution')}</div>
                     {(() => {
                       const pop = snapshot.snapshot.demographics.population || 1
                       const age_0_15 = snapshot.snapshot.demographics.age_0_15 || 0
@@ -791,31 +822,31 @@ export default function HomePage() {
                         <>
                           {age_0_15 > 0 && (
                             <div className="flex justify-between text-xs mb-1">
-                              <span className="text-gray-600">0-15 years</span>
+                              <span className="text-gray-600">{t('demographics.ageRanges.0-15')}</span>
                               <span className="text-gray-900">{Math.round((age_0_15 / pop) * 100)}%</span>
                             </div>
                           )}
                           {age_15_25 > 0 && (
                             <div className="flex justify-between text-xs mb-1">
-                              <span className="text-gray-600">15-25 years</span>
+                              <span className="text-gray-600">{t('demographics.ageRanges.15-25')}</span>
                               <span className="text-gray-900">{Math.round((age_15_25 / pop) * 100)}%</span>
                             </div>
                           )}
                           {age_25_45 > 0 && (
                             <div className="flex justify-between text-xs mb-1">
-                              <span className="text-gray-600">25-45 years</span>
+                              <span className="text-gray-600">{t('demographics.ageRanges.25-45')}</span>
                               <span className="text-gray-900">{Math.round((age_25_45 / pop) * 100)}%</span>
                             </div>
                           )}
                           {age_45_65 > 0 && (
                             <div className="flex justify-between text-xs mb-1">
-                              <span className="text-gray-600">45-65 years</span>
+                              <span className="text-gray-600">{t('demographics.ageRanges.45-65')}</span>
                               <span className="text-gray-900">{Math.round((age_45_65 / pop) * 100)}%</span>
                             </div>
                           )}
                           {age_65_plus > 0 && (
                             <div className="flex justify-between text-xs">
-                              <span className="text-gray-600">65+ years</span>
+                              <span className="text-gray-600">{t('demographics.ageRanges.65+')}</span>
                               <span className="text-gray-900">{Math.round((age_65_plus / pop) * 100)}%</span>
                             </div>
                           )}
@@ -825,22 +856,22 @@ export default function HomePage() {
                   </div>
 
                   <div className="pt-2 border-t border-gray-100">
-                    <div className="text-xs font-medium text-gray-700 mb-2">Housing</div>
+                    <div className="text-xs font-medium text-gray-700 mb-2">{t('demographics.housing')}</div>
                     {snapshot.snapshot.demographics.pct_owner_occupied && (
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-gray-600">Owner-occupied</span>
+                        <span className="text-gray-600">{t('demographics.ownerOccupied')}</span>
                         <span className="text-gray-900">{snapshot.snapshot.demographics.pct_owner_occupied}%</span>
                       </div>
                     )}
                     {snapshot.snapshot.demographics.pct_rental && (
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-gray-600">Rental</span>
+                        <span className="text-gray-600">{t('demographics.rental')}</span>
                         <span className="text-gray-900">{snapshot.snapshot.demographics.pct_rental}%</span>
                       </div>
                     )}
                     {snapshot.snapshot.demographics.avg_woz_value_k && (
                       <div className="flex justify-between text-xs">
-                        <span className="text-gray-600">Avg WOZ value</span>
+                        <span className="text-gray-600">{t('demographics.avgWozValue')}</span>
                         <span className="text-gray-900">€ {(snapshot.snapshot.demographics.avg_woz_value_k * 1000).toLocaleString('nl-NL')}</span>
                       </div>
                     )}
@@ -1230,45 +1261,31 @@ export default function HomePage() {
             <div className="text-center py-12">
               <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Start Your Search
+                {t('snapshot.startSearch')}
               </h3>
               <p className="text-sm text-gray-600 max-w-xs mx-auto">
-                Enter an address above to see comprehensive neighborhood information, property values, and livability data.
+                {t('snapshot.startSearchDescription')}
               </p>
 
               <div className="mt-8 space-y-3 text-left max-w-sm mx-auto">
                 <div className="text-sm font-medium text-gray-900 mb-3">
-                  What you'll discover:
+                  {t('snapshot.discover')}
                 </div>
                 <div className="flex items-start gap-3 text-sm text-gray-700">
                   <div className="text-blue-600 mt-0.5">✓</div>
-                  <div>
-                    <span className="font-medium">WOZ Property Values</span> - Current valuation and historical trends
-                  </div>
+                  <div>{t('snapshot.discoverItems.crime')}</div>
                 </div>
                 <div className="flex items-start gap-3 text-sm text-gray-700">
                   <div className="text-blue-600 mt-0.5">✓</div>
-                  <div>
-                    <span className="font-medium">Safety & Crime Stats</span> - Neighborhood crime data from Politie.nl
-                  </div>
+                  <div>{t('snapshot.discoverItems.amenities')}</div>
                 </div>
                 <div className="flex items-start gap-3 text-sm text-gray-700">
                   <div className="text-blue-600 mt-0.5">✓</div>
-                  <div>
-                    <span className="font-medium">Nearby Amenities</span> - Supermarkets, healthcare, schools, playgrounds
-                  </div>
+                  <div>{t('snapshot.discoverItems.environment')}</div>
                 </div>
                 <div className="flex items-start gap-3 text-sm text-gray-700">
                   <div className="text-blue-600 mt-0.5">✓</div>
-                  <div>
-                    <span className="font-medium">Environment Quality</span> - Green spaces, parks, livability scores
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 text-sm text-gray-700">
-                  <div className="text-blue-600 mt-0.5">✓</div>
-                  <div>
-                    <span className="font-medium">Demographics</span> - Population, age distribution, household types
-                  </div>
+                  <div>{t('snapshot.discoverItems.demographics')}</div>
                 </div>
               </div>
             </div>

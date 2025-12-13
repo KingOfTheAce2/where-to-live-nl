@@ -61,14 +61,16 @@ DATASETS = {
         "name": "Middelbaar Beroepsonderwijs (Vocational Education)",
         "description": "MBO institutions (ROC)",
         "files": {
-            "instellingen": "https://onderwijsdata.duo.nl/dataset/099507d2-df05-4dc3-8510-a55c26a7c13f/resource/bb3e73ff-38d5-4ce4-9426-17650266013f/download/instellingenmbo.csv",
+            # Updated URL (December 2025) - old onderwijsdata.duo.nl URLs are now 404
+            "instellingen": "https://duo.nl/open_onderwijsdata/images/01.-adressen-mbo-instellingen.csv",
         }
     },
     "ho": {
         "name": "Hoger Onderwijs (Higher Education)",
         "description": "Universities and HBO institutions",
         "files": {
-            "instellingen": "https://onderwijsdata.duo.nl/dataset/4bb6ae5a-1f76-4e39-a369-ec1beb6bac51/resource/9db9d6a2-39cb-465b-9973-2f6995572324/download/instellingenho.csv",
+            # Updated URL (December 2025) - old onderwijsdata.duo.nl URLs are now 404
+            "instellingen": "https://duo.nl/open_onderwijsdata/images/01.-instellingen-hbo-en-wo.csv",
         }
     }
 }
@@ -108,13 +110,27 @@ class DUOSchoolsDownloader:
             response = self.client.get(url)
             response.raise_for_status()
 
-            # Parse CSV - DUO uses UTF-8 with BOM sometimes
-            content = response.content.decode('utf-8-sig')
+            # Parse CSV - try different encodings
+            # DUO uses UTF-8 with BOM for some files, Windows-1252/Latin-1 for others
+            content = None
+            for encoding in ['utf-8-sig', 'utf-8', 'cp1252', 'latin-1']:
+                try:
+                    content = response.content.decode(encoding)
+                    break
+                except UnicodeDecodeError:
+                    continue
 
-            # DUO CSVs use comma delimiter with quoted fields
+            if content is None:
+                raise ValueError("Could not decode CSV with any known encoding")
+
+            # Detect delimiter - some files use ; instead of ,
+            first_line = content.split('\n')[0]
+            delimiter = ';' if first_line.count(';') > first_line.count(',') else ','
+
+            # DUO CSVs use comma or semicolon delimiter with quoted fields
             csv_reader = csv.DictReader(
                 io.StringIO(content),
-                delimiter=',',
+                delimiter=delimiter,
                 quotechar='"'
             )
 

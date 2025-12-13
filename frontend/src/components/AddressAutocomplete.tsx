@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { MapPin, Loader2 } from 'lucide-react'
 import { useAddressSearch, useAddressLookup } from '@/hooks/useAddressSearch'
 import { parseCoordinates } from '@/lib/pdok'
+import { useTranslations } from 'next-intl'
 
 interface AddressAutocompleteProps {
   value: string
@@ -20,6 +21,7 @@ export default function AddressAutocomplete({
   placeholder = 'Enter address or search...',
   className = '',
 }: AddressAutocompleteProps) {
+  const t = useTranslations('addressSearch')
   const [isOpen, setIsOpen] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -146,7 +148,7 @@ export default function AddressAutocomplete({
       {/* No results message */}
       {isOpen && !isLoading && value.length >= 2 && results.length === 0 && (
         <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg p-4">
-          <p className="text-sm text-gray-500">No addresses found</p>
+          <p className="text-sm text-gray-500">{t('noResults')}</p>
         </div>
       )}
     </div>
