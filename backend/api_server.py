@@ -344,6 +344,9 @@ def get_properties(
     if df is None:
         raise HTTPException(status_code=503, detail="Properties data not available")
 
+    # Load energy labels for lookup
+    energy_df = load_dataframe("energielabels", ENERGIELABELS_DATA)
+
     # Apply geographic filters
     if minLat is not None:
         df = df.filter(pl.col("latitude") >= minLat)
@@ -360,6 +363,19 @@ def get_properties(
     # Convert to list of dicts
     properties = []
     for record in df.to_dicts():
+        # Look up energy label from energielabels table if not in properties
+        energy_label = record.get("energy_label")
+        if not energy_label and energy_df is not None:
+            postal_code = record.get("postal_code")
+            house_number = record.get("house_number")
+            if postal_code and house_number:
+                energy_match = energy_df.filter(
+                    (pl.col("postal_code") == postal_code) &
+                    (pl.col("house_number") == house_number)
+                )
+                if energy_match.height > 0:
+                    energy_label = energy_match.head(1).to_dicts()[0].get("energy_label")
+
         # Format property to match frontend expectations
         property_obj = {
             "id": record.get("id"),
@@ -380,7 +396,7 @@ def get_properties(
                 "plot_area_m2": 0,
                 "rooms": record.get("num_rooms") or 3,
                 "year_built": record.get("building_year"),
-                "energy_label": record.get("energy_label") or "C"
+                "energy_label": energy_label  # None if no label found - frontend shows gray
             },
             "valuation": {
                 "woz_value": 250000,  # Placeholder - would need WOZ lookup
@@ -1567,6 +1583,7 @@ def wms_proxy(request: Request):
         # Whitelist of allowed WMS services to prevent abuse
         allowed_domains = [
             'geodata.rivm.nl',
+            'data.rivm.nl',  # Atlas Leefomgeving (noise pollution data)
             'geo.leefbaarometer.nl',
             'geodata.nationaalgeoregister.nl',
             'service.pdok.nl'
@@ -1904,6 +1921,186 @@ def get_housing_costs(area_code: str):
             "source": "CBS (Statistics Netherlands)",
             "dataset": "Woonlasten huishoudens",
             "license": "CC-BY 4.0"
+        }
+    }
+
+
+@app.get("/api/map-overlays/flood-risk")
+def get_flood_risk_map_data():
+    """
+    Get flood risk data and WMS endpoint information for map overlay.
+
+    Returns:
+        Flood risk summary and WMS endpoints for LIWO/Klimaateffectatlas
+    """
+    # Return WMS endpoint info for frontend to use directly
+    return {
+        "success": True,
+        "wms_endpoints": {
+            "liwo": {
+                "endpoint": "https://geodata.nationaalgeoregister.nl/liwo/wms",
+                "layers": ["waterdiepte_primair", "waterdiepte_regionaal", "stroomsnelheid_primair"],
+                "description": "Flood depth and flow velocity from national system"
+            },
+            "klimaateffectatlas": {
+                "endpoint": "https://geodata.nationaalgeoregister.nl/rws-klimaateffectatlas/wms",
+                "layers": ["overstromingsdiepte"],
+                "description": "Climate effect atlas - flood depth scenarios"
+            },
+            "risicokaart": {
+                "endpoint": "https://geodata.nationaalgeoregister.nl/risicokaart/wms",
+                "layers": ["overstromingsgebieden"],
+                "description": "Risk map flood zones"
+            }
+        },
+        "risk_summary": {
+            "country_overview": {
+                "flood_prone_pct": 58,
+                "description": "58% of the Netherlands can flood from sea, lakes, or rivers"
+            },
+            "flood_defense": "Delta Works + 17,500 km of levees (dijken)"
+        },
+        "resources": {
+            "overstroomik": "https://www.overstroomik.nl/",
+            "risicokaart": "https://www.risicokaart.nl/",
+            "klimaateffectatlas": "https://www.klimaateffectatlas.nl/"
+        },
+        "metadata": {
+            "source": "LIWO, Klimaateffectatlas, Risicokaart (Dutch Government)",
+            "license": "Open Data / CC0"
+        }
+    }
+
+
+@app.get("/api/map-overlays/noise")
+def get_noise_map_data():
+    """
+    Get noise pollution data and WMS endpoint information for map overlay.
+
+    Returns:
+        Noise pollution summary and WMS endpoints for Atlas Leefomgeving
+    """
+    noise_layers = {
+        "road_lden": "geluid_wegverkeer_lden",
+        "road_lnight": "geluid_wegverkeer_lnight",
+        "rail_lden": "geluid_spoorwegen_lden",
+        "rail_lnight": "geluid_spoorwegen_lnight",
+        "aircraft_lden": "geluid_luchtvaart_lden",
+        "industry_lden": "geluid_industrie_lden",
+        "combined_lden": "geluid_cumulatief_lden"
+    }
+
+    noise_thresholds = {
+        "excellent": {"max_db": 50, "description": "Quiet residential area"},
+        "good": {"max_db": 55, "description": "Acceptable noise level"},
+        "moderate": {"max_db": 60, "description": "Some noise noticeable"},
+        "loud": {"max_db": 65, "description": "Noticeable noise, may affect sleep"},
+        "very_loud": {"max_db": 70, "description": "Significant noise exposure"},
+        "extreme": {"max_db": 999, "description": "High noise exposure, health risks"}
+    }
+
+    return {
+        "success": True,
+        "wms_endpoint": "https://data.rivm.nl/geo/alo/wms",
+        "noise_layers": noise_layers,
+        "thresholds": noise_thresholds,
+        "tips": [
+            "Check noise maps before purchasing",
+            "Visit property at different times of day",
+            "Check for double glazing (dubbel glas)",
+            "Consider bedroom location relative to noise source"
+        ],
+        "schiphol_affected_areas": ["Amsterdam", "Amstelveen", "Aalsmeer", "Haarlemmermeer", "Uithoorn"],
+        "resources": {
+            "atlas_leefomgeving": "https://www.atlasleefomgeving.nl/geluid-in-je-omgeving",
+            "who_guidelines": "https://www.who.int/publications/i/item/9789241550253"
+        },
+        "metadata": {
+            "source": "Atlas Leefomgeving (RIVM/Ministry of Infrastructure)",
+            "license": "Open Data / CC0"
+        }
+    }
+
+
+@app.get("/api/risk-check")
+async def check_location_risks(lat: float, lng: float):
+    """
+    Check all environmental risks at a specific location.
+
+    Args:
+        lat: Latitude (WGS84)
+        lng: Longitude (WGS84)
+
+    Returns:
+        Combined risk assessment for foundation, flood, noise
+    """
+    risks = {
+        "location": {"lat": lat, "lng": lng},
+        "foundation_risk": None,
+        "flood_risk": None,
+        "noise_risk": None,
+        "red_flags": []
+    }
+
+    # Check foundation risk using PDOK WFS
+    try:
+        async with httpx.AsyncClient(timeout=30) as client:
+            # Foundation risk check
+            foundation_params = {
+                "service": "WFS",
+                "version": "2.0.0",
+                "request": "GetFeature",
+                "typeName": "indgebfunderingsproblematiek:indgebfunderingsproblematiek",
+                "outputFormat": "application/json",
+                "CQL_FILTER": f"INTERSECTS(geometry, POINT({lng} {lat}))",
+                "srsName": "EPSG:4326"
+            }
+
+            response = await client.get(
+                "https://geodata.nationaalgeoregister.nl/indgebfunderingsproblematiek/wfs",
+                params=foundation_params
+            )
+
+            if response.status_code == 200:
+                data = response.json()
+                features = data.get("features", [])
+
+                if features:
+                    risks["foundation_risk"] = {
+                        "in_risk_area": True,
+                        "risk_level": "attention",
+                        "warning": "This location is in an official foundation attention area",
+                        "recommendation": "Get a professional foundation inspection for buildings before 1970"
+                    }
+                    risks["red_flags"].append({
+                        "type": "foundation",
+                        "severity": "high",
+                        "message": "Location is in a foundation risk attention area"
+                    })
+                else:
+                    risks["foundation_risk"] = {"in_risk_area": False}
+
+    except Exception as e:
+        risks["foundation_risk"] = {"error": str(e)}
+
+    # Note: For flood and noise, the frontend should use WMS GetFeatureInfo
+    # as those services work better with image-based queries
+    risks["flood_risk"] = {
+        "note": "Use overstroomik.nl for detailed flood risk assessment",
+        "check_url": f"https://www.overstroomik.nl/"
+    }
+
+    risks["noise_risk"] = {
+        "note": "Use Atlas Leefomgeving for detailed noise assessment",
+        "check_url": "https://www.atlasleefomgeving.nl/geluid-in-je-omgeving"
+    }
+
+    return {
+        "success": True,
+        "data": risks,
+        "metadata": {
+            "sources": ["PDOK Foundation Risk", "LIWO", "Atlas Leefomgeving"],
+            "note": "Foundation risk checked via WFS. Flood and noise require WMS GetFeatureInfo."
         }
     }
 

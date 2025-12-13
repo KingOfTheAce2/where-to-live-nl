@@ -1,10 +1,39 @@
-# where-to-live-nl - Dutch Housing Intelligence Platform
+# Where-to-Live-NL - Dutch Housing Intelligence Platform
 
 > *Comprehensive housing insights across the Netherlands*
 
 **Where-to-live-nl** consolidates fragmented Dutch government data sources into a single platform that helps you make informed decisions about where to live in the Netherlands. No more juggling 10+ Dutch-only websites or missing critical information about neighborhoods, property characteristics, and livability factors.
 
 **⚠️ PROPRIETARY SOFTWARE** - See [LICENSE.md](LICENSE.md) for usage restrictions.
+
+---
+
+## Project Status
+
+| Milestone | Target | Status |
+|-----------|--------|--------|
+| **MVP** | Q1 2026 | 🟡 In Progress (~85% complete) |
+| **v1.0** | Q2 2026 | 🔵 Planned |
+
+### What's Working Now
+- Interactive map with 25+ data layers
+- Address autocomplete (PDOK)
+- Property details with WOZ values
+- 2.26M energy labels
+- Livability scores (Leefbaarometer)
+- Crime statistics
+- School locations (7,300+ schools)
+- Foundation risk warnings
+- Flood risk zones
+- Air quality & noise overlays
+- Travel time calculator (OpenRouteService)
+- Neighborhood comparison
+- 12 languages supported
+
+### Coming Soon
+- PDF export for comparisons (Premium)
+- Erfpacht (ground lease) warnings
+- User accounts & saved searches
 
 ---
 
@@ -22,44 +51,48 @@ Where-to-Live-NL solves this by aggregating public data into actionable insights
 
 ---
 
-## ✨ Key Features
+## ✨ Features
 
-### 🗺️ **Intelligent Location Finder**
-- Multi-destination travel time calculator (work, school, friends)
-- Combine cycling + public transport routes
-- Visual overlay of suitable living areas
-- No real-time dependency - uses reliable estimates
+### 🗺️ **Interactive Map** ✅
+- MapLibre GL + PDOK Dutch government tiles (free, unlimited)
+- 25+ toggleable data layers
+- Address autocomplete with instant results
+- Click any location for detailed insights
 
-### 🏘️ **Comprehensive Neighborhood Analysis**
+### 🚗 **Travel Time Calculator** ✅
+- OpenRouteService API integration with caching
+- Car, bike, and walking modes
+- Add multiple destinations (work, school, gym)
+- Visual isochrone overlays
+
+### 🏘️ **Neighborhood Analysis** ✅
 - **Livability scores** (Leefbaarometer) - 100x100m granularity
-- **Safety metrics** - Burglary and crime statistics
+- **Safety metrics** - Burglary and crime statistics per neighborhood
 - **Demographics** - Age distribution, household types, income levels
-- **Environmental factors** - Air quality, noise pollution, green spaces
+- **Environmental factors** - Air quality (RIVM), noise pollution overlays
 
-### 🏠 **Property Intelligence**
+### 🏠 **Property Intelligence** ✅
 - Building characteristics (year built, type, size)
-- Energy labels and efficiency ratings
-- WOZ property valuations
+- Energy labels (2.26M properties from EP-Online)
+- WOZ property valuations (2.2M+ records)
 - **Red flag alerts**:
-  - ⚠️ Erfpacht (ground lease) status
-  - ⚠️ Foundation risk areas (wooden pile problems)
-  - ⚠️ Flood susceptibility
-  - ⚠️ Soil contamination history
+  - ⚠️ Foundation risk areas (funderingsproblematiek)
+  - ⚠️ Flood risk zones
+  - 🔜 Erfpacht (ground lease) warnings
 
-### 👨‍👩‍👧‍👦 **Family-Friendly Insights**
-- Nearby schools (primary, secondary, international)
+### 👨‍👩‍👧‍👦 **Family-Friendly Insights** ✅
+- 7,300+ schools (primary, secondary, international, MBO, HBO)
 - Playgrounds and parks
-- Daycare facilities
-- Healthcare access
+- Healthcare facilities (hospitals, GPs, pharmacies)
+- Emergency services coverage
 
-### 📊 **Data-Driven Scores**
-A simple 0-10 composite score based on:
-- Travel time fit (your priorities)
-- Neighborhood livability
-- Safety index
-- Environmental quality
-- Value for money
-- Family friendliness
+### 🌍 **Multi-Language** ✅
+12 languages: English, Dutch, German, French, Spanish, Italian, Portuguese, Polish, Russian, Ukrainian, and more
+
+### 📊 **Comparison Tools** ✅
+- Side-by-side neighborhood comparison
+- House vs house comparison
+- 🔜 PDF export (Premium feature)
 
 ---
 
@@ -255,29 +288,35 @@ where-to-live-nl/
 
 ---
 
-## 🛠️ Development Roadmap
+## 🛠️ Development Status
 
-### Phase 1: MVP (Current)
-- [x] Data ingestion pipeline
-- [x] Basic map interface
-- [x] Travel time calculator
+### Phase 1: MVP (Target: Q1 2026) - 85% Complete
+- [x] Data ingestion pipeline (25+ datasets)
+- [x] Interactive map interface (MapLibre + PDOK)
+- [x] Travel time calculator (OpenRouteService)
 - [x] Livability scores display
-- [ ] Property search by address
-- [ ] Neighborhood comparison
+- [x] Property search by address
+- [x] Neighborhood comparison
+- [x] Energy labels (2.26M properties)
+- [x] WOZ valuations (2.2M+ records)
+- [x] Foundation risk overlay
+- [x] Flood risk overlay
+- [x] Air quality & noise overlays
+- [x] Schools, healthcare, amenities
+- [x] 12 languages
+- [ ] PDF export for comparisons
+- [ ] Erfpacht warnings
 
-### Phase 2: Enhanced Features
+### Phase 2: Enhanced Features (Target: Q2 2026)
 - [ ] User accounts (save searches)
-- [ ] Email alerts for new properties
-- [ ] Mobile app (React Native)
-- [ ] Multi-language support (EN/NL)
-- [ ] Foundation risk database (crowdsourced)
-
-### Phase 3: Premium Features
-- [ ] Kadaster integration (paid API)
+- [ ] Saved location alerts
+- [ ] Kadaster integration (premium)
 - [ ] Historical price trends
+
+### Phase 3: Future
+- [ ] Mobile app
 - [ ] Predictive pricing model
-- [ ] Erfpacht calculator
-- [ ] Community forum
+- [ ] Community reviews
 
 ---
 
@@ -358,12 +397,13 @@ This tool provides **informational estimates** based on public data sources. It 
 
 ---
 
-## 🐛 Known Issues
+## 🐛 Known Limitations
 
-- Erfpacht data may be incomplete (Kadaster API required for full coverage)
-- Foundation risk areas based on construction period heuristics
-- Travel times are estimates, not real-time calculations
-- Some rural areas have limited data coverage
+- **Erfpacht**: Not yet implemented - Kadaster API required for full coverage
+- **Properties coverage**: ~400K addresses currently (expanding)
+- **Foundation risk**: Based on known risk areas + construction period heuristics
+- **Travel times**: Cached estimates via OpenRouteService (not real-time)
+- **Energy labels**: Looked up on-demand from 2.26M record database
 
 See the [GitHub Issues](https://github.com/yourusername/where-to-live-nl/issues) page for a full list.
 
@@ -395,4 +435,4 @@ The underlying public data sources remain under their original open licenses.
 
 **Built for navigating the Dutch housing market**
 
-*Last updated: November 2025*
+*Last updated: December 2025*

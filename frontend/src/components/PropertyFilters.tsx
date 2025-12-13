@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import type { PropertyFilters as Filters, PropertyType } from '@/types/property'
 import { getPropertyTypeLabel } from '@/types/property'
+import { useTranslations } from 'next-intl'
 
 interface PropertyFiltersProps {
   onFiltersChange: (filters: Filters) => void
@@ -13,6 +14,7 @@ export default function PropertyFilters({
   onFiltersChange,
   initialFilters = {},
 }: PropertyFiltersProps) {
+  const t = useTranslations('filters')
   const [minPrice, setMinPrice] = useState<number | undefined>(initialFilters.minPrice)
   const [maxPrice, setMaxPrice] = useState<number | undefined>(initialFilters.maxPrice)
   const [selectedTypes, setSelectedTypes] = useState<PropertyType[]>(
@@ -74,13 +76,13 @@ export default function PropertyFilters({
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-gray-900">Filter Properties</h3>
+        <h3 className="font-semibold text-gray-900">{t('title')}</h3>
         {hasActiveFilters && (
           <button
             onClick={handleResetFilters}
             className="text-xs text-blue-600 hover:text-blue-800"
           >
-            Reset all
+            {t('resetAll')}
           </button>
         )}
       </div>
@@ -88,13 +90,13 @@ export default function PropertyFilters({
       {/* Price Range */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Price Range (WOZ Value)
+          {t('priceRange')}
         </label>
         <div className="grid grid-cols-2 gap-2">
           <div>
             <input
               type="number"
-              placeholder="Min €"
+              placeholder={t('minPrice')}
               value={minPrice || ''}
               onChange={(e) => setMinPrice(e.target.value ? parseInt(e.target.value) : undefined)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
@@ -103,7 +105,7 @@ export default function PropertyFilters({
           <div>
             <input
               type="number"
-              placeholder="Max €"
+              placeholder={t('maxPrice')}
               value={maxPrice || ''}
               onChange={(e) => setMaxPrice(e.target.value ? parseInt(e.target.value) : undefined)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
@@ -135,7 +137,7 @@ export default function PropertyFilters({
       {/* Property Type */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Property Type
+          {t('propertyType')}
         </label>
         <div className="space-y-2">
           {propertyTypes.map((type) => (
@@ -157,13 +159,13 @@ export default function PropertyFilters({
       {/* Number of Rooms */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Number of Rooms
+          {t('numberOfRooms')}
         </label>
         <div className="grid grid-cols-2 gap-2">
           <div>
             <input
               type="number"
-              placeholder="Min"
+              placeholder={t('min')}
               min="1"
               max="10"
               value={minRooms || ''}
@@ -174,7 +176,7 @@ export default function PropertyFilters({
           <div>
             <input
               type="number"
-              placeholder="Max"
+              placeholder={t('max')}
               min="1"
               max="10"
               value={maxRooms || ''}
@@ -191,7 +193,7 @@ export default function PropertyFilters({
               onClick={() => setMinRooms(rooms)}
               className="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded"
             >
-              {rooms}+ rooms
+              {rooms}+ {t('rooms')}
             </button>
           ))}
         </div>
@@ -200,13 +202,13 @@ export default function PropertyFilters({
       {/* Living Area */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Living Area (m²)
+          {t('livingArea')}
         </label>
         <div className="grid grid-cols-2 gap-2">
           <div>
             <input
               type="number"
-              placeholder="Min m²"
+              placeholder={t('minArea')}
               value={minArea || ''}
               onChange={(e) => setMinArea(e.target.value ? parseInt(e.target.value) : undefined)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
@@ -215,7 +217,7 @@ export default function PropertyFilters({
           <div>
             <input
               type="number"
-              placeholder="Max m²"
+              placeholder={t('maxArea')}
               value={maxArea || ''}
               onChange={(e) => setMaxArea(e.target.value ? parseInt(e.target.value) : undefined)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
@@ -249,22 +251,22 @@ export default function PropertyFilters({
         onClick={handleApplyFilters}
         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
       >
-        Apply Filters
+        {t('applyFilters')}
       </button>
 
       {/* Active Filters Summary */}
       {hasActiveFilters && (
         <div className="text-xs text-gray-600 space-y-1">
-          <div className="font-medium">Active Filters:</div>
-          {minPrice && <div>• Min price: €{minPrice.toLocaleString('nl-NL')}</div>}
-          {maxPrice && <div>• Max price: €{maxPrice.toLocaleString('nl-NL')}</div>}
+          <div className="font-medium">{t('activeFilters')}</div>
+          {minPrice && <div>• {t('minPriceLabel')} €{minPrice.toLocaleString('nl-NL')}</div>}
+          {maxPrice && <div>• {t('maxPriceLabel')} €{maxPrice.toLocaleString('nl-NL')}</div>}
           {selectedTypes.length > 0 && (
-            <div>• Types: {selectedTypes.map(getPropertyTypeLabel).join(', ')}</div>
+            <div>• {t('types')} {selectedTypes.map(getPropertyTypeLabel).join(', ')}</div>
           )}
-          {minRooms && <div>• Min rooms: {minRooms}</div>}
-          {maxRooms && <div>• Max rooms: {maxRooms}</div>}
-          {minArea && <div>• Min area: {minArea}m²</div>}
-          {maxArea && <div>• Max area: {maxArea}m²</div>}
+          {minRooms && <div>• {t('minRoomsLabel')} {minRooms}</div>}
+          {maxRooms && <div>• {t('maxRoomsLabel')} {maxRooms}</div>}
+          {minArea && <div>• {t('minAreaLabel')} {minArea}m²</div>}
+          {maxArea && <div>• {t('maxAreaLabel')} {maxArea}m²</div>}
         </div>
       )}
     </div>

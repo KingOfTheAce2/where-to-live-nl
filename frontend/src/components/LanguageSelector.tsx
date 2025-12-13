@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
+import { useState, useEffect, useTransition } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { useLocale } from 'next-intl'
 
 const languages = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -17,32 +18,40 @@ const languages = [
 ]
 
 export default function LanguageSelector() {
-  const [currentLang, setCurrentLang] = useState('en')
+  const locale = useLocale()
+  const [currentLang, setCurrentLang] = useState(locale || 'en')
   const [isOpen, setIsOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
   const router = useRouter()
   const pathname = usePathname()
 
   useEffect(() => {
-    // Get language from localStorage or pathname
-    const stored = localStorage.getItem('language')
-    if (stored) {
-      setCurrentLang(stored)
-    } else if (pathname) {
-      const pathLang = pathname.split('/')[1]
-      if (languages.some(l => l.code === pathLang)) {
-        setCurrentLang(pathLang)
-      }
+    // Sync with current locale
+    if (locale) {
+      setCurrentLang(locale)
     }
-  }, [pathname])
+  }, [locale])
 
   const changeLanguage = (langCode: string) => {
     setCurrentLang(langCode)
     localStorage.setItem('language', langCode)
     setIsOpen(false)
 
+    // Get the path without locale prefix
+    // pathname could be /en/something or /something
+    let pathWithoutLocale = pathname || ''
+    const localePattern = /^\/(en|nl|de|fr|es|it|pl|pt|ru|uk)(\/|$)/
+    if (localePattern.test(pathWithoutLocale)) {
+      pathWithoutLocale = pathWithoutLocale.replace(localePattern, '/')
+    }
+    if (pathWithoutLocale === '/') pathWithoutLocale = ''
+
     // Navigate to new language path
-    const newPath = `/${langCode}${pathname?.replace(/^\/[a-z]{2}/, '') || ''}`
-    router.push(newPath)
+    const newPath = `/${langCode}${pathWithoutLocale}`
+    startTransition(() => {
+      router.push(newPath)
+      router.refresh()
+    })
   }
 
   const currentLanguage = languages.find(l => l.code === currentLang) || languages[0]
@@ -51,10 +60,18 @@ export default function LanguageSelector() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 text-sm bg-white border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
+        disabled={isPending}
+        className={`flex items-center gap-2 px-3 py-2 text-sm bg-white border border-gray-200 rounded-md hover:bg-gray-50 transition-colors ${isPending ? 'opacity-70 cursor-wait' : ''}`}
         aria-label="Select language"
       >
-        <span>{currentLanguage.flag}</span>
+        {isPending ? (
+          <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        ) : (
+          <span>{currentLanguage.flag}</span>
+        )}
         <span className="hidden sm:inline">{currentLanguage.name}</span>
         <svg
           className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
