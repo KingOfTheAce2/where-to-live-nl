@@ -1,8 +1,51 @@
 {
+  "nav": {
+    "home": "Home",
+    "backToHome": "Back to Home"
+  },
   "app": {
-    "title": "Where to Live NL",
-    "subtitle": "Find your perfect Dutch home",
-    "builtWith": "Built with ❤️  for expats"
+    "title": "WhereToLive",
+    "subtitle": "Find the best place to live in the Netherlands",
+    "builtWith": "Built with care for expats",
+    "betaDisclaimer": "Beta: Map layers may load slowly (external services)"
+  },
+  "landing": {
+    "openMap": "Open Map",
+    "hero": {
+      "title": "Find Your Perfect Neighborhood in the Netherlands",
+      "subtitle": "Make informed decisions about where to live with comprehensive data on safety, livability, amenities, and more.",
+      "cta": "Explore the Map",
+      "learnMore": "Learn More"
+    },
+    "features": {
+      "title": "Everything You Need to Know",
+      "subtitle": "Access comprehensive neighborhood data to make the best decision for you and your family.",
+      "safety": {
+        "title": "Safety & Crime Data",
+        "description": "Real crime statistics from Politie.nl to understand neighborhood safety levels."
+      },
+      "livability": {
+        "title": "Livability Scores",
+        "description": "Official Leefbaarometer scores measuring quality of life across Dutch neighborhoods."
+      },
+      "amenities": {
+        "title": "Nearby amenities",
+        "description": "Distance to supermarkets, healthcare, schools, parks, and public transport."
+      },
+      "demographics": {
+        "title": "Demographics",
+        "description": "Population statistics, age distribution, and housing information from CBS."
+      }
+    },
+    "dataSources": {
+      "title": "Trusted Data Sources",
+      "subtitle": "All data comes from official Dutch government sources and verified databases."
+    },
+    "cta": {
+      "title": "Ready to Find Your New Home?",
+      "subtitle": "Start exploring neighborhoods across the Netherlands today.",
+      "button": "Start Exploring"
+    }
   },
   "woz": {
     "title": "WOZ Property Value",
@@ -37,10 +80,10 @@
     "shopping": "Shopping",
     "supermarket": "Supermarket",
     "dailyGroceries": "Daily groceries",
-    "education": "Education & Childcare",
+    "education": "Education and Childcare",
     "primarySchool": "Primary school",
     "daycare": "Daycare",
-    "culture": "Culture & Recreation",
+    "culture": "Culture and Recreation",
     "library": "Library",
     "restaurant": "Restaurant"
   },
@@ -68,26 +111,42 @@
     "houses": "Houses"
   },
   "search": {
-    "title": "Search Property Address",
+    "title": "Search property address",
     "description": "Enter an address to see detailed neighborhood information, WOZ value, crime stats, nearby amenities, and more.",
     "placeholder": "Enter street address, city...",
     "selected": "Selected:"
   },
+  "atAGlance": {
+    "selectedLocation": "Selected Location",
+    "livability": "Livability",
+    "safety": "Safety",
+    "green": "Green",
+    "transit": "Transit",
+    "warnings": "warnings",
+    "goodSignals": "good",
+    "analyzing": "Analyzing location data..."
+  },
+  "sections": {
+    "risks": "Risks & Warnings",
+    "costs": "Costs & Value",
+    "location": "Location & Amenities",
+    "neighborhood": "Neighborhood"
+  },
   "snapshot": {
-    "title": "Neighborhood Snapshot",
+    "title": "Neighborhood snapshot",
     "loading": "Loading...",
     "startSearch": "Start your search",
     "startSearchDescription": "Enter an address above to see comprehensive neighborhood information, property values, and livability data.",
     "discover": "What you'll discover:",
     "discoverItems": {
-      "crime": "Safety & crime stats - neighborhood crime data from Politie.nl",
+      "crime": "Safety and crime stats - neighborhood crime data from Politie.nl",
       "amenities": "Nearby amenities - supermarkets, healthcare, schools, playgrounds",
       "environment": "Environment quality - green spaces, parks, livability scores",
       "demographics": "Demographics - population, age distribution, household types"
     }
   },
   "amenities": {
-    "title": "Nearby Amenities (2km)",
+    "title": "Nearby amenities (2km)",
     "supermarkets": "Supermarkets",
     "healthcare": "Healthcare",
     "playgrounds": "Playgrounds",
@@ -96,14 +155,15 @@
     "away": "away"
   },
   "crime": {
-    "title": "Safety & Crime",
+    "title": "Safety and crime",
     "crimeRate": "Crime rate:",
     "notAvailable": "Not available",
     "nlAverage": "NL average: {average} per 1,000 residents (CBS {year})",
     "dataFrom": "Data from Politie.nl and CBS"
   },
   "wijkagent": {
-    "title": "Your Neighborhood Police Officer",
+    "title": "Your neighborhood police officer",
+    "clickToLearn": "Learn more",
     "whatIs": "What is a Wijkagent?",
     "explanation": "A wijkagent (neighborhood police officer) is your local police contact responsible for safety in your specific area. They focus on preventing crime, building trust with residents, and addressing local concerns.",
     "whatTheyDo": "What they do:",
@@ -124,17 +184,15 @@
     }
   },
   "environment": {
-    "title": "Environment and Risks",
+    "title": "Environment and risks",
     "parksNearby": "Parks nearby (3km)",
     "greenSpace": "Green space quality",
     "floodRisk": "Flood risk",
     "foundationRisk": "Foundation risk",
-    "airQuality": "Air quality",
-    "viewOnMap": "View on map",
-    "dataVisible": "Environmental data visible on map"
+    "airQuality": "Air quality"
   },
   "livability": {
-    "title": "Livability Score",
+    "title": "Livability score",
     "dataUnavailable": "Data unavailable",
     "breakdown": "Score breakdown",
     "physical": "Physical environment",
@@ -223,6 +281,7 @@
     "baseMap": "Base map",
     "standardMap": "Standard",
     "aerialPhoto": "Aerial",
+    "neighborhoodBoundaries": "Neighborhood boundaries",
     "overlays": "Map overlays",
     "loading": "Loading map...",
     "crimeRate": "Crime rate",
@@ -233,25 +292,35 @@
     "healthcare": "Healthcare",
     "supermarkets": "Supermarkets",
     "playgrounds": "Playgrounds",
-    "trainStations": "Train stations",
+    "speelbossen": "Play forests (Speelbossen)",
+    "trainStations": "Train stations (NS)",
+    "metroStations": "Metro stations",
+    "tramStops": "Tram stops",
     "schools": "Schools",
     "cadastralParcels": "Cadastral parcels",
-    "natureEnvironment": "Nature & Environment",
+    "natureEnvironment": "Nature and environment",
     "nationalParks": "National parks",
     "natura2000": "Natura 2000 areas",
+    "floodRisk": "Flood risk",
     "floodRiskZones": "Flood risk zones",
+    "floodCombined": "Combined flood risk",
     "droneNoFlyZones": "Drone no-fly zones",
     "pollutants": {
       "NO2": "NO₂ (Nitrogen Dioxide)",
       "PM10": "PM10 (Particulate Matter)",
       "PM25": "PM2.5 (Fine Particles)"
     },
+    "noiseOverlay": "Noise pollution",
+    "noiseCombined": "Combined (all sources)",
+    "noiseRoad": "Road traffic",
+    "noiseRail": "Railways",
+    "noiseAircraft": "Aircraft",
     "legend": {
       "title": "Map legend",
       "baseMap": "Base map",
       "markers": "Markers",
       "water": "Water",
-      "parks": "Parks & green",
+      "parks": "Parks and green",
       "buildings": "Buildings",
       "residential": "Residential",
       "industrial": "Industrial",
@@ -267,10 +336,17 @@
       "pharmacy": "Apotheek (pharmacy)",
       "hospital": "Hospital",
       "clinic": "Clinic",
-      "transportAmenities": "Transport & amenities",
-      "trainStation": "Train station",
+      "transportAmenities": "Transport and amenities",
+      "transport": "Transport",
+      "shopping": "Shopping",
+      "recreation": "Recreation",
+      "trainStation": "Train station (NS)",
+      "metroStation": "Metro station",
+      "tramStop": "Tram stop",
       "supermarket": "Supermarket",
       "playground": "Playground (speeltuin)",
+      "naturePlay": "Nature play",
+      "speelbos": "Speelbos (play forest)",
       "neighborhoodBoundary": "Neighborhood boundary",
       "crimeRateLegend": "Crime rate (blue)",
       "low": "Low",
@@ -297,11 +373,16 @@
       "floodRiskZone": "Flood risk zone",
       "droneNoFlyLegend": "Drone No-Fly Zones (LVNL)",
       "restrictedZone": "Restricted zone (vital infrastructure)",
-      "natura2000NoFly": "Natura 2000 no-fly zone"
+      "natura2000NoFly": "Natura 2000 no-fly zone",
+      "veryHighRisk": "Very high risk",
+      "highRisk": "High risk",
+      "mediumRisk": "Medium risk",
+      "lowRisk": "Low risk",
+      "veryLowRisk": "Very low risk"
     }
   },
   "redFlags": {
-    "title": "Red Flags & Warnings",
+    "title": "Red flags and warnings",
     "issue": "issue",
     "issues": "issues",
     "errorLoading": "Error loading risk data",
@@ -310,6 +391,7 @@
     "foundation": {
       "title": "Foundation Risk Area",
       "inRiskArea": "This property is in an official foundation attention area (PDOK/RVO)",
+      "unknown": "Foundation risk status unknown - risk data service unavailable. Always verify with a professional inspection.",
       "recommendation": "Get a professional foundation inspection (bouwkundig rapport) before purchasing",
       "linkLabel": "Learn more at KCAF"
     },
@@ -333,7 +415,7 @@
       "linkLabel": "View noise maps"
     },
     "expatsNotice": {
-      "title": "Important for Expats",
+      "title": "Important for expats",
       "tip1": "Foundation inspection is NOT included in standard property viewing",
       "tip2": "Sellers are not required to disclose foundation issues",
       "tip3": "Budget €1,000-1,500 for professional bouwkundig rapport"
@@ -399,5 +481,434 @@
     "premiumDescription": "PDF export is a premium feature. Upgrade to download comparison reports and share them with others.",
     "upgradeToPremium": "Upgrade to Premium",
     "maybeLater": "Maybe Later"
+  },
+  "wws": {
+    "title": "Rent points calculator (WWS)",
+    "whatIsWWS": "What is the WWS rent points system?",
+    "wwsExplanation": "The Dutch government uses a points system to set maximum rent prices. Your landlord calculates points based on the property's size, energy efficiency, and features. More points = higher allowed rent. This calculator helps you estimate if your rent is fair.",
+    "livingSpace": "Living space (m²)",
+    "energyLabel": "Energy label",
+    "amenities": "Amenities (optional)",
+    "privateGarden": "Private garden (+4 points)",
+    "balconyTerrace": "Balcony/terrace (+2 points)",
+    "privateParking": "Private parking (+2 points)",
+    "totalPoints": "Total WWS points",
+    "maximumRent": "Maximum rent (2025)",
+    "noCap": "No cap",
+    "perMonth": "/mo",
+    "regulatedSocialHousing": "Regulated social housing",
+    "regulatedMidRangeRental": "Regulated mid-range rental",
+    "privateSectorNoLimit": "Private sector (no rent limit)",
+    "socialHousingInfo": "Up to {maxPoints} points. Rent is capped at €{limit}/month. You have strong legal protections.",
+    "midRangeInfo": "{minPoints}-{maxPoints} points. Rent capped between €{minLimit}-€{maxLimit}/month. Moderate protections.",
+    "privateSectorInfo": "{minPoints}+ points. No rent limit - landlord can charge any amount they want.",
+    "whatIsHuurcommissie": "What is the Huurcommissie?",
+    "huurcommissieTitle": "Huurcommissie (Rent Tribunal)",
+    "huurcommissieExplanation": "The Huurcommissie is an independent Dutch government organization that protects tenant rights. They help resolve disputes between tenants and landlords about rent prices, maintenance, and service charges.",
+    "whatTheyCanDo": "What they can do for you:",
+    "huurcommissieServices": {
+      "checkRent": "Check if your rent price is correct based on WWS points",
+      "lowerRent": "Lower your rent if it's too high for social housing",
+      "disputes": "Settle disputes about property maintenance",
+      "serviceCharges": "Review service charge costs (heating, water, etc.)",
+      "freeAdvice": "Provide free advice on rental law"
+    },
+    "tipsForExpats": "Tips for Expats:",
+    "expatTips": {
+      "english": "Services available in English on their website",
+      "rentCheck": "You can request a rent check for social housing (€25 fee, refunded if rent is lowered)",
+      "binding": "Decision is legally binding for both tenant and landlord",
+      "duration": "Process typically takes 8-12 weeks",
+      "noEviction": "Your landlord cannot evict you for filing a complaint"
+    },
+    "checkRentLink": "Check your rent on Huurcommissie.nl",
+    "huurcommissieWarning": "The Huurcommissie can only help with regulated rentals (below €{limit}/month). For expensive rentals, landlords can charge whatever they want.",
+    "disclaimer": "This is a simplified calculator for estimation purposes. The actual WWS calculation includes many more factors (bathroom quality, kitchen facilities, insulation, location scarcity, etc.). For an official assessment, use the",
+    "officialCalculator": "official Huurcommissie calculator",
+    "points": "points"
+  },
+  "utilities": {
+    "title": "Average utility costs",
+    "perMonth": "/month",
+    "perYear": "/year",
+    "total": "total",
+    "gas": "Gas",
+    "electricity": "Electricity",
+    "water": "Water",
+    "districtHeating": "of homes here use district heating (stadsverwarming)",
+    "aboutCosts": "About these costs",
+    "dataSource": "Data source:",
+    "prices": "Prices (Jan 2025):",
+    "note": "Note:",
+    "noteDesc": "Actual costs vary by:",
+    "varFactor1": "Home size and insulation",
+    "varFactor2": "Number of residents",
+    "varFactor3": "Personal usage habits",
+    "varFactor4": "Energy provider and contract",
+    "noData": "No energy consumption data available for this area",
+    "energyLabel": "Energy Label",
+    "estimatedLabel": "Estimated from neighborhood average consumption"
+  },
+  "proximity": {
+    "title": "Distance to facilities (CBS 2024)",
+    "transport": "🚆 Transport",
+    "trainStation": "Train station",
+    "majorTrainStation": "Major train station",
+    "highwayOnramp": "Highway on-ramp",
+    "shopping": "🛒 Shopping",
+    "largeSupermarket": "Large supermarket",
+    "dailyGroceries": "Daily groceries",
+    "withinKm": "within 1km",
+    "healthcare": "🏥 Healthcare",
+    "gp": "GP (huisarts)",
+    "pharmacy": "Pharmacy",
+    "hospital": "Hospital",
+    "education": "🎓 Education and Childcare",
+    "primarySchool": "Primary school",
+    "daycare": "Daycare",
+    "culture": "🎭 Culture and Recreation",
+    "library": "Library",
+    "museum": "Museum",
+    "cinema": "Cinema",
+    "swimmingPool": "Swimming pool",
+    "officialMetrics": "Official CBS proximity metrics for"
+  },
+  "emergencyServices": {
+    "title": "🚨 Emergency services nearby"
+  },
+  "culturalAmenities": {
+    "title": "🎭 Cultural amenities nearby"
+  },
+  "healthcareFacilities": {
+    "title": "🏥 Healthcare facilities",
+    "description": "Includes hospitals, GPs, pharmacies, dentists, and specialists"
+  },
+  "municipality": {
+    "title": "📍 Local government",
+    "gemeente": "Municipality",
+    "quickLinks": "Quick Links:",
+    "website": "🌐 Gemeente website",
+    "trash": "🗑️ Trash collection schedule",
+    "parking": "🅿️ Parking permits",
+    "tipForExpats": "💡 Tip for Expats:",
+    "tipDesc": "Most gemeente services are available online. You can arrange permits, report issues, and access local information through their website."
+  },
+  "travelTimeCard": {
+    "title": "Optional: Add work address",
+    "description": "Calculate travel time from this property to your workplace. Routes are cached in a database to make repeated queries faster and minimize API costs.",
+    "addCommute": "+ Add Commute Calculation",
+    "cancel": "Cancel",
+    "workAddress": "Work address:",
+    "estimatedCommute": "Estimated commute time:",
+    "byBike": "By bike",
+    "byCar": "By car",
+    "calculating": "Calculating travel times...",
+    "actualRoutes": "ℹ️ Actual route times via OpenRouteService",
+    "changeAddress": "Change work address",
+    "enterWorkAddress": "Enter work address..."
+  },
+  "wozCard": {
+    "title": "WOZ property value",
+    "value2024": "2024 Value",
+    "perSqm": "Per m² (est. 75m²)",
+    "viewHistorical": "View historical values (2014-2024)",
+    "notIndexedYet": "This address hasn't been indexed in our database yet. You can look up the WOZ value yourself on the official government website.",
+    "checkYourself": "Check WOZ value at wozwaardeloket.nl"
+  },
+  "neighborhood": {
+    "noCode": "No neighborhood code provided"
+  },
+  "auth": {
+    "login": "Log in",
+    "signIn": "Sign in",
+    "signup": "Sign up",
+    "signOut": "Sign out",
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full name",
+    "signingIn": "Signing in...",
+    "creatingAccount": "Creating account...",
+    "orContinueWith": "Or continue with",
+    "noAccount": "Don't have an account? Sign up",
+    "alreadyHaveAccount": "Already have an account? Log in",
+    "checkEmail": "Check your email",
+    "confirmationSent": "We've sent you a confirmation email. Please check your inbox and click the link to verify your account.",
+    "passwordTooShort": "Password must be at least 8 characters",
+    "passwordRequirements": "Minimum 8 characters",
+    "createAccount": "Create an account",
+    "upgradeToPremium": "Upgrade to Premium",
+    "dashboard": "Dashboard",
+    "savedSearches": "Saved searches",
+    "subscription": "Subscription"
+  },
+  "premium": {
+    "premiumFeature": "Premium Feature",
+    "loginRequired": "Please log in to access this feature",
+    "loginToAccess": "Log in",
+    "upgradeNow": "Upgrade Now",
+    "pdfDescription": "Export comparison reports as PDF documents",
+    "savedSearchesDescription": "Save unlimited address searches for later",
+    "favoritesDescription": "Save unlimited favorite locations",
+    "advancedDataDescription": "Access detailed crime statistics and historical data"
+  },
+  "pricing": {
+    "title": "Choose your plan",
+    "subtitle": "Get the most out of Where to Live NL",
+    "freePlan": "Free",
+    "freeDescription": "Perfect for casual exploration",
+    "free": "Free",
+    "premiumPlan": "Premium",
+    "premiumDescription": "Everything you need to find your perfect home",
+    "price": "€9.99",
+    "perMonth": "/month",
+    "cancelAnytime": "Cancel anytime",
+    "unlimitedSearch": "Unlimited address searches",
+    "basicData": "Basic neighborhood data",
+    "savedSearches3": "Save up to 3 searches",
+    "favorites5": "Save up to 5 favorites",
+    "noPdfExport": "No PDF export",
+    "noAdvancedData": "No advanced analytics",
+    "fullData": "Full neighborhood data",
+    "unlimitedSaved": "Unlimited saved searches",
+    "unlimitedFavorites": "Unlimited favorites",
+    "pdfExport": "PDF export and reports",
+    "advancedData": "Detailed crime statistics",
+    "historicalData": "Historical data (10+ years)",
+    "getStarted": "Get Started",
+    "subscribe": "Subscribe Now",
+    "currentPlan": "Current Plan",
+    "processing": "Processing...",
+    "securePayment": "Secure payment powered by Stripe",
+    "popular": "Most Popular"
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "upgradeBanner": "Unlock Premium Features",
+    "upgradeDescription": "Get unlimited saved searches, PDF exports, and advanced data.",
+    "upgradeCta": "Upgrade Now",
+    "savedSearches": "Saved Searches",
+    "savedSearchesDescription": "View and manage your saved address searches",
+    "subscription": "Subscription",
+    "subscriptionDescription": "Manage your subscription and billing",
+    "searchMap": "Search Map",
+    "searchMapDescription": "Search for addresses and explore neighborhoods",
+    "accountInfo": "Account Information",
+    "email": "Email",
+    "plan": "Plan",
+    "memberSince": "Member since"
+  },
+  "savedSearches": {
+    "title": "Saved Searches",
+    "usageCount": "{count} of {limit} saved searches used",
+    "backToDashboard": "Back to Dashboard",
+    "limitReached": "You've reached your limit",
+    "upgradeForMore": "Upgrade to Premium for unlimited saved searches",
+    "upgrade": "Upgrade",
+    "noSearches": "No saved searches",
+    "noSearchesDescription": "Search for an address and save it to view later",
+    "startSearching": "Start Searching",
+    "savedOn": "Saved on",
+    "openSearch": "Open",
+    "deleteSearch": "Delete"
+  },
+  "subscription": {
+    "title": "Subscription",
+    "backToDashboard": "Back to Dashboard",
+    "subscriptionSuccess": "Your subscription is now active!",
+    "currentPlan": "Current Plan",
+    "planDetails": "Manage your subscription and billing",
+    "status": "Status",
+    "active": "Active",
+    "renewsOn": "Renews on",
+    "price": "Price",
+    "priceValue": "€9.99/month",
+    "loading": "Loading...",
+    "manageSubscription": "Manage Subscription",
+    "freeDescription": "You're currently on the free plan with limited features.",
+    "premiumBenefits": "Premium includes:",
+    "benefit1": "Unlimited saved searches",
+    "benefit2": "PDF export and comparison reports",
+    "benefit3": "Detailed crime statistics",
+    "benefit4": "Historical data (10+ years)",
+    "upgradeToPremium": "Upgrade to Premium"
+  },
+  "guide": {
+    "openMap": "Open Map",
+    "backToMap": "Back to Map",
+    "title": "Map Layers Guide",
+    "subtitle": "Understanding what each map overlay means and why it matters when choosing where to live in the Netherlands. This guide explains Dutch terms and concepts that may be unfamiliar to expats.",
+    "intro": {
+      "title": "How to use this guide",
+      "description": "Each map layer reveals different aspects of a neighborhood. Toggle these layers on the map to visualize data that affects your quality of life. Click on any area to see specific values. This guide explains what each layer means and why it matters for your housing decision."
+    },
+    "whyMatters": "Why this matters for you",
+    "dataSource": "Data source",
+    "layers": {
+      "leefbaarometer": {
+        "title": "Livability Score (Leefbaarometer)",
+        "description": "The Leefbaarometer is an official Dutch government index that measures quality of life across all neighborhoods. It combines 100+ indicators including safety, housing quality, social cohesion, and access to facilities into a single score from 1 (very poor) to 5 (excellent).",
+        "whyMatters": "This is the most comprehensive quality-of-life indicator available. A score below 3 indicates areas with challenges. The score is updated every 2 years based on resident surveys and official statistics. It's widely used by Dutch people when choosing where to live."
+      },
+      "airQuality": {
+        "title": "Air Quality",
+        "description": "Shows concentrations of harmful pollutants including NO₂ (nitrogen dioxide from traffic), PM10 (coarse particles), and PM2.5 (fine particles that penetrate deep into lungs). Data comes from RIVM monitoring stations and atmospheric modeling.",
+        "whyMatters": "Air pollution significantly impacts health, especially for children, elderly, and people with respiratory conditions. Areas near highways, airports, and industrial zones typically have worse air quality. The Netherlands has relatively high pollution levels compared to other European countries."
+      },
+      "noise": {
+        "title": "Noise Pollution",
+        "description": "Displays noise levels in decibels (dB) from different sources: road traffic, railways, and aircraft. The Lden metric represents a 24-hour average where evening and night noise is weighted more heavily because it's more disturbing.",
+        "whyMatters": "Chronic noise exposure above 55 dB increases stress and cardiovascular disease risk. Areas near Schiphol, highways, and train lines have significant noise. This affects property values, sleep quality, and overall wellbeing. Check this before renting or buying near infrastructure."
+      },
+      "crime": {
+        "title": "Crime Statistics",
+        "description": "Crime data from the Dutch Police (Politie) showing reported incidents per 1,000 residents. Includes theft, burglary, violence, and vandalism. The national average is approximately 50 incidents per 1,000 residents.",
+        "whyMatters": "Crime rates vary significantly between neighborhoods, even within the same city. City centers and certain suburban areas typically have higher rates. Low crime correlates with higher livability scores. Consider both the rate and types of crime when evaluating an area."
+      },
+      "flooding": {
+        "title": "Flood Risk",
+        "description": "Shows areas at risk of flooding from rivers, sea, or heavy rainfall. The Netherlands is famously low-lying, with 26% of the country below sea level. The map shows potential water depth in worst-case scenarios (dike breach or extreme weather).",
+        "whyMatters": "While Dutch flood defenses are world-class, risk isn't zero. Flood risk affects insurance costs and could impact basement usage. Properties in risk zones may face restrictions. Climate change is increasing rainfall intensity. Always check evacuation routes if you live in a risk area."
+      },
+      "foundationRisk": {
+        "title": "Foundation Risk",
+        "description": "Identifies areas where buildings may have foundation problems due to subsiding soil. Particularly relevant for older buildings (pre-1970) with wooden pile foundations in clay or peat soil areas, common in western Netherlands.",
+        "whyMatters": "Foundation problems are extremely expensive to fix (€50,000-€150,000+) and are NOT covered by standard insurance. Sellers are not legally required to disclose issues. Budget €1,000-1,500 for a professional foundation inspection (bouwkundig rapport) before buying any pre-1970 property in risk areas."
+      },
+      "natura2000": {
+        "title": "Natura 2000 Protected Areas",
+        "description": "Natura 2000 is the European Union's network of protected nature areas. The Netherlands has 162 Natura 2000 sites covering about 14% of land and water. These include dunes, heathlands, forests, and wetlands with strict environmental protections.",
+        "whyMatters": "Living near Natura 2000 areas means access to pristine nature for hiking and recreation. However, there are strict regulations: you cannot build or renovate freely near these areas, and nitrogen emissions restrictions may limit activities. It's great for nature lovers but check local rules before buying."
+      },
+      "nationalParks": {
+        "title": "National Parks",
+        "description": "The Netherlands has 21 national parks covering unique landscapes including the Wadden Sea, Veluwe forests, dunes, and wetlands. These are designated for nature conservation and public recreation.",
+        "whyMatters": "National parks offer exceptional outdoor recreation opportunities: hiking, cycling, wildlife watching. Properties near parks often have premium values. However, similar to Natura 2000, there may be building restrictions and environmental regulations in surrounding areas."
+      },
+      "droneNoFly": {
+        "title": "Drone No-Fly Zones",
+        "description": "Areas where drone flight is restricted or prohibited. Includes airports, military installations, royal palaces, prisons, and nature reserves. Managed by LVNL (Air Traffic Control Netherlands).",
+        "whyMatters": "If you're a drone hobbyist, check these zones before choosing a location. No-fly zones can be quite large around airports. This map also indicates proximity to sensitive infrastructure like airports and military bases which may affect noise levels and property values."
+      },
+      "cadastral": {
+        "title": "Cadastral Parcels",
+        "description": "Shows official property boundaries as registered with the Kadaster (Dutch Land Registry). Each parcel has a unique identifier and legally defined boundaries. The Kadaster was established in 1832 and maintains precise records of all land ownership.",
+        "whyMatters": "Essential when buying property to understand exact boundaries. Disputes over property lines can be expensive to resolve. The cadastral map shows whether boundaries are definitively surveyed or provisional. You can request official boundary documents from the Kadaster for a fee."
+      },
+      "neighborhoods": {
+        "title": "Neighborhood Boundaries",
+        "description": "Shows official CBS (Statistics Netherlands) neighborhood ('buurt') and district ('wijk') boundaries. The Netherlands is divided into approximately 17,000 neighborhoods. All government statistics are reported at this level.",
+        "whyMatters": "Understanding neighborhood boundaries helps you search for relevant statistics and compare areas accurately. Property prices, crime rates, and livability scores are typically reported per neighborhood. Adjacent streets can have very different statistics if they're in different official neighborhoods."
+      },
+      "schools": {
+        "title": "Schools",
+        "description": "Locations of all Dutch schools including basisschool (primary, ages 4-12), voortgezet onderwijs (secondary, ages 12-18), MBO (vocational), HBO (applied sciences), and WO (research universities). Data from DUO, the Dutch education authority.",
+        "whyMatters": "For families, proximity to schools is crucial. Dutch children typically walk or cycle to school independently. International schools are concentrated in major cities. School quality varies and parents should research specific schools. The catchment area for popular schools can be very small."
+      },
+      "healthcare": {
+        "title": "Healthcare Facilities",
+        "description": "Shows locations of huisartsen (GPs), pharmacies, hospitals, and specialist clinics. In the Dutch system, your huisarts is your first point of contact for all healthcare and provides referrals to specialists.",
+        "whyMatters": "Everyone in the Netherlands must register with a local huisarts. Popular practices in cities often have waiting lists. Having a hospital nearby matters for emergencies. Pharmacies are less common than in some countries - most are in shopping areas or attached to GP practices."
+      },
+      "supermarkets": {
+        "title": "Supermarkets",
+        "description": "Major grocery stores including Albert Heijn, Jumbo, Lidl, Aldi, Plus, and specialty stores. Most Dutch supermarkets are smaller than American or UK equivalents and are found in neighborhood centers.",
+        "whyMatters": "Daily shopping is common in the Netherlands - people often visit supermarkets multiple times per week. Most Dutch cycle to the store. Having a supermarket within cycling distance significantly impacts daily convenience. Some villages only have small shops with limited selection."
+      },
+      "trainStations": {
+        "title": "Train Stations (NS)",
+        "description": "Dutch Railways (NS) stations including Intercity and local (Sprinter) stops. The Netherlands has one of Europe's densest rail networks. Intercity trains connect major cities every 10-15 minutes.",
+        "whyMatters": "Train commuting is extremely common. Living near an Intercity station provides fast connections across the country. Station proximity significantly affects property values. Consider both the station and frequency of trains to your workplace. Rural stations may have limited service."
+      },
+      "publicTransport": {
+        "title": "Metro and Tram",
+        "description": "Metro systems exist in Amsterdam and Rotterdam. Tram networks operate in Amsterdam, Rotterdam, The Hague, and Utrecht. These provide frequent urban transport complementing the train network.",
+        "whyMatters": "In major cities, tram and metro access can be more important than train stations for daily commuting. Lines and stops affect property values. Tram tracks can mean noise, but excellent connections. Metro provides fast cross-city travel in Amsterdam and Rotterdam."
+      },
+      "playgrounds": {
+        "title": "Playgrounds",
+        "description": "Public playgrounds (speeltuinen) maintained by municipalities. Dutch neighborhoods typically have well-maintained play areas for children. Data sourced from municipal records and OpenStreetMap.",
+        "whyMatters": "For families with young children, nearby playgrounds are essential for daily life. Dutch children spend significant time outdoors. Quality and equipment varies - visit in person to assess. Some playgrounds have age restrictions or membership requirements."
+      }
+    },
+    "glossary": {
+      "title": "Dutch Terms for Expats",
+      "places": "Geographic Terms",
+      "terms": "Housing Terms"
+    },
+    "cta": {
+      "title": "Ready to Explore?",
+      "subtitle": "Now that you understand the data layers, start exploring neighborhoods to find your perfect place to live in the Netherlands.",
+      "button": "Open Interactive Map"
+    },
+    "footer": {
+      "disclaimer": "Data is sourced from official Dutch government agencies and is provided for informational purposes. Always verify important information with professional advice before making property decisions."
+    }
+  },
+  "renovation": {
+    "title": "Renovation Budget Calculator",
+    "subtitle": "Estimate costs, savings, and ROI for energy improvements",
+    "currentLabel": "Current energy label",
+    "homeSize": "Home size (m²)",
+    "heatingType": "Heating type",
+    "heatingGas": "Gas (CV ketel)",
+    "heatingElectric": "Electric",
+    "heatingDistrict": "District heating",
+    "heatingHeatpump": "Heat pump",
+    "roofOrientation": "Roof orientation",
+    "roofSouth": "South facing",
+    "roofEastWest": "East-West",
+    "roofNorth": "North facing",
+    "roofFlat": "Flat roof",
+    "selectedMeasures": "{count} measures selected",
+    "clearAll": "Clear all",
+    "totalCost": "Total investment",
+    "annualSavings": "Annual savings",
+    "paybackPeriod": "Payback period",
+    "labelProjection": "Label projection",
+    "years": "years",
+    "co2Reduction": "~{amount} kg CO₂ reduction per year",
+    "subsidyAvailable": "{count} measures eligible for subsidies",
+    "showDetails": "Show details",
+    "hideDetails": "Hide details",
+    "availableSubsidies": "Available Subsidies",
+    "quickWins": "Quick Wins",
+    "mediumInvestments": "Medium Investments",
+    "majorInvestments": "Major Investments",
+    "disclaimer": "Costs are estimates based on average Dutch prices (2025). Actual costs vary by property, contractor, and region. Always get multiple quotes. Subsidies are subject to availability and eligibility requirements."
+  },
+  "tiers": {
+    "free": "Free",
+    "basic": "Basic",
+    "pro": "Pro",
+    "enterprise": "Enterprise",
+    "freeFeatures": {
+      "mapExploration": "Unlimited map exploration",
+      "addressSearches": "10 address searches per day",
+      "basicLayers": "Basic layers (livability, crime, schools)",
+      "travelTime": "3 travel time calculations per day",
+      "neighborhoodInfo": "Summary neighborhood info"
+    },
+    "basicFeatures": {
+      "allFree": "Everything in Free",
+      "unlimitedSearch": "Unlimited address searches",
+      "allLayers": "All 30+ map layers",
+      "unlimitedTravel": "Unlimited travel time calculator",
+      "multiDestination": "Up to 3 commute destinations",
+      "savedLocations": "Save up to 10 locations",
+      "comparison": "Compare 2 neighborhoods",
+      "pdfExport": "3 PDF exports per month"
+    },
+    "proFeatures": {
+      "allBasic": "Everything in Basic",
+      "propertyInsights": "WOZ values & energy labels",
+      "redFlags": "Red Flags risk dashboard",
+      "multiDestination": "Up to 5 commute destinations",
+      "unlimitedSaved": "Unlimited saved locations",
+      "comparison": "Compare up to 5 areas",
+      "unlimitedPdf": "Unlimited PDF reports",
+      "renovationCalc": "Renovation Budget Calculator",
+      "viewer3d": "3D building viewer",
+      "apiAccess": "API access (1,000 calls/month)"
+    }
   }
 }

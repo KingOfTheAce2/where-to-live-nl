@@ -21,6 +21,8 @@ dist/
 # Testing
 coverage/
 .nyc_output/
+tests/api-testing/*.xml
+tests/api-testing/*.json
 
 # IDEs
 .vscode/
@@ -42,6 +44,7 @@ yarn-error.log*
 data/raw/
 data/processed/
 data/tiles/
+data/gtfs/
 
 # Scripts data directory (large raw data files)
 scripts/data/
@@ -55,6 +58,7 @@ scripts/etl/data/
 # Temporary files
 *.tmp
 *.temp
+To-do.md
 .cache/
 __pycache__/
 *.py[cod]
@@ -95,3 +99,7 @@ coordination/orchestration/*
 claude-flow
 # Removed Windows wrapper files per user request
 hive-mind-prompt-*.txt
+
+# Monument data (large, can be regenerated)
+data/processed/rijksmonumenten.geojson
+data/processed/monumenten_polygons.geojson

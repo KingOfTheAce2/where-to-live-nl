@@ -193,6 +193,18 @@ export interface AddressSnapshot {
         [key: string]: any
       }>
     }
+    energy_label?: {
+      available: boolean
+      area_code?: string
+      area_name?: string
+      estimated_energy_label?: string
+      avg_gas_consumption_m3?: number
+      avg_electricity_consumption_kwh?: number
+      avg_household_size?: number
+      connection_count?: number
+      note?: string
+      [key: string]: any
+    }
   }
   metadata: {
     timestamp: string

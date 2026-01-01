@@ -27,11 +27,23 @@ function calculateDistance(lat1: number, lng1: number, lat2: number, lng2: numbe
   return R * c
 }
 
-function loadAmenityData(filename: string) {
+function loadAmenityData(filename: string): any[] | null {
   try {
     const dataPath = path.join(process.cwd(), '../data/raw', filename)
     const fileContent = fs.readFileSync(dataPath, 'utf-8')
-    return JSON.parse(fileContent)
+    const parsed = JSON.parse(fileContent)
+
+    // Handle both formats: {metadata, data: [...]} or flat array [...]
+    let items: any[] = Array.isArray(parsed) ? parsed : (parsed.data || [])
+
+    // Normalize coordinate property names (some files use 'latitude' instead of 'lat')
+    items = items.map(item => ({
+      ...item,
+      lat: item.lat ?? item.latitude,
+      lng: item.lng ?? item.longitude
+    }))
+
+    return items
   } catch (error) {
     console.error(`Error loading ${filename}:`, error)
     return null
@@ -92,7 +104,7 @@ export async function GET(request: NextRequest) {
     const lat = parseFloat(searchParams.get('lat') || '0')
     const lng = parseFloat(searchParams.get('lng') || '0')
     const address = searchParams.get('address') || ''
-    const areaCode = searchParams.get('area_code') || '' // Neighborhood code from PDOK
+    let areaCode = searchParams.get('area_code') || '' // Neighborhood code from PDOK (or resolved by backend)
 
     if (!lat || !lng) {
       return NextResponse.json(
@@ -101,19 +113,17 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Load amenity data
-    const supermarketsData = loadAmenityData('amenities_supermarkets.json')
-    const healthcareData = loadAmenityData('amenities_healthcare.json')
-    const playgroundsData = loadAmenityData('amenities_playgrounds.json')
-    const parksData = loadAmenityData('amenities_parks.json')
+    // Load amenity data (using correct file names)
+    const supermarketsData = loadAmenityData('supermarkets.json')
+    const healthcareData = loadAmenityData('healthcare.json')
     const trainStations = await loadTrainStations()
 
     // Count nearby amenities (within 2km)
     const amenities: AmenityCounts = {
-      supermarkets: supermarketsData ? countNearbyAmenities(lat, lng, supermarketsData.data, 2) : { count: 0, items: [] },
-      healthcare: healthcareData ? countNearbyAmenities(lat, lng, healthcareData.data, 2) : { count: 0, items: [] },
-      playgrounds: playgroundsData ? countNearbyAmenities(lat, lng, playgroundsData.data, 2) : { count: 0, items: [] },
-      parks: parksData ? countNearbyAmenities(lat, lng, parksData.data, 3) : { count: 0, items: [] }, // 3km for parks
+      supermarkets: supermarketsData ? countNearbyAmenities(lat, lng, supermarketsData, 2) : { count: 0, items: [] },
+      healthcare: healthcareData ? countNearbyAmenities(lat, lng, healthcareData, 2) : { count: 0, items: [] },
+      playgrounds: { count: 0, items: [] }, // No playground data yet
+      parks: { count: 0, items: [] }, // No parks data yet
     }
 
     // WOZ data - fetch from backend if postal code + house number available
@@ -210,90 +220,122 @@ export async function GET(request: NextRequest) {
       note: 'No neighborhood code provided'
     }
 
-    if (areaCode) {
-      try {
-        // Call Python backend for integrated data with timeout
-        const snapshotUrl = `${backendUrl}/api/snapshot?area_code=${areaCode}`
-        const controller = new AbortController()
-        const timeoutId = setTimeout(() => controller.abort(), 5000) // 5 second timeout
+    let energyLabel: {
+      available: boolean
+      estimated_energy_label?: string
+      energy_label_numeric?: number
+      energy_label_description?: string
+      avg_gas_m3?: number
+      avg_electricity_kwh?: number
+      municipality?: string
+    } = {
+      available: false
+    }
 
-        const backendResponse = await fetch(snapshotUrl, {
-          signal: controller.signal,
-          headers: { 'Content-Type': 'application/json' }
-        })
-        clearTimeout(timeoutId)
+    // Always call Python backend - it can do coordinate-based neighborhood lookup if needed
+    try {
+      // Build URL with coordinates and optional area_code
+      const snapshotParams = new URLSearchParams({
+        lat: lat.toString(),
+        lng: lng.toString()
+      })
+      if (areaCode) {
+        snapshotParams.append('area_code', areaCode)
+      }
+      const snapshotUrl = `${backendUrl}/api/snapshot?${snapshotParams.toString()}`
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 8000) // 8 second timeout for coordinate lookup
 
-        if (backendResponse.ok) {
-          const backendData = await backendResponse.json()
+      const backendResponse = await fetch(snapshotUrl, {
+        signal: controller.signal,
+        headers: { 'Content-Type': 'application/json' },
+        cache: 'no-store'
+      })
+      clearTimeout(timeoutId)
 
-          // Extract crime data
-          if (backendData.crime) {
-            const crimeCount = backendData.crime.GeregistreerdeMisdrijven_1
-            const population = backendData.demographics?.population || 1
-            const crimeRateNum = population > 0 ? (crimeCount / population * 1000) : 0
-            const crimeRate = crimeRateNum > 0 ? crimeRateNum.toFixed(1) : 'N/A'
+      if (backendResponse.ok) {
+        const backendData = await backendResponse.json()
 
-            crimeData = {
-              rate: `${crimeRate} per 1,000 residents (${crimeCount} total)`,
-              crime_rate_per_1000: crimeRateNum,
-              available: true,
-              note: `${backendData.crime.year} crime data`
-            }
+        // If backend resolved the area_code from coordinates, use it
+        if (backendData.area_code && !areaCode) {
+          areaCode = backendData.area_code
+        }
 
-            // Extract crime metadata with national average
-            if (backendData.crime_metadata) {
-              crimeMetadata = {
-                source: backendData.crime_metadata.source || 'Politie.nl / CBS',
-                year: backendData.crime_metadata.year || backendData.crime.year || 2024,
-                netherlands_average: backendData.crime_metadata.netherlands_average || 45,
-                netherlands_population: backendData.crime_metadata.netherlands_population,
-                comparison_note: backendData.crime_metadata.comparison_note
-              }
-            }
+        // Extract crime data
+        if (backendData.crime) {
+          const crimeCount = backendData.crime.GeregistreerdeMisdrijven_1
+          const population = backendData.demographics?.population || 1
+          const crimeRateNum = population > 0 ? (crimeCount / population * 1000) : 0
+          const crimeRate = crimeRateNum > 0 ? crimeRateNum.toFixed(1) : 'N/A'
+
+          crimeData = {
+            rate: `${crimeRate} per 1,000 residents (${crimeCount} total)`,
+            crime_rate_per_1000: crimeRateNum,
+            available: true,
+            note: `${backendData.crime.year} crime data`
           }
 
-          // Extract livability data
-          if (backendData.livability) {
-            // Build note with explanation if some dimensions are null
-            const nullDimensions = []
-            if (backendData.livability.score_safety === null) nullDimensions.push('Safety')
-            if (backendData.livability.score_physical === null) nullDimensions.push('Physical')
-            if (backendData.livability.score_social === null) nullDimensions.push('Social')
-            if (backendData.livability.score_facilities === null) nullDimensions.push('Facilities')
-            if (backendData.livability.score_housing === null) nullDimensions.push('Housing')
-
-            let note = `${backendData.livability.area_name || 'Leefbaarometer'} - Score ${backendData.livability.score_total}/10`
-            if (nullDimensions.length > 0) {
-              note += ` (${nullDimensions.join(', ')} data unavailable - total uses official Leefbaarometer calculation)`
-            }
-
-            livabilityData = {
-              score: backendData.livability.score_total,
-              overall_score: backendData.livability.score_total,
-              available: true,
-              note: note,
-              breakdown: {
-                physical: backendData.livability.score_physical,
-                social: backendData.livability.score_social,
-                safety: backendData.livability.score_safety,
-                facilities: backendData.livability.score_facilities,
-                housing: backendData.livability.score_housing
-              }
-            }
-          }
-
-          // Extract demographics
-          if (backendData.demographics) {
-            demographics = {
-              available: true,
-              note: `CBS 2024 data for neighborhood ${areaCode}`,
-              ...backendData.demographics
+          // Extract crime metadata with national average
+          if (backendData.crime_metadata) {
+            crimeMetadata = {
+              source: backendData.crime_metadata.source || 'Politie.nl / CBS',
+              year: backendData.crime_metadata.year || backendData.crime.year || 2024,
+              netherlands_average: backendData.crime_metadata.netherlands_average || 45,
+              netherlands_population: backendData.crime_metadata.netherlands_population,
+              comparison_note: backendData.crime_metadata.comparison_note
             }
           }
         }
-      } catch (err) {
-        console.error('Error fetching from Python backend:', err)
+
+        // Extract livability data
+        if (backendData.livability) {
+          // Build note with explanation if some dimensions are null
+          const nullDimensions = []
+          if (backendData.livability.score_safety === null) nullDimensions.push('Safety')
+          if (backendData.livability.score_physical === null) nullDimensions.push('Physical')
+          if (backendData.livability.score_social === null) nullDimensions.push('Social')
+          if (backendData.livability.score_facilities === null) nullDimensions.push('Facilities')
+          if (backendData.livability.score_housing === null) nullDimensions.push('Housing')
+
+          let note = `${backendData.livability.area_name || 'Leefbaarometer'} - Score ${backendData.livability.score_total}/10`
+          if (nullDimensions.length > 0) {
+            note += ` (${nullDimensions.join(', ')} data unavailable - total uses official Leefbaarometer calculation)`
+          }
+
+          livabilityData = {
+            score: backendData.livability.score_total,
+            overall_score: backendData.livability.score_total,
+            available: true,
+            note: note,
+            breakdown: {
+              physical: backendData.livability.score_physical,
+              social: backendData.livability.score_social,
+              safety: backendData.livability.score_safety,
+              facilities: backendData.livability.score_facilities,
+              housing: backendData.livability.score_housing
+            }
+          }
+        }
+
+        // Extract demographics
+        if (backendData.demographics) {
+          demographics = {
+            available: true,
+            note: `CBS 2024 data for neighborhood ${backendData.area_code || areaCode}`,
+            ...backendData.demographics
+          }
+        }
+
+        // Extract energy label
+        if (backendData.energy_label) {
+          energyLabel = {
+            available: true,
+            ...backendData.energy_label
+          }
+        }
       }
+    } catch (err) {
+      console.error('Error fetching from Python backend:', err)
     }
 
     // Environment data (count parks and green spaces)
@@ -400,6 +442,7 @@ export async function GET(request: NextRequest) {
         demographics,
         nearest_train_station: nearestTrainStation,
         energy_consumption: energyConsumption,
+        energy_label: energyLabel,
         proximity,
         emergency_services: emergencyServices,
         cultural_amenities: culturalAmenities,

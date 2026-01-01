@@ -8,10 +8,14 @@ interface RiskCheckResult {
   foundation_risk?: {
     in_risk_area: boolean
     risk_level?: string
+    legenda?: string
     municipality?: string
+    pct_pre_1970?: string
     source?: string
     warning?: string
     recommendation?: string
+    note?: string
+    error?: string
   }
   flood_risk?: {
     flood_depth_m?: number | null
@@ -96,17 +100,14 @@ export default function RedFlagsCard({
         setRiskData(riskInfo)
       } catch (err) {
         console.error('Error fetching risk data:', err)
-        // Don't show error if endpoint not available - show fallback info instead
-        if (err instanceof Error && err.message.includes('Failed to fetch risk data')) {
-          // API not available, show informational fallback
-          setRiskData({
-            foundation_risk: { in_risk_area: false },
-            flood_risk: undefined,
-            noise: undefined
-          })
-        } else {
-          setError(err instanceof Error ? err.message : 'Unknown error')
-        }
+        // For any network error (CORS, connection refused, timeout, etc.)
+        // Show "error" status rather than completely failing
+        setRiskData({
+          foundation_risk: { in_risk_area: false, risk_level: 'error', error: 'Service unavailable' },
+          flood_risk: { risk_level: 'unknown' },
+          noise: undefined
+        })
+        // Don't set error - we'll show graceful degradation instead
       } finally {
         setIsLoading(false)
       }
@@ -121,19 +122,35 @@ export default function RedFlagsCard({
 
     // Foundation risk
     if (riskData?.foundation_risk?.in_risk_area) {
+      const severity: SeverityLevel = riskData.foundation_risk.risk_level === 'high' ? 'critical' :
+        riskData.foundation_risk.risk_level === 'medium' ? 'warning' : 'info'
       flags.push({
         id: 'foundation',
         title: t('foundation.title'),
-        description: t('foundation.inRiskArea'),
-        severity: 'critical',
-        details: riskData.foundation_risk.warning,
+        description: riskData.foundation_risk.legenda || t('foundation.inRiskArea'),
+        severity,
+        details: riskData.foundation_risk.warning || `${riskData.foundation_risk.pct_pre_1970 ? `${parseFloat(riskData.foundation_risk.pct_pre_1970).toFixed(0)}% of buildings in this area were built before 1970` : ''}`,
         recommendation: riskData.foundation_risk.recommendation || t('foundation.recommendation'),
         link: {
           url: 'https://www.kcaf.nl/',
           label: t('foundation.linkLabel')
         }
       })
+    } else if (riskData?.foundation_risk?.error || riskData?.foundation_risk?.risk_level === 'error') {
+      // API error - show unknown status
+      flags.push({
+        id: 'foundation-unknown',
+        title: t('foundation.title'),
+        description: t('foundation.unknown'),
+        severity: 'info',
+        recommendation: t('foundation.recommendation'),
+        link: {
+          url: 'https://www.kcaf.nl/',
+          label: t('foundation.linkLabel')
+        }
+      })
     }
+    // Note: If in_risk_area is false and no error, we don't show anything (good news!)
 
     // Building age check (pre-1970)
     if (buildingYear && buildingYear < 1970) {

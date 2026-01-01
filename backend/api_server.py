@@ -57,6 +57,7 @@ LEEFBAAROMETER = DATA_DIR / "leefbaarometer.parquet"
 WOZ_DATA = DATA_DIR / "woz-netherlands-complete.parquet"
 CBS_PROXIMITY = DATA_DIR / "cbs_proximity.parquet"
 ENERGIELABELS_DATA = DATA_DIR / "energielabels.parquet"
+ENERGY_LABELS_ESTIMATED = DATA_DIR / "energy_labels_estimated.parquet"
 PROPERTIES_DATA = DATA_DIR / "properties.parquet"
 SCHOOLS_DATA = DATA_DIR / "schools.parquet"
 TRAIN_STATIONS_DATA = DATA_DIR / "train_stations.parquet"
@@ -64,8 +65,13 @@ HEALTHCARE_DATA = DATA_DIR / "healthcare.parquet"
 SUPERMARKETS_DATA = DATA_DIR / "supermarkets.parquet"
 PLAYGROUNDS_DATA = DATA_DIR / "playgrounds.parquet"
 
+# Monument data (GeoJSON)
+MONUMENTS_POINTS = DATA_DIR / "rijksmonumenten.geojson"
+MONUMENTS_POLYGONS = DATA_DIR / "monumenten_polygons.geojson"
+
 # Cache for loaded dataframes (optional optimization)
 _cache: Dict[str, pl.DataFrame] = {}
+_monuments_cache: Dict[str, Any] = {}
 
 
 def load_dataframe(name: str, path: Path) -> Optional[pl.DataFrame]:
@@ -85,12 +91,177 @@ def load_dataframe(name: str, path: Path) -> Optional[pl.DataFrame]:
         return None
 
 
+import json
+import math
+
+def load_monuments_data():
+    """Load monument GeoJSON data with caching."""
+    if "points" in _monuments_cache:
+        return _monuments_cache
+
+    result = {"points": [], "polygons": []}
+
+    # Load monument points
+    if MONUMENTS_POINTS.exists():
+        try:
+            with open(MONUMENTS_POINTS, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                result["points"] = data.get("features", [])
+                print(f"Loaded {len(result['points'])} monument points")
+        except Exception as e:
+            print(f"Error loading monuments points: {e}")
+
+    # Load monument polygons
+    if MONUMENTS_POLYGONS.exists():
+        try:
+            with open(MONUMENTS_POLYGONS, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                result["polygons"] = data.get("features", [])
+                print(f"Loaded {len(result['polygons'])} monument polygons")
+        except Exception as e:
+            print(f"Error loading monuments polygons: {e}")
+
+    _monuments_cache.update(result)
+    return result
+
+
+def haversine_distance(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
+    """Calculate distance between two points in meters."""
+    R = 6371000  # Earth radius in meters
+    phi1, phi2 = math.radians(lat1), math.radians(lat2)
+    dphi = math.radians(lat2 - lat1)
+    dlambda = math.radians(lng2 - lng1)
+    a = math.sin(dphi/2)**2 + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda/2)**2
+    return 2 * R * math.atan2(math.sqrt(a), math.sqrt(1-a))
+
+
+def check_monument_status(lat: float, lng: float, radius_m: float = 50) -> Dict[str, Any]:
+    """
+    Check if a location is a rijksmonument or in a protected area.
+
+    Args:
+        lat: Latitude (WGS84)
+        lng: Longitude (WGS84)
+        radius_m: Search radius in meters for point monuments
+
+    Returns:
+        Dictionary with monument status and details
+    """
+    monuments = load_monuments_data()
+
+    result = {
+        "is_monument": False,
+        "is_rijksmonument": False,
+        "is_in_protected_area": False,
+        "monument_details": None,
+        "protected_area": None,
+        "nearby_monuments": [],
+        "ruimtelijke_plannen_url": f"https://www.ruimtelijkeplannen.nl/viewer/view?locatie={lat},{lng}"
+    }
+
+    # Check monument points (find nearest within radius)
+    nearest_distance = float('inf')
+    nearest_monument = None
+
+    for feature in monuments.get("points", []):
+        geom = feature.get("geometry", {})
+        if geom.get("type") != "Point":
+            continue
+
+        coords = geom.get("coordinates", [])
+        if len(coords) < 2:
+            continue
+
+        # GeoJSON is [lng, lat]
+        m_lng, m_lat = coords[0], coords[1]
+        distance = haversine_distance(lat, lng, m_lat, m_lng)
+
+        if distance < radius_m:
+            props = feature.get("properties", {})
+            monument_info = {
+                "distance_m": round(distance, 1),
+                "name": props.get("sitename") or props.get("text"),
+                "monument_url": props.get("ci_citation"),
+                "local_id": props.get("localid"),
+                "designation_date": props.get("legalfoundationdate"),
+            }
+
+            if distance < nearest_distance:
+                nearest_distance = distance
+                nearest_monument = monument_info
+
+            # Collect up to 5 nearby monuments
+            if len(result["nearby_monuments"]) < 5:
+                result["nearby_monuments"].append(monument_info)
+
+    if nearest_monument:
+        result["is_monument"] = True
+        result["is_rijksmonument"] = True
+        result["monument_details"] = nearest_monument
+
+    # Check protected area polygons (point-in-polygon)
+    # Simple bounding box check first, then detailed check
+    for feature in monuments.get("polygons", []):
+        geom = feature.get("geometry", {})
+        props = feature.get("properties", {})
+
+        # Check if it's a protected area (stads-/dorpsgezicht)
+        designation = props.get("designation", "")
+        if "stadsgezicht" in designation.lower() or "dorpsgezicht" in designation.lower():
+            # Simple point-in-polygon check using bounding box
+            if point_in_polygon_simple(lat, lng, geom):
+                result["is_in_protected_area"] = True
+                result["protected_area"] = {
+                    "name": props.get("sitename") or props.get("text"),
+                    "type": "Beschermd Stads-/Dorpsgezicht",
+                    "designation_date": props.get("legalfoundationdate"),
+                    "url": props.get("ci_citation"),
+                }
+                break
+
+    return result
+
+
+def point_in_polygon_simple(lat: float, lng: float, geometry: Dict) -> bool:
+    """Simple point-in-polygon check using ray casting algorithm."""
+    geom_type = geometry.get("type", "")
+
+    if geom_type == "Polygon":
+        coords = geometry.get("coordinates", [[]])
+        if coords:
+            return point_in_ring(lng, lat, coords[0])
+
+    elif geom_type == "MultiPolygon":
+        for polygon in geometry.get("coordinates", []):
+            if polygon and point_in_ring(lng, lat, polygon[0]):
+                return True
+
+    return False
+
+
+def point_in_ring(x: float, y: float, ring: list) -> bool:
+    """Ray casting algorithm for point-in-polygon."""
+    n = len(ring)
+    inside = False
+
+    j = n - 1
+    for i in range(n):
+        xi, yi = ring[i][0], ring[i][1]
+        xj, yj = ring[j][0], ring[j][1]
+
+        if ((yi > y) != (yj > y)) and (x < (xj - xi) * (y - yi) / (yj - yi) + xi):
+            inside = not inside
+        j = i
+
+    return inside
+
+
 @app.get("/")
 def root():
     """API root endpoint."""
     return {
         "message": "Where to Live NL - Data API",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "endpoints": [
             "/api/properties?minLat=&maxLat=&minLng=&maxLng=&limit=100",
             "/api/demographics/{area_code}",
@@ -98,6 +269,7 @@ def root():
             "/api/livability/{area_code}",
             "/api/woz/{postal_code}/{house_number}",
             "/api/energielabel/{postal_code}/{house_number}",
+            "/api/monument-status?lat={lat}&lng={lng}",
             "/api/snapshot?lat={lat}&lng={lng}",
         ]
     }
@@ -467,12 +639,15 @@ def get_schools(
         "primary": "Primair onderwijs (primary education)",
         "secondary": "Voortgezet onderwijs (secondary education)",
         "special": "Speciaal onderwijs (special education)",
-        "higher": "Hoger onderwijs (higher education)",
         "mbo": "Middelbaar beroepsonderwijs (vocational)",
+        "hbo": "HBO (Universities of Applied Sciences)",
+        "wo": "WO (Research Universities)",
+        # Legacy type codes for backwards compatibility
         "po": "Primair onderwijs (primary education)",
         "vo": "Voortgezet onderwijs (secondary education)",
         "so": "Speciaal onderwijs (special education)",
         "ho": "Hoger onderwijs (higher education)",
+        "higher": "Hoger onderwijs (higher education)",
     }
 
     # Convert to list of dicts
@@ -866,6 +1041,117 @@ def get_energielabel(
     }
 
 
+@app.get("/api/monument-status")
+def get_monument_status(lat: float, lng: float, radius: float = 50):
+    """
+    Check if a location is a registered monument (rijksmonument) or in a protected cityscape.
+
+    Important for property buyers because:
+    - Rijksmonumenten have strict renovation restrictions
+    - Changes require permits from municipality + Rijksdienst voor Cultureel Erfgoed
+    - Potential subsidies available for restoration
+    - Higher maintenance costs expected
+
+    Args:
+        lat: Latitude (WGS84)
+        lng: Longitude (WGS84)
+        radius: Search radius in meters for nearby monuments (default: 50m)
+
+    Returns:
+        Monument status and details including zoning link
+    """
+    try:
+        result = check_monument_status(lat, lng, radius)
+
+        return {
+            "success": True,
+            "location": {"lat": lat, "lng": lng},
+            "data": result,
+            "metadata": {
+                "source": "PDOK/RCE Rijksmonumentenregister",
+                "search_radius_m": radius,
+                "note": "Monument status affects renovation possibilities and costs"
+            }
+        }
+    except Exception as e:
+        # Return graceful degradation if monument data unavailable
+        return {
+            "success": True,
+            "location": {"lat": lat, "lng": lng},
+            "data": {
+                "is_monument": None,
+                "is_rijksmonument": None,
+                "is_in_protected_area": None,
+                "monument_details": None,
+                "protected_area": None,
+                "nearby_monuments": [],
+                "ruimtelijke_plannen_url": f"https://www.ruimtelijkeplannen.nl/viewer/view?locatie={lat},{lng}",
+                "error": str(e)
+            },
+            "metadata": {
+                "source": "PDOK/RCE Rijksmonumentenregister",
+                "note": "Monument data temporarily unavailable"
+            }
+        }
+
+
+@app.get("/api/energy-label-neighborhood/{area_code}")
+def get_neighborhood_energy_label(area_code: str):
+    """
+    Get estimated energy label for a neighborhood based on CBS energy consumption data.
+
+    Args:
+        area_code: Neighborhood code (e.g., "BU03630001")
+
+    Returns:
+        Estimated energy label and energy consumption statistics
+    """
+    df = load_dataframe("energy_labels_estimated", ENERGY_LABELS_ESTIMATED)
+
+    if df is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Energy label data not available. Run: python scripts/etl/transform/estimate_energy_labels.py"
+        )
+
+    # Normalize area code
+    area_code_normalized = area_code.strip().upper()
+    if not area_code_normalized.startswith("BU"):
+        area_code_normalized = f"BU{area_code_normalized}"
+
+    # Find the neighborhood
+    result = df.filter(pl.col("area_code") == area_code_normalized)
+
+    if result.is_empty():
+        raise HTTPException(
+            status_code=404,
+            detail=f"No energy data found for neighborhood {area_code}"
+        )
+
+    record = result.head(1).to_dicts()[0]
+
+    return {
+        "success": True,
+        "area_code": area_code_normalized,
+        "data": {
+            "estimated_energy_label": record.get("estimated_energy_label"),
+            "energy_label_numeric": record.get("energy_label_numeric"),
+            "energy_label_description": record.get("energy_label_description"),
+            "avg_gas_m3": record.get("avg_gas_m3"),
+            "avg_electricity_kwh": record.get("avg_electricity_kwh"),
+            "avg_net_electricity_kwh": record.get("avg_net_electricity_kwh"),
+            "district_heating_pct": record.get("district_heating_pct"),
+            "has_district_heating": record.get("has_district_heating"),
+            "municipality": record.get("municipality"),
+        },
+        "metadata": {
+            "source": "CBS 86159NED (estimated from energy consumption)",
+            "year": 2024,
+            "note": "Energy label estimated from average gas/electricity usage. For official labels, use EP-Online."
+        }
+    }
+
+
 @app.get("/api/snapshot")
 async def get_snapshot(
     lat: Optional[float] = None,
@@ -937,6 +1223,38 @@ async def get_snapshot(
         snapshot["proximity"] = proximity_response.get("data") if proximity_response.get("success") else None
     except:
         snapshot["proximity"] = None
+
+    # Add neighborhood energy label estimate
+    try:
+        energy_label_response = get_neighborhood_energy_label(area_code)
+        snapshot["energy_label"] = energy_label_response.get("data") if energy_label_response.get("success") else None
+    except:
+        snapshot["energy_label"] = None
+
+    # Add monument status and zoning link (requires coordinates)
+    if lat and lng:
+        try:
+            monument_response = get_monument_status(lat, lng)
+            snapshot["monument_status"] = monument_response.get("data") if monument_response.get("success") else None
+        except:
+            snapshot["monument_status"] = None
+
+        # Always add ruimtelijke plannen link for zoning info
+        snapshot["zoning"] = {
+            "check_url": f"https://www.ruimtelijkeplannen.nl/viewer/view?locatie={lat},{lng}",
+            "source": "ruimtelijkeplannen.nl (official)",
+            "note": "Click to view official zoning designation and building rules",
+            "what_to_check": [
+                "Bestemming (zoning designation)",
+                "Bouwvlak (building envelope)",
+                "Maximum building height",
+                "Allowed uses (wonen, kantoor, etc.)",
+                "Any planned changes (ontwerp bestemmingsplannen)"
+            ]
+        }
+    else:
+        snapshot["monument_status"] = None
+        snapshot["zoning"] = None
 
     return snapshot
 
@@ -2177,22 +2495,26 @@ async def check_location_risks(lat: float, lng: float):
         "red_flags": []
     }
 
-    # Check foundation risk using PDOK WFS
+    # Check foundation risk using PDOK WFS (new URL since March 2022)
     try:
         async with httpx.AsyncClient(timeout=30) as client:
-            # Foundation risk check
+            # Foundation risk check using BBOX query
+            # Create small bounding box around the point (~100m)
+            delta = 0.001
+            bbox = f"{lat - delta},{lng - delta},{lat + delta},{lng + delta},EPSG:4326"
+
             foundation_params = {
                 "service": "WFS",
                 "version": "2.0.0",
                 "request": "GetFeature",
                 "typeName": "indgebfunderingsproblematiek:indgebfunderingsproblematiek",
                 "outputFormat": "application/json",
-                "CQL_FILTER": f"INTERSECTS(geometry, POINT({lng} {lat}))",
-                "srsName": "EPSG:4326"
+                "bbox": bbox,
+                "count": "1"
             }
 
             response = await client.get(
-                "https://geodata.nationaalgeoregister.nl/indgebfunderingsproblematiek/wfs",
+                "https://service.pdok.nl/rvo/indgebfunderingsproblematiek/wfs/v1_0",
                 params=foundation_params
             )
 
@@ -2201,22 +2523,53 @@ async def check_location_risks(lat: float, lng: float):
                 features = data.get("features", [])
 
                 if features:
+                    props = features[0].get("properties", {})
+                    legenda = props.get("legenda", "")
+                    perc_pre1970 = props.get("percvoor1970")
+                    municipality = props.get("gemeente", "")
+                    popup = props.get("popuptext", "")
+
+                    # Parse risk level from legenda
+                    # Examples: "Kwetsbaar gebied - 40-60 %", "Stedelijk gebied - 0-20 %"
+                    risk_level = "low"
+                    in_risk_area = False
+
+                    if "Kwetsbaar" in legenda:
+                        in_risk_area = True
+                        if "60-80" in legenda or "80-100" in legenda:
+                            risk_level = "high"
+                        elif "40-60" in legenda:
+                            risk_level = "medium"
+                        else:
+                            risk_level = "low"
+
                     risks["foundation_risk"] = {
-                        "in_risk_area": True,
-                        "risk_level": "attention",
-                        "warning": "This location is in an official foundation attention area",
-                        "recommendation": "Get a professional foundation inspection for buildings before 1970"
+                        "in_risk_area": in_risk_area,
+                        "risk_level": risk_level,
+                        "legenda": legenda,
+                        "municipality": municipality,
+                        "pct_pre_1970": perc_pre1970,
+                        "source": "KCAF / PDOK",
+                        "recommendation": "Get a professional foundation inspection (bouwkundig rapport) for buildings built before 1970" if in_risk_area else None
                     }
-                    risks["red_flags"].append({
-                        "type": "foundation",
-                        "severity": "high",
-                        "message": "Location is in a foundation risk attention area"
-                    })
+
+                    if in_risk_area:
+                        risks["red_flags"].append({
+                            "type": "foundation",
+                            "severity": "high" if risk_level == "high" else "medium",
+                            "message": f"Location is in a foundation attention area: {legenda}"
+                        })
                 else:
-                    risks["foundation_risk"] = {"in_risk_area": False}
+                    # No data for this area - not in any attention zone
+                    risks["foundation_risk"] = {
+                        "in_risk_area": False,
+                        "risk_level": "not_in_dataset",
+                        "note": "This location is not in the foundation attention areas dataset",
+                        "source": "KCAF / PDOK"
+                    }
 
     except Exception as e:
-        risks["foundation_risk"] = {"error": str(e)}
+        risks["foundation_risk"] = {"error": str(e), "source": "PDOK WFS"}
 
     # Note: For flood and noise, the frontend should use WMS GetFeatureInfo
     # as those services work better with image-based queries

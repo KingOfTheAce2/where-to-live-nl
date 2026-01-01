@@ -1,8 +1,51 @@
 {
+  "nav": {
+    "home": "Home",
+    "backToHome": "Terug naar Home"
+  },
   "app": {
-    "title": "Waar te Wonen NL",
-    "subtitle": "Vind jouw perfecte Nederlandse thuis",
-    "builtWith": "Gemaakt met ❤️  voor expats"
+    "title": "WhereToLive",
+    "subtitle": "Slimme wooninzichten voor Nederland",
+    "builtWith": "Gemaakt met zorg voor expats",
+    "betaDisclaimer": "Beta: Kaartlagen kunnen traag laden (externe diensten)"
+  },
+  "landing": {
+    "openMap": "Open Kaart",
+    "hero": {
+      "title": "Vind Jouw Perfecte Buurt in Nederland",
+      "subtitle": "Neem weloverwogen beslissingen over waar je wilt wonen met uitgebreide gegevens over veiligheid, leefbaarheid, voorzieningen en meer.",
+      "cta": "Verken de Kaart",
+      "learnMore": "Meer Informatie"
+    },
+    "features": {
+      "title": "Alles Wat Je Moet Weten",
+      "subtitle": "Toegang tot uitgebreide buurtgegevens om de beste beslissing te nemen voor jou en je gezin.",
+      "safety": {
+        "title": "Veiligheid & Criminaliteit",
+        "description": "Echte criminaliteitscijfers van Politie.nl om de veiligheid van de buurt te begrijpen."
+      },
+      "livability": {
+        "title": "Leefbaarheidsscores",
+        "description": "Officiële Leefbaarometer scores die de kwaliteit van leven in Nederlandse buurten meten."
+      },
+      "amenities": {
+        "title": "Nabije Voorzieningen",
+        "description": "Afstand tot supermarkten, gezondheidszorg, scholen, parken en openbaar vervoer."
+      },
+      "demographics": {
+        "title": "Demografische Gegevens",
+        "description": "Bevolkingsstatistieken, leeftijdsverdeling en woninginformatie van het CBS."
+      }
+    },
+    "dataSources": {
+      "title": "Betrouwbare Databronnen",
+      "subtitle": "Alle gegevens komen van officiële Nederlandse overheidsbronnen en geverifieerde databases."
+    },
+    "cta": {
+      "title": "Klaar om Je Nieuwe Huis te Vinden?",
+      "subtitle": "Begin vandaag nog met het verkennen van buurten in heel Nederland.",
+      "button": "Begin Met Verkennen"
+    }
   },
   "woz": {
     "title": "WOZ-waarde Woning",
@@ -37,10 +80,10 @@
     "shopping": "Winkelen",
     "supermarket": "Supermarkt",
     "dailyGroceries": "Dagelijkse boodschappen",
-    "education": "Onderwijs & Kinderopvang",
+    "education": "Onderwijs en kinderopvang",
     "primarySchool": "Basisschool",
     "daycare": "Kinderopvang",
-    "culture": "Cultuur & Recreatie",
+    "culture": "Cultuur en recreatie",
     "library": "Bibliotheek",
     "restaurant": "Restaurant"
   },
@@ -73,21 +116,37 @@
     "placeholder": "Voer straatnaam, plaats in...",
     "selected": "Geselecteerd:"
   },
+  "atAGlance": {
+    "selectedLocation": "Geselecteerde Locatie",
+    "livability": "Leefbaarheid",
+    "safety": "Veiligheid",
+    "green": "Groen",
+    "transit": "OV",
+    "warnings": "waarschuwingen",
+    "goodSignals": "goed",
+    "analyzing": "Locatiegegevens analyseren..."
+  },
+  "sections": {
+    "risks": "Risico's & Waarschuwingen",
+    "costs": "Kosten & Waarde",
+    "location": "Locatie & Voorzieningen",
+    "neighborhood": "Buurt"
+  },
   "snapshot": {
-    "title": "Buurt Momentopname",
+    "title": "Buurt momentopname",
     "loading": "Laden...",
     "startSearch": "Begin je zoekopdracht",
     "startSearchDescription": "Voer hierboven een adres in om uitgebreide buurtinformatie, woningwaarden en leefbaarheidsgegevens te zien.",
     "discover": "Wat je zult ontdekken:",
     "discoverItems": {
-      "crime": "Veiligheid & criminaliteit - buurtcriminaliteitsgegevens van Politie.nl",
+      "crime": "Veiligheid en criminaliteit - buurtcriminaliteitsgegevens van Politie.nl",
       "amenities": "Nabijgelegen voorzieningen - supermarkten, gezondheidszorg, scholen, speeltuinen",
       "environment": "Milieukwaliteit - groene ruimtes, parken, leefbaarheidsscores",
       "demographics": "Demografie - bevolking, leeftijdsverdeling, huishoudtypes"
     }
   },
   "amenities": {
-    "title": "Nabijgelegen Voorzieningen (2km)",
+    "title": "Nabijgelegen voorzieningen (2km)",
     "supermarkets": "Supermarkten",
     "healthcare": "Gezondheidszorg",
     "playgrounds": "Speeltuinen",
@@ -96,14 +155,15 @@
     "away": "verderop"
   },
   "crime": {
-    "title": "Veiligheid & Criminaliteit",
+    "title": "Veiligheid en criminaliteit",
     "crimeRate": "Criminaliteitscijfer:",
     "notAvailable": "Niet beschikbaar",
     "nlAverage": "NL gemiddelde: {average} per 1.000 inwoners (CBS {year})",
     "dataFrom": "Gegevens van Politie.nl en CBS"
   },
   "wijkagent": {
-    "title": "Jouw Wijkagent",
+    "title": "Jouw wijkagent",
+    "clickToLearn": "Meer info",
     "whatIs": "Wat is een Wijkagent?",
     "explanation": "Een wijkagent is jouw lokale politiecontact die verantwoordelijk is voor de veiligheid in jouw specifieke buurt. Ze richten zich op het voorkomen van criminaliteit, het opbouwen van vertrouwen met bewoners en het aanpakken van lokale zorgen.",
     "whatTheyDo": "Wat ze doen:",
@@ -124,14 +184,12 @@
     }
   },
   "environment": {
-    "title": "Milieu en Risico's",
+    "title": "Milieu en risico's",
     "parksNearby": "Parken in de buurt (3km)",
     "greenSpace": "Kwaliteit groene ruimte",
     "floodRisk": "Overstromingsrisico",
     "foundationRisk": "Funderingsrisico",
-    "airQuality": "Luchtkwaliteit",
-    "viewOnMap": "Bekijk op kaart",
-    "dataVisible": "Milieugegevens zichtbaar op kaart"
+    "airQuality": "Luchtkwaliteit"
   },
   "livability": {
     "title": "Leefbaarheidsscore",
@@ -223,6 +281,7 @@
     "baseMap": "Basiskaart",
     "standardMap": "Standaard",
     "aerialPhoto": "Luchtfoto",
+    "neighborhoodBoundaries": "Buurtgrenzen",
     "overlays": "Kaartlagen",
     "loading": "Kaart laden...",
     "crimeRate": "Criminaliteitscijfer",
@@ -233,25 +292,35 @@
     "healthcare": "Gezondheidszorg",
     "supermarkets": "Supermarkten",
     "playgrounds": "Speeltuinen",
-    "trainStations": "Treinstations",
+    "speelbossen": "Speelbossen",
+    "trainStations": "Treinstations (NS)",
+    "metroStations": "Metrostations",
+    "tramStops": "Tramhaltes",
     "schools": "Scholen",
     "cadastralParcels": "Kadastrale percelen",
-    "natureEnvironment": "Natuur & Milieu",
+    "natureEnvironment": "Natuur en milieu",
     "nationalParks": "Nationale parken",
     "natura2000": "Natura 2000 gebieden",
+    "floodRisk": "Overstromingsrisico",
     "floodRiskZones": "Overstromingsrisicogebieden",
+    "floodCombined": "Gecombineerd overstromingsrisico",
     "droneNoFlyZones": "Drone no-fly zones",
     "pollutants": {
       "NO2": "NO₂ (Stikstofdioxide)",
       "PM10": "PM10 (Fijnstof)",
       "PM25": "PM2.5 (Ultrafijnstof)"
     },
+    "noiseOverlay": "Geluidsoverlast",
+    "noiseCombined": "Gecombineerd (alle bronnen)",
+    "noiseRoad": "Wegverkeer",
+    "noiseRail": "Spoorwegen",
+    "noiseAircraft": "Luchtvaart",
     "legend": {
       "title": "Kaartlegenda",
       "baseMap": "Basiskaart",
       "markers": "Markeringen",
       "water": "Water",
-      "parks": "Parken & groen",
+      "parks": "Parken en groen",
       "buildings": "Gebouwen",
       "residential": "Woongebied",
       "industrial": "Industrie",
@@ -267,10 +336,17 @@
       "pharmacy": "Apotheek",
       "hospital": "Ziekenhuis",
       "clinic": "Kliniek",
-      "transportAmenities": "Vervoer & voorzieningen",
-      "trainStation": "Treinstation",
+      "transportAmenities": "Vervoer en voorzieningen",
+      "transport": "Vervoer",
+      "shopping": "Winkelen",
+      "recreation": "Recreatie",
+      "trainStation": "Treinstation (NS)",
+      "metroStation": "Metrostation",
+      "tramStop": "Tramhalte",
       "supermarket": "Supermarkt",
       "playground": "Speeltuin",
+      "naturePlay": "Natuurspeelplaats",
+      "speelbos": "Speelbos",
       "neighborhoodBoundary": "Buurtgrens",
       "crimeRateLegend": "Criminaliteitscijfer (blauw)",
       "low": "Laag",
@@ -297,11 +373,16 @@
       "floodRiskZone": "Overstromingsrisicogebied",
       "droneNoFlyLegend": "Drone No-Fly Zones (LVNL)",
       "restrictedZone": "Verboden zone (vitale infrastructuur)",
-      "natura2000NoFly": "Natura 2000 no-fly zone"
+      "natura2000NoFly": "Natura 2000 no-fly zone",
+      "veryHighRisk": "Zeer hoog risico",
+      "highRisk": "Hoog risico",
+      "mediumRisk": "Gemiddeld risico",
+      "lowRisk": "Laag risico",
+      "veryLowRisk": "Zeer laag risico"
     }
   },
   "redFlags": {
-    "title": "Waarschuwingen & Risico's",
+    "title": "Waarschuwingen en risico's",
     "issue": "probleem",
     "issues": "problemen",
     "errorLoading": "Fout bij laden risicogegevens",
@@ -310,6 +391,7 @@
     "foundation": {
       "title": "Funderingsrisicogebied",
       "inRiskArea": "Deze woning staat in een officieel funderingsaandachtsgebied (PDOK/RVO)",
+      "unknown": "Funderingsrisico status onbekend - gegevens niet beschikbaar. Laat altijd een professionele inspectie uitvoeren.",
       "recommendation": "Laat een professionele funderingsinspectie (bouwkundig rapport) uitvoeren voor aankoop",
       "linkLabel": "Meer info bij KCAF"
     },
@@ -358,6 +440,139 @@
       "terrain": "Terrein"
     }
   },
+  "wws": {
+    "title": "Huurpuntencalculator (WWS)",
+    "whatIsWWS": "Wat is het WWS huurpuntensysteem?",
+    "explanation": "De Nederlandse overheid gebruikt een puntensysteem om maximale huurprijzen vast te stellen. Je verhuurder berekent punten op basis van de grootte, energie-efficiëntie en kenmerken van de woning. Meer punten = hogere toegestane huur. Deze calculator helpt je inschatten of je huur eerlijk is.",
+    "livingSpace": "Woonoppervlakte (m²)",
+    "points": "Punten",
+    "energyLabel": "Energielabel",
+    "amenities": "Voorzieningen (optioneel)",
+    "privateGarden": "Privétuin (+4 punten)",
+    "balconyTerrace": "Balkon/terras (+2 punten)",
+    "privateParking": "Privé parkeerplaats (+2 punten)",
+    "totalPoints": "Totaal WWS punten",
+    "maxRent": "Maximale huur (2025)",
+    "noCap": "Geen limiet",
+    "perMonth": "/maand",
+    "regulatedSocial": "Gereguleerde sociale huurwoning",
+    "regulatedSocialDesc": "Tot {points} punten. Huur is gemaximeerd op €{limit}/maand. Je hebt sterke wettelijke bescherming.",
+    "regulatedMid": "Gereguleerde middenhuur",
+    "regulatedMidDesc": "{minPoints}-{maxPoints} punten. Huur gemaximeerd tussen €{minLimit}-€{maxLimit}/maand. Beperkte bescherming.",
+    "privateSector": "Vrije sector (geen huurlimiet)",
+    "privateSectorDesc": "{points}+ punten. Geen huurlimiet - verhuurder mag elke prijs vragen.",
+    "whatIsHuurcommissie": "Wat is de Huurcommissie?",
+    "huurcommissieTitle": "🏛️ Huurcommissie (Huurgeschillencommissie)",
+    "huurcommissieDesc": "De Huurcommissie is een onafhankelijke Nederlandse overheidsorganisatie die huurdersrechten beschermt. Ze helpen geschillen tussen huurders en verhuurders op te lossen over huurprijzen, onderhoud en servicekosten.",
+    "whatTheyCanDo": "Wat ze voor je kunnen doen:",
+    "canDo1": "Controleren of je huurprijs correct is op basis van WWS-punten",
+    "canDo2": "Je huur verlagen als deze te hoog is voor sociale huurwoning",
+    "canDo3": "Geschillen over woningonderhoud beslechten",
+    "canDo4": "Servicekosten beoordelen (verwarming, water, etc.)",
+    "canDo5": "Gratis advies over huurrecht",
+    "tipsForExpats": "💡 Tips voor Expats:",
+    "expat1": "Diensten beschikbaar in het Engels op hun website",
+    "expat2": "Je kunt een huurcheck aanvragen voor sociale huurwoningen (€25, terugbetaald als huur wordt verlaagd)",
+    "expat3": "Beslissing is juridisch bindend voor zowel huurder als verhuurder",
+    "expat4": "Proces duurt meestal 8-12 weken",
+    "expat5": "Je verhuurder mag je niet uitzetten voor het indienen van een klacht",
+    "checkRent": "Controleer je huur op Huurcommissie.nl",
+    "important": "Belangrijk:",
+    "importantNote": "De Huurcommissie kan alleen helpen bij gereguleerde huur (onder €{limit}/maand). Bij dure huurwoningen mag de verhuurder vragen wat hij wil.",
+    "disclaimer": "Let op: Dit is een vereenvoudigde calculator voor schattingsdoeleinden. De werkelijke WWS-berekening omvat veel meer factoren (badkamerkwaliteit, keukenfaciliteiten, isolatie, locatieschaarste, etc.). Voor een officiële beoordeling, gebruik de",
+    "officialCalculator": "officiële Huurcommissie calculator"
+  },
+  "utilities": {
+    "title": "Gemiddelde energiekosten",
+    "perMonth": "/maand",
+    "perYear": "/jaar",
+    "total": "totaal",
+    "gas": "Gas",
+    "electricity": "Elektriciteit",
+    "water": "Water",
+    "districtHeating": "van de woningen hier gebruikt stadsverwarming",
+    "aboutCosts": "Over deze kosten",
+    "dataSource": "Gegevensbron:",
+    "prices": "Prijzen (jan 2025):",
+    "note": "Let op:",
+    "noteDesc": "Werkelijke kosten variëren per:",
+    "varFactor1": "Woninggrootte en isolatie",
+    "varFactor2": "Aantal bewoners",
+    "varFactor3": "Persoonlijk verbruik",
+    "varFactor4": "Energieleverancier en contract",
+    "noData": "Geen energieverbruiksgegevens beschikbaar voor dit gebied",
+    "energyLabel": "Energielabel",
+    "estimatedLabel": "Geschat op basis van gemiddeld buurtverbruik"
+  },
+  "proximity": {
+    "title": "Afstand tot voorzieningen (CBS 2024)",
+    "transport": "🚆 Vervoer",
+    "trainStation": "Treinstation",
+    "majorTrainStation": "Groot treinstation",
+    "highwayOnramp": "Snelwegoprit",
+    "shopping": "🛒 Winkelen",
+    "largeSupermarket": "Grote supermarkt",
+    "dailyGroceries": "Dagelijkse boodschappen",
+    "withinKm": "binnen 1km",
+    "healthcare": "🏥 Gezondheidszorg",
+    "gp": "Huisarts",
+    "pharmacy": "Apotheek",
+    "hospital": "Ziekenhuis",
+    "education": "🎓 Onderwijs en kinderopvang",
+    "primarySchool": "Basisschool",
+    "daycare": "Kinderopvang",
+    "culture": "🎭 Cultuur en recreatie",
+    "library": "Bibliotheek",
+    "museum": "Museum",
+    "cinema": "Bioscoop",
+    "swimmingPool": "Zwembad",
+    "officialMetrics": "Officiële CBS afstandsmetingen voor"
+  },
+  "emergencyServices": {
+    "title": "🚨 hulpdiensten in de buurt"
+  },
+  "culturalAmenities": {
+    "title": "🎭 culturele voorzieningen in de buurt"
+  },
+  "healthcareFacilities": {
+    "title": "🏥 zorginstellingen",
+    "description": "Inclusief ziekenhuizen, huisartsen, apotheken, tandartsen en specialisten"
+  },
+  "municipality": {
+    "title": "📍 lokale overheid",
+    "gemeente": "Gemeente",
+    "quickLinks": "Snelkoppelingen:",
+    "website": "🌐 Gemeente website",
+    "trash": "🗑️ Afvalkalender",
+    "parking": "🅿️ Parkeervergunningen",
+    "tipForExpats": "💡 Tip voor Expats:",
+    "tipDesc": "De meeste gemeentediensten zijn online beschikbaar. Je kunt vergunningen regelen, problemen melden en toegang krijgen tot lokale informatie via hun website."
+  },
+  "travelTimeCard": {
+    "title": "Optioneel: Voeg werkadres toe",
+    "description": "Bereken de reistijd van deze woning naar je werkplek. Routes worden in een database opgeslagen om herhaalde opvragingen sneller te maken en API-kosten te minimaliseren.",
+    "addCommute": "+ Voeg woon-werkberekening toe",
+    "cancel": "Annuleren",
+    "workAddress": "Werkadres:",
+    "estimatedCommute": "Geschatte reistijd:",
+    "byBike": "Met de fiets",
+    "byCar": "Met de auto",
+    "calculating": "Reistijden berekenen...",
+    "actualRoutes": "ℹ️ Werkelijke routetijden via OpenRouteService",
+    "changeAddress": "Wijzig werkadres",
+    "enterWorkAddress": "Voer werkadres in..."
+  },
+  "wozCard": {
+    "title": "WOZ-woningwaarde",
+    "value2024": "Waarde 2024",
+    "perSqm": "Per m² (geschat 75m²)",
+    "viewHistorical": "Bekijk historische waarden (2014-2024)",
+    "notIndexedYet": "Dit adres is nog niet geïndexeerd in onze database. Je kunt de WOZ-waarde zelf opzoeken op de officiële overheidswebsite.",
+    "checkYourself": "Bekijk WOZ-waarde op wozwaardeloket.nl"
+  },
+  "neighborhood": {
+    "noCode": "Geen buurtcode beschikbaar"
+  },
   "comparisonPanel": {
     "neighborhoodComparison": "Buurtvergelijking",
     "houseComparison": "Woningvergelijking",
@@ -399,5 +614,297 @@
     "premiumDescription": "PDF export is een premium functie. Upgrade om vergelijkingsrapporten te downloaden en te delen met anderen.",
     "upgradeToPremium": "Upgrade naar Premium",
     "maybeLater": "Misschien Later"
+  },
+  "auth": {
+    "login": "Inloggen",
+    "signup": "Registreren",
+    "signOut": "Uitloggen",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "fullName": "Volledige naam",
+    "signingIn": "Inloggen...",
+    "creatingAccount": "Account aanmaken...",
+    "orContinueWith": "Of ga verder met",
+    "noAccount": "Nog geen account? Registreer",
+    "alreadyHaveAccount": "Al een account? Inloggen",
+    "checkEmail": "Check je e-mail",
+    "confirmationSent": "We hebben je een bevestigingsmail gestuurd. Check je inbox en klik op de link om je account te verifiëren.",
+    "passwordTooShort": "Wachtwoord moet minimaal 8 tekens zijn",
+    "passwordRequirements": "Minimaal 8 tekens",
+    "createAccount": "Account aanmaken",
+    "upgradeToPremium": "Upgrade naar Premium",
+    "dashboard": "Dashboard",
+    "savedSearches": "Opgeslagen zoekopdrachten",
+    "subscription": "Abonnement"
+  },
+  "premium": {
+    "premiumFeature": "Premium Functie",
+    "loginRequired": "Log in om deze functie te gebruiken",
+    "loginToAccess": "Inloggen",
+    "upgradeNow": "Nu Upgraden",
+    "pdfDescription": "Exporteer vergelijkingsrapporten als PDF",
+    "savedSearchesDescription": "Sla onbeperkt zoekopdrachten op",
+    "favoritesDescription": "Sla onbeperkt favoriete locaties op",
+    "advancedDataDescription": "Toegang tot gedetailleerde criminaliteitsstatistieken en historische gegevens"
+  },
+  "pricing": {
+    "title": "Kies je abonnement",
+    "subtitle": "Haal het maximale uit Where to Live NL",
+    "freePlan": "Gratis",
+    "freeDescription": "Perfect voor verkennende zoekopdrachten",
+    "free": "Gratis",
+    "premiumPlan": "Premium",
+    "premiumDescription": "Alles wat je nodig hebt om je perfecte woning te vinden",
+    "price": "€9,99",
+    "perMonth": "/maand",
+    "cancelAnytime": "Elk moment opzeggen",
+    "unlimitedSearch": "Onbeperkt adressen zoeken",
+    "basicData": "Basis buurtgegevens",
+    "savedSearches3": "Sla tot 3 zoekopdrachten op",
+    "favorites5": "Sla tot 5 favorieten op",
+    "noPdfExport": "Geen PDF export",
+    "noAdvancedData": "Geen geavanceerde analyse",
+    "fullData": "Volledige buurtgegevens",
+    "unlimitedSaved": "Onbeperkt opgeslagen zoekopdrachten",
+    "unlimitedFavorites": "Onbeperkt favorieten",
+    "pdfExport": "PDF export en rapporten",
+    "advancedData": "Gedetailleerde criminaliteitsstatistieken",
+    "historicalData": "Historische gegevens (10+ jaar)",
+    "getStarted": "Aan de slag",
+    "subscribe": "Nu Abonneren",
+    "currentPlan": "Huidig Abonnement",
+    "processing": "Verwerken...",
+    "securePayment": "Veilige betaling via Stripe",
+    "popular": "Meest Populair"
+  },
+  "dashboard": {
+    "welcome": "Welkom",
+    "upgradeBanner": "Ontgrendel Premium Functies",
+    "upgradeDescription": "Krijg onbeperkte opgeslagen zoekopdrachten, PDF exports en geavanceerde data.",
+    "upgradeCta": "Nu Upgraden",
+    "savedSearches": "Opgeslagen Zoekopdrachten",
+    "savedSearchesDescription": "Bekijk en beheer je opgeslagen zoekopdrachten",
+    "subscription": "Abonnement",
+    "subscriptionDescription": "Beheer je abonnement en facturering",
+    "searchMap": "Zoek op Kaart",
+    "searchMapDescription": "Zoek adressen en verken buurten",
+    "accountInfo": "Accountinformatie",
+    "email": "E-mail",
+    "plan": "Abonnement",
+    "memberSince": "Lid sinds"
+  },
+  "savedSearches": {
+    "title": "Opgeslagen Zoekopdrachten",
+    "usageCount": "{count} van {limit} opgeslagen zoekopdrachten gebruikt",
+    "backToDashboard": "Terug naar Dashboard",
+    "limitReached": "Je hebt je limiet bereikt",
+    "upgradeForMore": "Upgrade naar Premium voor onbeperkte opgeslagen zoekopdrachten",
+    "upgrade": "Upgraden",
+    "noSearches": "Geen opgeslagen zoekopdrachten",
+    "noSearchesDescription": "Zoek een adres en sla het op om later te bekijken",
+    "startSearching": "Begin met Zoeken",
+    "savedOn": "Opgeslagen op",
+    "openSearch": "Openen",
+    "deleteSearch": "Verwijderen"
+  },
+  "subscription": {
+    "title": "Abonnement",
+    "backToDashboard": "Terug naar Dashboard",
+    "subscriptionSuccess": "Je abonnement is nu actief!",
+    "currentPlan": "Huidig Abonnement",
+    "planDetails": "Beheer je abonnement en facturering",
+    "status": "Status",
+    "active": "Actief",
+    "renewsOn": "Verlengt op",
+    "price": "Prijs",
+    "priceValue": "€9,99/maand",
+    "loading": "Laden...",
+    "manageSubscription": "Abonnement Beheren",
+    "freeDescription": "Je bent momenteel op het gratis abonnement met beperkte functies.",
+    "premiumBenefits": "Premium bevat:",
+    "benefit1": "Onbeperkt opgeslagen zoekopdrachten",
+    "benefit2": "PDF export en vergelijkingsrapporten",
+    "benefit3": "Gedetailleerde criminaliteitsstatistieken",
+    "benefit4": "Historische gegevens (10+ jaar)",
+    "upgradeToPremium": "Upgrade naar Premium"
+  },
+  "guide": {
+    "openMap": "Open Kaart",
+    "backToMap": "Terug naar Kaart",
+    "title": "Kaartlagen Gids",
+    "subtitle": "Begrijp wat elke kaartlaag betekent en waarom het belangrijk is bij het kiezen van een woonplaats in Nederland.",
+    "intro": {
+      "title": "Hoe gebruik je deze gids",
+      "description": "Elke kaartlaag toont verschillende aspecten van een buurt. Schakel deze lagen in op de kaart om data te visualiseren die je levenskwaliteit beïnvloedt. Klik op een gebied om specifieke waarden te zien."
+    },
+    "whyMatters": "Waarom dit belangrijk is",
+    "dataSource": "Databron",
+    "layers": {
+      "leefbaarometer": {
+        "title": "Leefbaarheidsscore (Leefbaarometer)",
+        "description": "De Leefbaarometer is een officiële overheidsindex die de kwaliteit van leven meet in alle buurten. Het combineert 100+ indicatoren waaronder veiligheid, woningkwaliteit, sociale cohesie en toegang tot voorzieningen.",
+        "whyMatters": "Dit is de meest uitgebreide indicator voor levenskwaliteit. Een score onder de 3 duidt op uitdagingen. De score wordt elke 2 jaar bijgewerkt."
+      },
+      "airQuality": {
+        "title": "Luchtkwaliteit",
+        "description": "Toont concentraties van schadelijke stoffen waaronder NO₂ (stikstofdioxide van verkeer), PM10 (grove deeltjes) en PM2.5 (fijne deeltjes). Data komt van RIVM meetstations.",
+        "whyMatters": "Luchtvervuiling heeft een significante impact op de gezondheid, vooral voor kinderen, ouderen en mensen met luchtwegaandoeningen."
+      },
+      "noise": {
+        "title": "Geluidshinder",
+        "description": "Toont geluidsniveaus in decibel (dB) van verschillende bronnen: wegverkeer, spoorwegen en vliegtuigen. De Lden-metriek vertegenwoordigt een 24-uurs gemiddelde.",
+        "whyMatters": "Chronische blootstelling aan geluid boven 55 dB verhoogt stress en risico op hart- en vaatziekten. Controleer dit voordat je huurt of koopt nabij infrastructuur."
+      },
+      "crime": {
+        "title": "Criminaliteitsstatistieken",
+        "description": "Criminaliteitscijfers van de Politie met geregistreerde incidenten per 1.000 inwoners. Inclusief diefstal, inbraak, geweld en vandalisme.",
+        "whyMatters": "Criminaliteitscijfers variëren aanzienlijk tussen buurten, zelfs binnen dezelfde stad. Lage criminaliteit correleert met hogere leefbaarheidsscores."
+      },
+      "flooding": {
+        "title": "Overstromingsrisico",
+        "description": "Toont gebieden met risico op overstroming door rivieren, zee of hevige regenval. Nederland is beroemd laaggelegen, met 26% van het land onder zeeniveau.",
+        "whyMatters": "Hoewel Nederlandse waterkeringen van wereldklasse zijn, is het risico niet nul. Overstromingsrisico beïnvloedt verzekeringskosten en kan keldergebruik beperken."
+      },
+      "foundationRisk": {
+        "title": "Funderingsrisico",
+        "description": "Identificeert gebieden waar gebouwen funderingsproblemen kunnen hebben door verzakkende bodem. Relevant voor oudere gebouwen (voor 1970) met houten heipalen.",
+        "whyMatters": "Funderingsproblemen zijn extreem duur om te herstellen (€50.000-€150.000+) en worden NIET gedekt door standaard verzekeringen. Verkopende partijen hoeven problemen niet te melden."
+      },
+      "natura2000": {
+        "title": "Natura 2000-gebieden",
+        "description": "Natura 2000 is het netwerk van beschermde natuurgebieden van de Europese Unie. Nederland heeft 162 Natura 2000-gebieden die ongeveer 14% van land en water beslaan.",
+        "whyMatters": "Wonen nabij Natura 2000-gebieden betekent toegang tot ongerepte natuur. Er zijn echter strikte regels: je kunt niet vrij bouwen of verbouwen nabij deze gebieden."
+      },
+      "nationalParks": {
+        "title": "Nationale Parken",
+        "description": "Nederland heeft 21 nationale parken met unieke landschappen waaronder de Waddenzee, Veluwse bossen, duinen en wetlands.",
+        "whyMatters": "Nationale parken bieden uitzonderlijke recreatiemogelijkheden: wandelen, fietsen, wildspotten. Woningen nabij parken hebben vaak premiumwaarden."
+      },
+      "droneNoFly": {
+        "title": "Drone-verbodsgebieden",
+        "description": "Gebieden waar dronevlucht beperkt of verboden is. Inclusief vliegvelden, militaire installaties, koninklijke paleizen en natuurreservaten.",
+        "whyMatters": "Als je een drone-hobbyist bent, controleer deze zones voor je een locatie kiest. Deze kaart toont ook nabijheid van gevoelige infrastructuur."
+      },
+      "cadastral": {
+        "title": "Kadastrale Percelen",
+        "description": "Toont officiële perceelgrenzen zoals geregistreerd bij het Kadaster. Elk perceel heeft een unieke identificatie en wettelijk gedefinieerde grenzen.",
+        "whyMatters": "Essentieel bij het kopen van vastgoed om exacte grenzen te begrijpen. Geschillen over perceelgrenzen kunnen duur zijn om op te lossen."
+      },
+      "neighborhoods": {
+        "title": "Buurtgrenzen",
+        "description": "Toont officiële CBS buurt- en wijkgrenzen. Nederland is verdeeld in ongeveer 17.000 buurten. Alle overheidsstatistieken worden op dit niveau gerapporteerd.",
+        "whyMatters": "Het begrijpen van buurtgrenzen helpt je relevante statistieken te zoeken en gebieden accuraat te vergelijken."
+      },
+      "schools": {
+        "title": "Scholen",
+        "description": "Locaties van alle Nederlandse scholen inclusief basisschool, voortgezet onderwijs, MBO, HBO en WO. Data van DUO.",
+        "whyMatters": "Voor gezinnen is nabijheid van scholen cruciaal. Nederlandse kinderen lopen of fietsen meestal zelfstandig naar school."
+      },
+      "healthcare": {
+        "title": "Zorgvoorzieningen",
+        "description": "Toont locaties van huisartsen, apotheken, ziekenhuizen en specialistische klinieken. In het Nederlandse systeem is je huisarts je eerste aanspreekpunt.",
+        "whyMatters": "Iedereen in Nederland moet zich registreren bij een lokale huisarts. Populaire praktijken in steden hebben vaak wachtlijsten."
+      },
+      "supermarkets": {
+        "title": "Supermarkten",
+        "description": "Grote supermarkten inclusief Albert Heijn, Jumbo, Lidl, Aldi, Plus en speciaalzaken. De meeste Nederlandse supermarkten bevinden zich in buurtcentra.",
+        "whyMatters": "Dagelijks winkelen is gebruikelijk in Nederland. De meeste Nederlanders fietsen naar de winkel. Een supermarkt binnen fietsafstand beïnvloedt dagelijks gemak."
+      },
+      "trainStations": {
+        "title": "Treinstations (NS)",
+        "description": "Nederlandse Spoorwegen (NS) stations inclusief Intercity en lokale (Sprinter) haltes. Nederland heeft een van de dichtste spoorwegnetwerken van Europa.",
+        "whyMatters": "Treinpendelen is zeer gebruikelijk. Wonen nabij een Intercity-station biedt snelle verbindingen door het hele land. Stationnabijheid beïnvloedt vastgoedwaarden."
+      },
+      "publicTransport": {
+        "title": "Metro en Tram",
+        "description": "Metrosystemen bestaan in Amsterdam en Rotterdam. Tramnetwerken zijn actief in Amsterdam, Rotterdam, Den Haag en Utrecht.",
+        "whyMatters": "In grote steden kan tram- en metrotoegang belangrijker zijn dan treinstations voor dagelijks pendelen."
+      },
+      "playgrounds": {
+        "title": "Speeltuinen",
+        "description": "Openbare speeltuinen onderhouden door gemeenten. Nederlandse buurten hebben doorgaans goed onderhouden speelplaatsen voor kinderen.",
+        "whyMatters": "Voor gezinnen met jonge kinderen zijn nabije speeltuinen essentieel voor het dagelijks leven. Nederlandse kinderen brengen veel tijd buiten door."
+      }
+    },
+    "glossary": {
+      "title": "Nederlandse Termen",
+      "places": "Geografische Termen",
+      "terms": "Woontermen"
+    },
+    "cta": {
+      "title": "Klaar om te Verkennen?",
+      "subtitle": "Nu je de datalagen begrijpt, begin met het verkennen van buurten om je perfecte woonplek in Nederland te vinden.",
+      "button": "Open Interactieve Kaart"
+    },
+    "footer": {
+      "disclaimer": "Data is afkomstig van officiële Nederlandse overheidsinstanties en wordt verstrekt voor informatiedoeleinden. Verifieer altijd belangrijke informatie met professioneel advies voordat je vastgoedbeslissingen neemt."
+    }
+  },
+  "renovation": {
+    "title": "Renovatie Budget Calculator",
+    "subtitle": "Bereken kosten, besparingen en ROI voor energieverbeteringen",
+    "currentLabel": "Huidig energielabel",
+    "homeSize": "Woonoppervlak (m²)",
+    "heatingType": "Verwarmingstype",
+    "heatingGas": "Gas (CV ketel)",
+    "heatingElectric": "Elektrisch",
+    "heatingDistrict": "Stadsverwarming",
+    "heatingHeatpump": "Warmtepomp",
+    "roofOrientation": "Dakoriëntatie",
+    "roofSouth": "Zuid",
+    "roofEastWest": "Oost-West",
+    "roofNorth": "Noord",
+    "roofFlat": "Plat dak",
+    "selectedMeasures": "{count} maatregelen geselecteerd",
+    "clearAll": "Wis alles",
+    "totalCost": "Totale investering",
+    "annualSavings": "Jaarlijkse besparing",
+    "paybackPeriod": "Terugverdientijd",
+    "labelProjection": "Labelverbetering",
+    "years": "jaar",
+    "co2Reduction": "~{amount} kg CO₂ reductie per jaar",
+    "subsidyAvailable": "{count} maatregelen komen in aanmerking voor subsidie",
+    "showDetails": "Toon details",
+    "hideDetails": "Verberg details",
+    "availableSubsidies": "Beschikbare Subsidies",
+    "quickWins": "Snelle Winsten",
+    "mediumInvestments": "Middelgrote Investeringen",
+    "majorInvestments": "Grote Investeringen",
+    "disclaimer": "Kosten zijn schattingen gebaseerd op gemiddelde Nederlandse prijzen (2025). Werkelijke kosten variëren per woning, aannemer en regio. Vraag altijd meerdere offertes aan. Subsidies zijn onderhevig aan beschikbaarheid en voorwaarden."
+  },
+  "tiers": {
+    "free": "Gratis",
+    "basic": "Basis",
+    "pro": "Pro",
+    "enterprise": "Zakelijk",
+    "freeFeatures": {
+      "mapExploration": "Onbeperkt kaart verkennen",
+      "addressSearches": "10 adreszoekacties per dag",
+      "basicLayers": "Basislagen (leefbaarheid, criminaliteit, scholen)",
+      "travelTime": "3 reistijdberekeningen per dag",
+      "neighborhoodInfo": "Samenvatting buurtinfo"
+    },
+    "basicFeatures": {
+      "allFree": "Alles in Gratis",
+      "unlimitedSearch": "Onbeperkt adres zoeken",
+      "allLayers": "Alle 30+ kaartlagen",
+      "unlimitedTravel": "Onbeperkt reistijd calculator",
+      "multiDestination": "Tot 3 woon-werkbestemmingen",
+      "savedLocations": "Tot 10 locaties opslaan",
+      "comparison": "Vergelijk 2 buurten",
+      "pdfExport": "3 PDF exports per maand"
+    },
+    "proFeatures": {
+      "allBasic": "Alles in Basis",
+      "propertyInsights": "WOZ-waarden & energielabels",
+      "redFlags": "Red Flags risico dashboard",
+      "multiDestination": "Tot 5 woon-werkbestemmingen",
+      "unlimitedSaved": "Onbeperkt locaties opslaan",
+      "comparison": "Vergelijk tot 5 gebieden",
+      "unlimitedPdf": "Onbeperkte PDF rapporten",
+      "renovationCalc": "Renovatie Budget Calculator",
+      "viewer3d": "3D gebouwenviewer",
+      "apiAccess": "API toegang (1.000 calls/maand)"
+    }
   }
 }

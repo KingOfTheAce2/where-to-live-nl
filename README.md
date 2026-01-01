@@ -12,28 +12,62 @@
 
 | Milestone | Target | Status |
 |-----------|--------|--------|
-| **MVP** | Q1 2026 | 🟡 In Progress (~85% complete) |
-| **v1.0** | Q2 2026 | 🔵 Planned |
+| **MVP** | Q1 2026 | 🟢 ~95% Complete |
+| **v1.0** | Q2 2026 | 🟡 In Progress |
 
 ### What's Working Now
-- Interactive map with 25+ data layers
-- Address autocomplete (PDOK)
-- Property details with WOZ values
-- 2.26M energy labels
-- Livability scores (Leefbaarometer)
-- Crime statistics
-- School locations (7,300+ schools)
+
+**Map & Visualization**
+- Interactive map with **30+ data layers**
+- Address autocomplete (PDOK Locatieserver)
+- 3D building viewer (CesiumJS)
+- Aerial/satellite imagery toggle
+- PDF export for location analysis
+
+**Property Intelligence**
+- Property details with WOZ values (2.2M+ records)
+- Energy labels (2.26M from EP-Online)
+- Building info from BAG registry
+- Red Flags card (critical issues dashboard)
+
+**Environment & Safety**
+- Livability scores (Leefbaarometer) + trends
+- Crime statistics by neighborhood
+- Flood risk zones (multiple scenarios + depth)
 - Foundation risk warnings
-- Flood risk zones
-- Air quality & noise overlays
-- Travel time calculator (OpenRouteService)
+- Air quality overlays (NO2, PM10, PM2.5, O3)
+- Real-time air quality stations
+- Noise pollution (road, rail, air traffic)
+
+**Nature & Recreation**
+- National Parks (21 parks)
+- Natura 2000 protected areas (162 sites)
+- Drone no-fly zones
+- Playgrounds & Speelbossen (forest playgrounds)
+
+**Schools & Education (15,269 schools)**
+- Primary, secondary, MBO, HBO, WO
+- Special education schools
+- Filterable by type
+
+**Transport & Amenities**
+- Train stations (NS + regional)
+- Metro stations & lines
+- Tram stops & lines
+- Supermarkets (6,049 stores)
+- Healthcare facilities
+
+**Tools & Features**
+- Travel time calculator (isochrones)
+- WWS Calculator (rental points system)
 - Neighborhood comparison
-- 12 languages supported
+- Interactive guide with Dutch terminology
+- **10 languages** (EN, NL, DE, FR, ES, IT, PT, PL, RU, UK)
 
 ### Coming Soon
-- PDF export for comparisons (Premium)
-- Erfpacht (ground lease) warnings
 - User accounts & saved searches
+- Erfpacht (ground lease) warnings
+- Email alerts for saved locations
 
 ---
 
@@ -55,9 +89,11 @@ Where-to-Live-NL solves this by aggregating public data into actionable insights
 
 ### 🗺️ **Interactive Map** ✅
 - MapLibre GL + PDOK Dutch government tiles (free, unlimited)
-- 25+ toggleable data layers
+- **30+ toggleable data layers** organized by category
 - Address autocomplete with instant results
 - Click any location for detailed insights
+- Aerial/satellite imagery toggle
+- **3D building viewer** (CesiumJS integration)
 
 ### 🚗 **Travel Time Calculator** ✅
 - OpenRouteService API integration with caching
@@ -67,6 +103,7 @@ Where-to-Live-NL solves this by aggregating public data into actionable insights
 
 ### 🏘️ **Neighborhood Analysis** ✅
 - **Livability scores** (Leefbaarometer) - 100x100m granularity
+- **Livability trends** - See how neighborhoods changed over time
 - **Safety metrics** - Burglary and crime statistics per neighborhood
 - **Demographics** - Age distribution, household types, income levels
 - **Environmental factors** - Air quality (RIVM), noise pollution overlays
@@ -75,24 +112,39 @@ Where-to-Live-NL solves this by aggregating public data into actionable insights
 - Building characteristics (year built, type, size)
 - Energy labels (2.26M properties from EP-Online)
 - WOZ property valuations (2.2M+ records)
-- **Red flag alerts**:
+- **Red Flags Dashboard** - Consolidated critical issues view:
   - ⚠️ Foundation risk areas (funderingsproblematiek)
-  - ⚠️ Flood risk zones
+  - ⚠️ Flood risk zones (multiple scenarios + depth)
+  - ⚠️ Air quality warnings
   - 🔜 Erfpacht (ground lease) warnings
 
+### 🌳 **Nature & Environment** ✅
+- **National Parks** (21 parks from PDOK)
+- **Natura 2000** protected areas (162 EU-protected sites)
+- Drone no-fly zones
+- Air quality: historical overlays + real-time stations
+- Noise pollution (road, rail, air traffic)
+
 ### 👨‍👩‍👧‍👦 **Family-Friendly Insights** ✅
-- 7,300+ schools (primary, secondary, international, MBO, HBO)
-- Playgrounds and parks
+- **15,269 schools** (primary, secondary, MBO, HBO, WO, special ed)
+- Playgrounds (speeltuinen)
+- **Speelbossen** - Forest playgrounds
 - Healthcare facilities (hospitals, GPs, pharmacies)
-- Emergency services coverage
+
+### 🚆 **Public Transport** ✅
+- Train stations (NS + regional)
+- Metro stations & lines
+- Tram stops & lines
+- Travel time isochrones
 
 ### 🌍 **Multi-Language** ✅
-12 languages: English, Dutch, German, French, Spanish, Italian, Portuguese, Polish, Russian, Ukrainian, and more
+10 languages: English, Dutch, German, French, Spanish, Italian, Portuguese, Polish, Russian, Ukrainian
 
-### 📊 **Comparison Tools** ✅
+### 📊 **Comparison & Export Tools** ✅
 - Side-by-side neighborhood comparison
 - House vs house comparison
-- 🔜 PDF export (Premium feature)
+- **PDF export** for location analysis
+- Interactive guide with Dutch terminology explained
 
 ---
 
@@ -126,31 +178,30 @@ All data comes from **free, open government sources** - no web scraping, no Term
 ### Stack Overview
 ```
 ┌─────────────────────────────────────────┐
-│     Frontend (Vercel - Free Tier)       │
+│     Frontend (Vercel)                   │
 │   • React/Next.js                       │
-│   • MapLibre GL JS (open source)        │
-│   • PDOK Maps (Dutch govt, free)        │
+│   • MapLibre GL JS                      │
+│   • PDOK Maps (Dutch govt)              │
 │   • Tailwind CSS                        │
 └────────────────┬────────────────────────┘
                  │
 ┌────────────────┴────────────────────────┐
 │   API Layer (Cloudflare Workers)        │
 │   • Serverless functions                │
-│   • Free tier: 100k req/day             │
+│   • Edge-optimized                      │
 └────────────────┬────────────────────────┘
                  │
 ┌────────────────┴────────────────────────┐
 │   Storage (Cloudflare R2)               │
 │   • Static datasets (5-7 GB)            │
 │   • Vector tiles (PMTiles)              │
-│   • Free tier: 10 GB storage            │
 └────────────────┬────────────────────────┘
                  │
 ┌────────────────┴────────────────────────┐
-│   Database (PlanetScale/Supabase)       │
-│   • User preferences                    │
+│   Database (Supabase)                   │
+│   • User accounts & subscriptions       │
 │   • Saved searches                      │
-│   • Free tier: 5 GB                     │
+│   • Payment processing                  │
 └─────────────────────────────────────────┘
 ```
 
@@ -273,34 +324,47 @@ where-to-live-nl/
 
 ## 🛠️ Development Status
 
-### Phase 1: MVP ✅ ~85% Complete
-- [x] Data ingestion pipeline (25+ datasets)
+### Phase 1: MVP ✅ ~95% Complete
+- [x] Data ingestion pipeline (30+ datasets)
 - [x] Interactive map interface (MapLibre + PDOK)
 - [x] Travel time calculator (OpenRouteService)
 - [x] Livability scores display (Leefbaarometer)
+- [x] Livability trends (change over time)
 - [x] School data integration (15,269 schools from DUO)
 - [x] Supermarket locations (6,049 stores)
 - [x] Energy labels (2.26M properties)
 - [x] WOZ valuations (2.2M+ records)
-- [x] Flood risk overlay
+- [x] Flood risk overlay (multiple scenarios)
+- [x] Flood depth visualization
 - [x] Crime statistics overlay
 - [x] Address autocomplete with PDOK Locatieserver
 - [x] Neighborhood comparison panel
-- [x] Air quality overlay (NO2, PM10, PM2.5)
+- [x] Air quality overlay (NO2, PM10, PM2.5, O3)
+- [x] Real-time air quality stations
+- [x] Noise pollution overlay
 - [x] Healthcare facilities map
 - [x] Foundation risk database
 - [x] Train stations layer
-- [x] Playgrounds layer
-- [x] Multi-language support (12 languages)
+- [x] Metro stations & lines
+- [x] Tram stops & lines
+- [x] Playgrounds & Speelbossen
+- [x] National Parks (21 parks)
+- [x] Natura 2000 areas (162 sites)
+- [x] Drone no-fly zones
+- [x] Cadastral parcels
+- [x] Multi-language support (10 languages)
 - [x] Property filters (price, type, year)
 - [x] WWS Calculator (rental points system)
-- [ ] PDF export for comparisons
+- [x] 3D building viewer (CesiumJS)
+- [x] PDF export
+- [x] Red Flags dashboard
+- [x] Interactive guide (/guide)
 - [ ] Erfpacht warnings
 
 ### Phase 2: Enhanced Features (In Progress)
 - [ ] User accounts (save searches)
 - [ ] Saved location alerts
-- [ ] Neighborhood boundary highlighting
+- [x] Neighborhood boundary highlighting
 
 ### Phase 3: Premium Features
 - [ ] Kadaster integration (paid API)
@@ -430,4 +494,4 @@ The underlying public data sources remain under their original open licenses.
 
 **Built for navigating the Dutch housing market**
 
-*Last updated: December 2025*
+*Last updated: December 24, 2025*

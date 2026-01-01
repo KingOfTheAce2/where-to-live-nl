@@ -54,34 +54,58 @@ def find_neighborhood_by_postal_code(postal_code: str) -> Optional[str]:
 
 async def reverse_geocode_pdok(lat: float, lng: float) -> Optional[dict]:
     """
-    Use PDOK reverse geocoding API to get address information.
+    Use PDOK reverse geocoding API to get full address information including buurtcode.
+
+    Two-step process:
+    1. /reverse endpoint to get address ID from coordinates
+    2. /lookup endpoint to get full details including buurtcode
 
     Args:
         lat: Latitude
         lng: Longitude
 
     Returns:
-        Address information including potential neighborhood data
+        Full address information including buurtcode
     """
     try:
-        url = "https://api.pdok.nl/bzk/locatieserver/search/v3_1/reverse"
-        params = {
-            "lat": lat,
-            "lon": lng,
-            "rows": 1
-        }
-
         async with httpx.AsyncClient(timeout=10.0) as client:
-            response = await client.get(url, params=params)
+            # Step 1: Reverse geocode to get address ID
+            reverse_url = "https://api.pdok.nl/bzk/locatieserver/search/v3_1/reverse"
+            params = {
+                "lat": lat,
+                "lon": lng,
+                "rows": 1
+            }
+
+            response = await client.get(reverse_url, params=params)
             response.raise_for_status()
             data = response.json()
 
-            if data.get("response", {}).get("numFound", 0) > 0:
-                docs = data["response"]["docs"]
-                if docs:
-                    return docs[0]
+            if data.get("response", {}).get("numFound", 0) == 0:
+                return None
 
-        return None
+            docs = data["response"]["docs"]
+            if not docs:
+                return None
+
+            address_id = docs[0].get("id")
+            if not address_id:
+                return docs[0]  # Return basic info if no ID
+
+            # Step 2: Lookup full details using the address ID
+            lookup_url = "https://api.pdok.nl/bzk/locatieserver/search/v3_1/lookup"
+            lookup_params = {"id": address_id}
+
+            lookup_response = await client.get(lookup_url, params=lookup_params)
+            lookup_response.raise_for_status()
+            lookup_data = lookup_response.json()
+
+            lookup_docs = lookup_data.get("response", {}).get("docs", [])
+            if lookup_docs:
+                return lookup_docs[0]  # Full address data with buurtcode
+
+            return docs[0]  # Fallback to basic reverse result
+
     except Exception as e:
         print(f"Error in PDOK reverse geocoding: {e}")
         return None
@@ -92,8 +116,8 @@ async def find_neighborhood_by_coordinates(lat: float, lng: float) -> Optional[s
     Find neighborhood code (area_code) by coordinates.
 
     Strategy:
-    1. Use PDOK reverse geocoding to get address
-    2. Use BAG API to get detailed address info including neighborhood code
+    1. Use PDOK reverse geocoding to get address - this directly returns buurtcode!
+    2. Fallback to WFS spatial query if needed
 
     Args:
         lat: Latitude (WGS84)
@@ -103,57 +127,29 @@ async def find_neighborhood_by_coordinates(lat: float, lng: float) -> Optional[s
         Neighborhood code (e.g., "BU03630001") or None
     """
     try:
-        # Step 1: Get address from coordinates
+        # Step 1: Get address from coordinates via PDOK reverse geocoding
+        # PDOK directly returns buurtcode in the response!
         address_info = await reverse_geocode_pdok(lat, lng)
-        if not address_info or address_info.get("type") != "adres":
+
+        if address_info:
+            # PDOK lookup response includes buurtcode directly
+            buurt_code = address_info.get("buurtcode")
+            if buurt_code:
+                # Skip "Buitenland" (foreign/no data) codes
+                if buurt_code == "BU09989999":
+                    print("Coordinates are outside CBS neighborhood boundaries (Buitenland)")
+                    return None
+                print(f"Found buurtcode {buurt_code} from PDOK for coordinates {lat}, {lng}")
+                return buurt_code
+
+            # Some address types might not have buurtcode, log for debugging
+            print(f"PDOK returned address but no buurtcode for {lat}, {lng}: type={address_info.get('type')}")
+        else:
             print(f"No address found for coordinates {lat}, {lng}")
-            return None
 
-        # Extract address ID from PDOK response
-        address_id = address_info.get("id", "")
-
-        # Step 2: Use BAG API to get detailed address info including neighborhood
-        bag_url = f"https://api.bag.kadaster.nl/lvbag/individuelebevragingen/v2/adressenuitgebreid/{address_id}"
-
-        async with httpx.AsyncClient(timeout=15.0) as client:
-            # BAG API requires specific headers
-            headers = {
-                "Accept": "application/hal+json",
-                "X-Api-Key": "l7xxbc7715cf849c4ff8966e6b0ad87bea0a"  # Public API key for BAG
-            }
-
-            response = await client.get(bag_url, headers=headers)
-
-            if response.status_code == 404:
-                # Address not found in BAG, try alternative method
-                print(f"Address {address_id} not found in BAG API")
-                return await find_neighborhood_by_coordinates_wfs(lat, lng)
-
-            response.raise_for_status()
-            data = response.json()
-
-            # Extract neighborhood code (buurtcode) from BAG response
-            # The structure is: data -> _embedded -> bijbehorendeBuurt -> buurtcode
-            embedded = data.get("_embedded", {})
-            if "bijbehorendeBuurt" in embedded:
-                buurt_info = embedded["bijbehorendeBuurt"]
-                buurt_code = buurt_info.get("identificatie", "")
-
-                # Format as BU-style code if needed
-                if buurt_code and not buurt_code.startswith("BU"):
-                    buurt_code = f"BU{buurt_code}"
-
-                return buurt_code
-
-            # Alternative: check if it's in the main data object
-            if "buurtcode" in data:
-                buurt_code = data["buurtcode"]
-                if buurt_code and not buurt_code.startswith("BU"):
-                    buurt_code = f"BU{buurt_code}"
-                return buurt_code
-
-            print(f"No neighborhood code found in BAG response for {address_id}")
-            return None
+        # Fallback to WFS spatial query
+        print(f"Falling back to WFS lookup for {lat}, {lng}")
+        return await find_neighborhood_by_coordinates_wfs(lat, lng)
 
     except Exception as e:
         print(f"Error finding neighborhood by coordinates: {e}")

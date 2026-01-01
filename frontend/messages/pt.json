@@ -1,8 +1,51 @@
 {
+  "nav": {
+    "home": "Início",
+    "backToHome": "Voltar ao início"
+  },
   "app": {
-    "title": "Onde morar na Holanda",
-    "subtitle": "encontre sua casa holandesa perfeita",
-    "builtWith": "feito com ❤️ para expatriados"
+    "title": "WhereToLive",
+    "subtitle": "Onde morar nos Países Baixos",
+    "builtWith": "Feito com cuidado para expatriados",
+    "betaDisclaimer": "Beta: Camadas do mapa podem carregar lentamente (serviços externos)"
+  },
+  "landing": {
+    "openMap": "Abrir Mapa",
+    "hero": {
+      "title": "Encontre o Seu Bairro Perfeito nos Países Baixos",
+      "subtitle": "Tome decisões informadas sobre onde morar com dados abrangentes sobre segurança, qualidade de vida, comodidades e muito mais.",
+      "cta": "Explorar o Mapa",
+      "learnMore": "Saiba Mais"
+    },
+    "features": {
+      "title": "Tudo o Que Você Precisa Saber",
+      "subtitle": "Acesse dados abrangentes do bairro para tomar a melhor decisão para você e sua família.",
+      "safety": {
+        "title": "Segurança e Criminalidade",
+        "description": "Estatísticas reais de criminalidade da Politie.nl para entender os níveis de segurança do bairro."
+      },
+      "livability": {
+        "title": "Índices de Qualidade de Vida",
+        "description": "Pontuações oficiais do Leefbaarometer medindo a qualidade de vida nos bairros holandeses."
+      },
+      "amenities": {
+        "title": "Comodidades Próximas",
+        "description": "Distância até supermercados, serviços de saúde, escolas, parques e transporte público."
+      },
+      "demographics": {
+        "title": "Dados Demográficos",
+        "description": "Estatísticas populacionais, distribuição etária e informações habitacionais do CBS."
+      }
+    },
+    "dataSources": {
+      "title": "Fontes de Dados Confiáveis",
+      "subtitle": "Todos os dados vêm de fontes oficiais do governo holandês e bancos de dados verificados."
+    },
+    "cta": {
+      "title": "Pronto para Encontrar Sua Nova Casa?",
+      "subtitle": "Comece a explorar bairros nos Países Baixos hoje.",
+      "button": "Começar a Explorar"
+    }
   },
   "woz": {
     "title": "valor WOZ da propriedade",
@@ -11,6 +54,14 @@
     "currentValue": "valor atual",
     "historicalTrend": "tendência histórica (2014-2024)",
     "change": "alteração"
+  },
+  "wozCard": {
+    "title": "Valor WOZ da propriedade",
+    "value2024": "Valor 2024",
+    "perSqm": "Por m² (estimado 75m²)",
+    "viewHistorical": "Ver valores históricos (2014-2024)",
+    "notIndexedYet": "Este endereço ainda não foi indexado em nosso banco de dados. Você pode consultar o valor WOZ no site oficial do governo.",
+    "checkYourself": "Verificar valor WOZ em wozwaardeloket.nl"
   },
   "energy": {
     "title": "custos médios de serviços",
@@ -28,6 +79,7 @@
     "title": "distância até instalações (CBS 2024)",
     "transport": "transporte",
     "trainStation": "estação de comboio",
+    "metroStation": "Metro/Elétrico",
     "majorTrainStation": "estação principal (IC)",
     "highwayOnramp": "entrada de autoestrada",
     "healthcareTitle": "cuidados de saúde",
@@ -74,7 +126,7 @@
     "selected": "selecionado:"
   },
   "snapshot": {
-    "title": "visão geral do bairro",
+    "title": "Visão geral do bairro",
     "loading": "carregando...",
     "startSearch": "iniciar pesquisa",
     "startSearchDescription": "digite um endereço acima para ver informações completas sobre o bairro, valores de propriedade e dados de qualidade de vida.",
@@ -104,6 +156,7 @@
   },
   "wijkagent": {
     "title": "seu agente de bairro",
+    "clickToLearn": "Saiba mais",
     "whatIs": "o que é um Wijkagent?",
     "explanation": "um Wijkagent (agente de bairro) é seu contato policial local responsável pela segurança em sua área específica. Eles se concentram na prevenção de crimes, construção de confiança com os residentes e resolução de preocupações locais.",
     "whatTheyDo": "o que eles fazem:",
@@ -129,9 +182,7 @@
     "greenSpace": "qualidade de espaços verdes",
     "floodRisk": "risco de inundação",
     "foundationRisk": "risco de fundação",
-    "airQuality": "qualidade do ar",
-    "viewOnMap": "ver no mapa",
-    "dataVisible": "dados ambientais visíveis no mapa"
+    "airQuality": "qualidade do ar"
   },
   "livability": {
     "title": "pontuação de qualidade de vida",
@@ -223,6 +274,7 @@
     "baseMap": "Mapa base",
     "standardMap": "Padrão",
     "aerialPhoto": "Aérea",
+    "neighborhoodBoundaries": "Limites de bairro",
     "overlays": "Camadas do mapa",
     "loading": "Carregando mapa...",
     "crimeRate": "Taxa de criminalidade",
@@ -233,13 +285,17 @@
     "healthcare": "Saúde",
     "supermarkets": "Supermercados",
     "playgrounds": "Parques infantis",
+    "speelbossen": "Florestas de jogo",
     "trainStations": "Estações de comboio",
+    "metroStations": "Metro/Elétrico",
     "schools": "Escolas",
     "cadastralParcels": "Parcelas cadastrais",
-    "natureEnvironment": "Natureza e Ambiente",
+    "natureEnvironment": "Natureza e ambiente",
     "nationalParks": "Parques nacionais",
     "natura2000": "Áreas Natura 2000",
+    "floodRisk": "Risco de inundação",
     "floodRiskZones": "Zonas de risco de inundação",
+    "floodCombined": "Risco de inundação combinado",
     "droneNoFlyZones": "Zonas de proibição de drones",
     "pollutants": {
       "NO2": "NO₂ (Dióxido de Nitrogénio)",
@@ -267,10 +323,16 @@
       "pharmacy": "Farmácia",
       "hospital": "Hospital",
       "clinic": "Clínica",
-      "transportAmenities": "Transporte e comodidades",
+      "transportAmenities": "Transporte e serviços",
+      "transport": "Transporte",
+      "shopping": "Compras",
+      "recreation": "Lazer",
       "trainStation": "Estação de comboio",
+      "metroStation": "Metro/Elétrico",
       "supermarket": "Supermercado",
       "playground": "Parque infantil",
+      "naturePlay": "Jogo na natureza",
+      "speelbos": "Floresta de jogo",
       "neighborhoodBoundary": "Limite do bairro",
       "crimeRateLegend": "Taxa de criminalidade (azul)",
       "low": "Baixa",
@@ -310,6 +372,7 @@
     "foundation": {
       "title": "Área de Risco de Fundação",
       "inRiskArea": "Esta propriedade está numa área de atenção oficial de fundação (PDOK/RVO)",
+      "unknown": "Estado de risco de fundação desconhecido - dados não disponíveis. Sempre verifique com inspeção profissional.",
       "recommendation": "Obtenha uma inspeção de fundação profissional (bouwkundig rapport) antes de comprar",
       "linkLabel": "Saiba mais em KCAF"
     },
@@ -399,5 +462,256 @@
     "premiumDescription": "A exportação em PDF é um recurso premium. Atualize para baixar relatórios de comparação e compartilhar com outros.",
     "upgradeToPremium": "Atualizar para Premium",
     "maybeLater": "Talvez mais tarde"
+  },
+  "auth": {
+    "login": "Entrar",
+    "signup": "Registar",
+    "logout": "Sair",
+    "email": "Email",
+    "password": "Palavra-passe",
+    "confirmPassword": "Confirmar palavra-passe",
+    "fullName": "Nome completo",
+    "forgotPassword": "Esqueceu a palavra-passe?",
+    "resetPassword": "Redefinir palavra-passe",
+    "noAccount": "Não tem conta?",
+    "haveAccount": "Já tem conta?",
+    "orContinueWith": "ou continue com",
+    "google": "Google",
+    "github": "GitHub",
+    "loginError": "Erro ao entrar. Verifique as suas credenciais.",
+    "signupError": "Erro ao registar. Por favor, tente novamente.",
+    "passwordMismatch": "As palavras-passe não coincidem",
+    "passwordTooShort": "A palavra-passe deve ter pelo menos 8 caracteres",
+    "invalidEmail": "Endereço de email inválido",
+    "checkEmail": "Verifique o seu email para confirmar a conta",
+    "resetEmailSent": "Email de redefinição de palavra-passe enviado",
+    "welcomeBack": "Bem-vindo de volta!",
+    "createAccount": "Criar conta",
+    "signingIn": "A entrar...",
+    "signingUp": "A registar..."
+  },
+  "premium": {
+    "badge": "Premium",
+    "freeBadge": "Grátis",
+    "upgrade": "Atualizar para Premium",
+    "upgradeDescription": "Desbloqueie todas as funcionalidades premium para a melhor experiência",
+    "feature": "Funcionalidade Premium",
+    "featureDescription": "Esta funcionalidade está disponível para utilizadores premium",
+    "limit": "Limite atingido",
+    "limitDescription": "Atingiu o limite do plano gratuito. Atualize para continuar."
+  },
+  "pricing": {
+    "title": "Escolha o seu plano",
+    "subtitle": "Comece grátis, atualize quando precisar",
+    "monthly": "Mensal",
+    "perMonth": "/mês",
+    "free": {
+      "title": "Grátis",
+      "price": "€0",
+      "description": "Perfeito para começar",
+      "features": {
+        "search": "Pesquisa de endereços ilimitada",
+        "basicData": "Dados básicos do bairro",
+        "savedSearches": "3 pesquisas guardadas",
+        "favorites": "5 favoritos"
+      },
+      "cta": "Plano atual"
+    },
+    "premium": {
+      "title": "Premium",
+      "price": "€9,99",
+      "description": "Para utilizadores sérios",
+      "features": {
+        "everything": "Tudo no Grátis, mais:",
+        "pdfExport": "Exportação PDF",
+        "unlimitedSearches": "Pesquisas guardadas ilimitadas",
+        "unlimitedFavorites": "Favoritos ilimitados",
+        "detailedCrime": "Estatísticas detalhadas de criminalidade",
+        "historicalData": "Dados históricos (10+ anos)",
+        "advancedAnalytics": "Análises avançadas"
+      },
+      "cta": "Começar",
+      "popular": "Mais popular"
+    }
+  },
+  "dashboard": {
+    "title": "Painel",
+    "welcome": "Bem-vindo, {name}!",
+    "overview": "Visão geral da conta",
+    "savedSearches": "Pesquisas guardadas",
+    "favorites": "Favoritos",
+    "subscription": "Subscrição",
+    "settings": "Definições",
+    "noSavedSearches": "Sem pesquisas guardadas",
+    "noFavorites": "Sem favoritos",
+    "viewAll": "Ver tudo",
+    "recentActivity": "Atividade recente",
+    "quickActions": "Ações rápidas",
+    "startNewSearch": "Iniciar nova pesquisa",
+    "managePlan": "Gerir plano"
+  },
+  "savedSearches": {
+    "title": "Pesquisas guardadas",
+    "empty": "Ainda não tem pesquisas guardadas",
+    "emptyDescription": "Guarde endereços da sua pesquisa para aceder rapidamente mais tarde",
+    "save": "Guardar pesquisa",
+    "saved": "Pesquisa guardada",
+    "remove": "Remover",
+    "limit": "Limite de pesquisas atingido ({count}/{max})",
+    "upgradeToSaveMore": "Atualize para Premium para guardar mais pesquisas",
+    "searchName": "Nome da pesquisa",
+    "saveSuccess": "Pesquisa guardada com sucesso",
+    "removeSuccess": "Pesquisa removida",
+    "saveError": "Erro ao guardar pesquisa"
+  },
+  "subscription": {
+    "title": "A sua subscrição",
+    "currentPlan": "Plano atual",
+    "status": "Estado",
+    "active": "Ativo",
+    "canceled": "Cancelado",
+    "expired": "Expirado",
+    "renewsOn": "Renova a",
+    "expiresOn": "Expira a",
+    "manageBilling": "Gerir faturação",
+    "cancelSubscription": "Cancelar subscrição",
+    "reactivate": "Reativar subscrição",
+    "upgradeNow": "Atualizar agora",
+    "thankYou": "Obrigado por ser premium!",
+    "enjoyBenefits": "Desfrute de todos os benefícios premium"
+  },
+  "guide": {
+    "openMap": "Abrir Mapa",
+    "backToMap": "Voltar ao Mapa",
+    "title": "Guia das Camadas do Mapa",
+    "subtitle": "Entenda o que cada camada do mapa significa e por que é importante ao escolher onde viver nos Países Baixos. Este guia explica termos e conceitos holandeses que podem ser desconhecidos para expatriados.",
+    "intro": {
+      "title": "Como usar este guia",
+      "description": "Cada camada do mapa revela diferentes aspectos de um bairro. Ative estas camadas no mapa para visualizar dados que afetam sua qualidade de vida. Clique em qualquer área para ver valores específicos."
+    },
+    "whyMatters": "Por que isso é importante para você",
+    "dataSource": "Fonte de dados",
+    "layers": {
+      "leefbaarometer": {
+        "title": "Índice de Habitabilidade (Leefbaarometer)",
+        "description": "O Leefbaarometer é um índice oficial do governo holandês que mede a qualidade de vida em todos os bairros. Combina mais de 100 indicadores incluindo segurança, qualidade habitacional, coesão social e acesso a serviços.",
+        "whyMatters": "Este é o indicador de qualidade de vida mais abrangente disponível. Uma pontuação abaixo de 3 indica áreas com desafios. A pontuação é atualizada a cada 2 anos."
+      },
+      "airQuality": {
+        "title": "Qualidade do Ar",
+        "description": "Mostra concentrações de poluentes nocivos incluindo NO₂ (dióxido de nitrogênio do trânsito), PM10 (partículas grossas) e PM2.5 (partículas finas). Os dados vêm das estações de monitoramento RIVM.",
+        "whyMatters": "A poluição do ar impacta significativamente a saúde, especialmente para crianças, idosos e pessoas com condições respiratórias."
+      },
+      "noise": {
+        "title": "Poluição Sonora",
+        "description": "Mostra níveis de ruído em decibéis (dB) de diferentes fontes: tráfego rodoviário, ferrovias e aviões. A métrica Lden representa uma média de 24 horas.",
+        "whyMatters": "A exposição crônica ao ruído acima de 55 dB aumenta o estresse e o risco de doenças cardiovasculares. Verifique isso antes de alugar ou comprar perto de infraestrutura."
+      },
+      "crime": {
+        "title": "Estatísticas de Criminalidade",
+        "description": "Dados de criminalidade da Polícia holandesa mostrando incidentes reportados por 1.000 residentes. Inclui roubo, arrombamento, violência e vandalismo.",
+        "whyMatters": "As taxas de criminalidade variam significativamente entre bairros, mesmo dentro da mesma cidade. Baixa criminalidade correlaciona-se com pontuações de habitabilidade mais altas."
+      },
+      "flooding": {
+        "title": "Risco de Inundação",
+        "description": "Mostra áreas em risco de inundação por rios, mar ou chuvas intensas. Os Países Baixos são famosos por serem baixos, com 26% do país abaixo do nível do mar.",
+        "whyMatters": "Embora as defesas contra inundações holandesas sejam de classe mundial, o risco não é zero. O risco de inundação afeta os custos de seguro e pode limitar o uso do porão."
+      },
+      "foundationRisk": {
+        "title": "Risco de Fundação",
+        "description": "Identifica áreas onde os edifícios podem ter problemas de fundação devido ao afundamento do solo. Relevante para edifícios mais antigos (pré-1970) com fundações de estacas de madeira.",
+        "whyMatters": "Problemas de fundação são extremamente caros para reparar (€50.000-€150.000+) e NÃO são cobertos por seguros padrão. Os vendedores não são obrigados a divulgar problemas."
+      },
+      "natura2000": {
+        "title": "Áreas Protegidas Natura 2000",
+        "description": "Natura 2000 é a rede de áreas naturais protegidas da União Europeia. Os Países Baixos têm 162 sítios Natura 2000 cobrindo aproximadamente 14% de terra e água.",
+        "whyMatters": "Viver perto de áreas Natura 2000 significa acesso à natureza intocada. No entanto, existem regulamentos rigorosos: você não pode construir ou renovar livremente perto destas áreas."
+      },
+      "nationalParks": {
+        "title": "Parques Nacionais",
+        "description": "Os Países Baixos têm 21 parques nacionais com paisagens únicas incluindo o Mar de Wadden, florestas de Veluwe, dunas e zonas húmidas.",
+        "whyMatters": "Os parques nacionais oferecem oportunidades recreativas excepcionais: caminhadas, ciclismo, observação de vida selvagem. As propriedades perto de parques frequentemente têm valores premium."
+      },
+      "droneNoFly": {
+        "title": "Zonas de Proibição de Voo de Drones",
+        "description": "Áreas onde o voo de drone é restrito ou proibido. Inclui aeroportos, instalações militares, palácios reais e reservas naturais.",
+        "whyMatters": "Se você é um entusiasta de drones, verifique estas zonas antes de escolher uma localização. Este mapa também indica proximidade a infraestrutura sensível."
+      },
+      "cadastral": {
+        "title": "Parcelas Cadastrais",
+        "description": "Mostra limites de propriedade oficiais registrados no Kadaster (Registro de Imóveis holandês). Cada parcela tem um identificador único e limites legalmente definidos.",
+        "whyMatters": "Essencial ao comprar propriedade para entender limites exatos. Disputas sobre limites de propriedade podem ser caras de resolver."
+      },
+      "neighborhoods": {
+        "title": "Limites de Bairros",
+        "description": "Mostra limites oficiais de bairros do CBS. Os Países Baixos são divididos em aproximadamente 17.000 bairros. Todas as estatísticas governamentais são reportadas neste nível.",
+        "whyMatters": "Entender os limites dos bairros ajuda você a buscar estatísticas relevantes e comparar áreas com precisão."
+      },
+      "schools": {
+        "title": "Escolas",
+        "description": "Localizações de todas as escolas holandesas incluindo primária, secundária, MBO, HBO e WO. Dados de DUO.",
+        "whyMatters": "Para famílias, a proximidade de escolas é crucial. As crianças holandesas tipicamente caminham ou andam de bicicleta para a escola de forma independente."
+      },
+      "healthcare": {
+        "title": "Instalações de Saúde",
+        "description": "Mostra localizações de médicos de família, farmácias, hospitais e clínicas especializadas. No sistema holandês, seu médico de família é seu primeiro ponto de contato.",
+        "whyMatters": "Todos nos Países Baixos devem se registrar com um médico de família local. Práticas populares nas cidades frequentemente têm listas de espera."
+      },
+      "supermarkets": {
+        "title": "Supermercados",
+        "description": "Grandes mercearias incluindo Albert Heijn, Jumbo, Lidl, Aldi, Plus e lojas especializadas. A maioria dos supermercados holandeses está em centros de bairros.",
+        "whyMatters": "Compras diárias são comuns nos Países Baixos. A maioria dos holandeses vai de bicicleta à loja. Ter um supermercado a distância de bicicleta impacta significativamente a conveniência diária."
+      },
+      "trainStations": {
+        "title": "Estações de Trem (NS)",
+        "description": "Estações NS incluindo Intercity e paradas locais (Sprinter). Os Países Baixos têm uma das redes ferroviárias mais densas da Europa.",
+        "whyMatters": "O deslocamento de trem é extremamente comum. Viver perto de uma estação Intercity proporciona conexões rápidas por todo o país. A proximidade da estação afeta os valores das propriedades."
+      },
+      "publicTransport": {
+        "title": "Metro e Elétrico",
+        "description": "Sistemas de metro existem em Amesterdão e Roterdão. Redes de elétrico operam em Amesterdão, Roterdão, Haia e Utrecht.",
+        "whyMatters": "Nas grandes cidades, o acesso ao elétrico e metro pode ser mais importante do que estações de trem para deslocamentos diários."
+      },
+      "playgrounds": {
+        "title": "Parques Infantis",
+        "description": "Parques infantis públicos mantidos pelos municípios. Os bairros holandeses tipicamente têm áreas de jogos bem mantidas para crianças.",
+        "whyMatters": "Para famílias com crianças pequenas, parques infantis próximos são essenciais para a vida diária. As crianças holandesas passam muito tempo ao ar livre."
+      }
+    },
+    "glossary": {
+      "title": "Termos Holandeses para Expatriados",
+      "places": "Termos Geográficos",
+      "terms": "Termos Habitacionais"
+    },
+    "cta": {
+      "title": "Pronto para Explorar?",
+      "subtitle": "Agora que você entende as camadas de dados, comece a explorar bairros para encontrar seu lugar perfeito para viver nos Países Baixos.",
+      "button": "Abrir Mapa Interativo"
+    },
+    "footer": {
+      "disclaimer": "Os dados são provenientes de agências governamentais holandesas oficiais e são fornecidos para fins informativos. Sempre verifique informações importantes com aconselhamento profissional antes de tomar decisões imobiliárias."
+    }
+  },
+  "utilities": {
+    "title": "Average utility costs",
+    "perMonth": "/month",
+    "perYear": "/year",
+    "total": "total",
+    "gas": "Gas",
+    "electricity": "Electricity",
+    "water": "Water",
+    "districtHeating": "of homes here use district heating (stadsverwarming)",
+    "aboutCosts": "About these costs",
+    "dataSource": "Data source:",
+    "prices": "Prices (Jan 2025):",
+    "note": "Note:",
+    "noteDesc": "Actual costs vary by:",
+    "varFactor1": "Home size and insulation",
+    "varFactor2": "Number of residents",
+    "varFactor3": "Personal usage habits",
+    "varFactor4": "Energy provider and contract",
+    "noData": "No energy consumption data available for this area",
+    "energyLabel": "Etiqueta energética",
+    "estimatedLabel": "Estimado a partir do consumo médio da vizinhança"
   }
 }

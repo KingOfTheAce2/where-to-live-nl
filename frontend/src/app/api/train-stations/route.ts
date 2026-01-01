@@ -1,81 +1,112 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { readParquetFile } from '@/lib/parquet-reader'
+import fs from 'fs'
 import path from 'path'
-
-interface TrainStationFilter {
-  minLat?: number
-  maxLat?: number
-  minLng?: number
-  maxLng?: number
-  operator?: string
-  railwayType?: 'station' | 'halt' // station or halt
-}
 
 interface TrainStation {
   id: number
   name: string
-  name_en?: string
-  name_nl?: string
+  name_en?: string | null
+  name_nl?: string | null
   lat: number
   lon: number
   railway_type: string
   operator: string
-  network?: string
-  station_code?: string
-  wheelchair?: string
-  platforms?: string
-  local_ref?: string
-  wikidata?: string
-  wikipedia?: string
+  network?: string | null
+  station_code?: string | null
+  wheelchair?: string | null
+  platforms?: string | null
+  local_ref?: string | null
+  wikidata?: string | null
+  wikipedia?: string | null
+}
+
+let cachedStations: TrainStation[] | null = null
+
+function loadStations(): TrainStation[] {
+  if (cachedStations) return cachedStations
+
+  const dataPath = path.join(process.cwd(), '..', 'data', 'raw', 'train_stations.json')
+
+  try {
+    const data = fs.readFileSync(dataPath, 'utf-8')
+    cachedStations = JSON.parse(data)
+    console.log(`✅ Loaded ${cachedStations!.length} train stations from local data`)
+    return cachedStations!
+  } catch (error) {
+    console.error('Failed to load train stations:', error)
+    return []
+  }
 }
 
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams
 
-    // Build backend URL
-    const backendUrl = new URL('http://localhost:8000/api/train-stations')
+    const minLat = parseFloat(searchParams.get('minLat') || '-90')
+    const maxLat = parseFloat(searchParams.get('maxLat') || '90')
+    const minLng = parseFloat(searchParams.get('minLng') || '-180')
+    const maxLng = parseFloat(searchParams.get('maxLng') || '180')
+    const limit = parseInt(searchParams.get('limit') || '500')
+    const operator = searchParams.get('operator')
+    const stationType = searchParams.get('type') // 'train' or 'metro'
 
-    // Forward all query parameters to backend
-    const minLat = searchParams.get('minLat')
-    const maxLat = searchParams.get('maxLat')
-    const minLng = searchParams.get('minLng')
-    const maxLng = searchParams.get('maxLng')
-    const limit = searchParams.get('limit')
+    // Train operators (NS and regional rail)
+    const trainOperators = ['NS', 'Nederlandse Spoorwegen', 'NS Groep', 'Arriva', 'Syntus', 'Connexxion', 'Keolis', 'Breng', 'ProRail']
+    // Metro/tram operators (Amsterdam GVB, The Hague HTM, Rotterdam RET, Utrecht Qbuzz)
+    const metroOperators = ['GVB', 'Gemeentelijk Vervoerbedrijf', 'HTM', 'RET', 'Rotterdamse Elektrische Tram', 'Qbuzz']
 
-    if (minLat) backendUrl.searchParams.set('minLat', minLat)
-    if (maxLat) backendUrl.searchParams.set('maxLat', maxLat)
-    if (minLng) backendUrl.searchParams.set('minLng', minLng)
-    if (maxLng) backendUrl.searchParams.set('maxLng', maxLng)
-    if (limit) backendUrl.searchParams.set('limit', limit)
+    const allStations = loadStations()
 
-    // Fetch from Python backend
-    const backendResponse = await fetch(backendUrl.toString(), {
-      headers: { 'Content-Type': 'application/json' }
-    })
+    // Filter by bounds
+    let filtered = allStations.filter(station =>
+      station.lat >= minLat &&
+      station.lat <= maxLat &&
+      station.lon >= minLng &&
+      station.lon <= maxLng
+    )
 
-    if (!backendResponse.ok) {
-      throw new Error(`Backend API returned ${backendResponse.status}`)
+    // Filter by station type
+    if (stationType === 'train') {
+      filtered = filtered.filter(s =>
+        trainOperators.some(op => s.operator?.includes(op))
+      )
+    } else if (stationType === 'metro') {
+      filtered = filtered.filter(s =>
+        metroOperators.some(op => s.operator?.includes(op))
+      )
     }
 
-    const data = await backendResponse.json()
+    // Filter by specific operator if provided
+    if (operator) {
+      filtered = filtered.filter(s =>
+        s.operator?.toLowerCase().includes(operator.toLowerCase())
+      )
+    }
 
-    // Transform backend response to match expected format
-    const transformedStations = data.stations.map((station: any) => ({
-      id: station.station_code || station.name,
+    // Limit results
+    const stations = filtered.slice(0, limit)
+
+    // Transform to expected format
+    const transformedStations = stations.map(station => ({
+      id: station.id,
       name: station.name,
-      nameEn: station.name,
-      nameNl: station.name,
-      coordinates: station.coordinates,
+      nameEn: station.name_en || station.name,
+      nameNl: station.name_nl || station.name,
+      coordinates: {
+        lat: station.lat,
+        lng: station.lon
+      },
       type: station.railway_type,
       operator: station.operator,
       stationCode: station.station_code,
+      wheelchair: station.wheelchair,
+      platforms: station.platforms,
     }))
 
     return NextResponse.json({
       success: true,
       count: transformedStations.length,
-      total: data.count,
+      total: filtered.length,
       stations: transformedStations,
     })
   } catch (error) {

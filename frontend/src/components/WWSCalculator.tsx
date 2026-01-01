@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Calculator, Info, ExternalLink, HelpCircle } from 'lucide-react'
 
 /**
@@ -48,6 +49,7 @@ export default function WWSCalculator({
   initialEnergyLabel = 'C',
   initialWozValue
 }: WWSCalculatorProps) {
+  const t = useTranslations('wws')
   const [sqm, setSqm] = useState(initialSqm)
   const [energyLabel, setEnergyLabel] = useState(initialEnergyLabel)
   const [hasGarden, setHasGarden] = useState(false)
@@ -98,21 +100,13 @@ export default function WWSCalculator({
 
   // Determine rental segment (updated 2025 rules)
   let segment: 'low' | 'middle' | 'high'
-  let segmentLabel: string
-  let segmentColor: string
 
   if (points <= LOW_SEGMENT_MAX_POINTS) {
     segment = 'low'
-    segmentLabel = 'Regulated social housing'
-    segmentColor = 'green'
   } else if (points <= MIDDLE_SEGMENT_MAX_POINTS) {
     segment = 'middle'
-    segmentLabel = 'Regulated mid-range rental'
-    segmentColor = 'blue'
   } else {
     segment = 'high'
-    segmentLabel = 'Private sector (no rent limit)'
-    segmentColor = 'purple'
   }
 
   return (
@@ -122,7 +116,7 @@ export default function WWSCalculator({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Calculator className="w-5 h-5" />
-            <h3 className="font-semibold">rent points calculator (WWS)</h3>
+            <h3 className="font-semibold">{t('title')}</h3>
           </div>
           <button
             onClick={() => setShowInfo(!showInfo)}
@@ -133,9 +127,9 @@ export default function WWSCalculator({
         </div>
         {showInfo && (
           <div className="mt-3 text-sm text-purple-100 bg-purple-800/30 rounded p-3">
-            <p className="font-medium mb-2">What is the WWS rent points system?</p>
+            <p className="font-medium mb-2">{t('whatIsWWS')}</p>
             <p className="text-xs leading-relaxed">
-              The Dutch government uses a points system to set maximum rent prices. Your landlord calculates points based on the property's size, energy efficiency, and features. More points = higher allowed rent. This calculator helps you estimate if your rent is fair.
+              {t('explanation')}
             </p>
           </div>
         )}
@@ -146,7 +140,7 @@ export default function WWSCalculator({
         {/* Living Space */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            living space (m²)
+            {t('livingSpace')}
           </label>
           <input
             type="number"
@@ -157,14 +151,14 @@ export default function WWSCalculator({
             max="300"
           />
           <p className="text-xs text-gray-500 mt-1">
-            Points: {sqm <= 40 ? sqm : sqm <= 90 ? (40 + (sqm - 40) * 0.75).toFixed(1) : (40 + 37.5 + (sqm - 90) * 0.5).toFixed(1)}
+            {t('points')}: {sqm <= 40 ? sqm : sqm <= 90 ? (40 + (sqm - 40) * 0.75).toFixed(1) : (40 + 37.5 + (sqm - 90) * 0.5).toFixed(1)}
           </p>
         </div>
 
         {/* Energy Label */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            energy label
+            {t('energyLabel')}
           </label>
           <select
             value={energyLabel}
@@ -173,7 +167,7 @@ export default function WWSCalculator({
           >
             {Object.keys(ENERGY_LABEL_POINTS).map(label => (
               <option key={label} value={label}>
-                {label} ({ENERGY_LABEL_POINTS[label] > 0 ? '+' : ''}{ENERGY_LABEL_POINTS[label]} points)
+                {label} ({ENERGY_LABEL_POINTS[label] > 0 ? '+' : ''}{ENERGY_LABEL_POINTS[label]} {t('points')})
               </option>
             ))}
           </select>
@@ -182,7 +176,7 @@ export default function WWSCalculator({
         {/* Amenities */}
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700">
-            amenities (optional)
+            {t('amenities')}
           </label>
 
           <label className="flex items-center gap-2 text-sm">
@@ -192,7 +186,7 @@ export default function WWSCalculator({
               onChange={(e) => setHasGarden(e.target.checked)}
               className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
             />
-            <span>Private garden (+4 points)</span>
+            <span>{t('privateGarden')}</span>
           </label>
 
           <label className="flex items-center gap-2 text-sm">
@@ -202,7 +196,7 @@ export default function WWSCalculator({
               onChange={(e) => setHasBalcony(e.target.checked)}
               className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
             />
-            <span>Balcony/terrace (+2 points)</span>
+            <span>{t('balconyTerrace')}</span>
           </label>
 
           <label className="flex items-center gap-2 text-sm">
@@ -212,7 +206,7 @@ export default function WWSCalculator({
               onChange={(e) => setHasParkingSpot(e.target.checked)}
               className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
             />
-            <span>Private parking (+2 points)</span>
+            <span>{t('privateParking')}</span>
           </label>
         </div>
 
@@ -223,7 +217,7 @@ export default function WWSCalculator({
           'bg-purple-50 border-purple-200'
         }`}>
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-gray-700">total WWS points</span>
+            <span className="text-sm font-medium text-gray-700">{t('totalPoints')}</span>
             <span className={`text-2xl font-bold ${
               segment === 'low' ? 'text-green-600' :
               segment === 'middle' ? 'text-blue-600' :
@@ -237,9 +231,9 @@ export default function WWSCalculator({
             'border-purple-200'
           }`}>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-gray-700">maximum rent (2025)</span>
+              <span className="text-sm font-medium text-gray-700">{t('maxRent')}</span>
               <span className="text-xl font-bold text-gray-900">
-                {segment === 'high' ? 'No cap' : `€${maxRent.toFixed(2)}/mo`}
+                {segment === 'high' ? t('noCap') : `€${maxRent.toFixed(2)}${t('perMonth')}`}
               </span>
             </div>
 
@@ -248,11 +242,15 @@ export default function WWSCalculator({
               segment === 'middle' ? 'bg-blue-100 text-blue-800 border border-blue-200' :
               'bg-purple-100 text-purple-800 border border-purple-200'
             }`}>
-              <strong>{segmentLabel}</strong>
+              <strong>
+                {segment === 'low' && t('regulatedSocial')}
+                {segment === 'middle' && t('regulatedMid')}
+                {segment === 'high' && t('privateSector')}
+              </strong>
               <p className="mt-1">
-                {segment === 'low' && `Up to ${LOW_SEGMENT_MAX_POINTS} points. Rent is capped at €${LOW_SEGMENT_LIMIT_2025.toFixed(2)}/month. You have strong legal protections.`}
-                {segment === 'middle' && `${LOW_SEGMENT_MAX_POINTS + 1}-${MIDDLE_SEGMENT_MAX_POINTS} points. Rent capped between €${LOW_SEGMENT_LIMIT_2025.toFixed(2)}-€${MIDDLE_SEGMENT_LIMIT_2025.toFixed(2)}/month. Moderate protections.`}
-                {segment === 'high' && `${MIDDLE_SEGMENT_MAX_POINTS + 1}+ points. No rent limit - landlord can charge any amount they want.`}
+                {segment === 'low' && t('regulatedSocialDesc', { points: LOW_SEGMENT_MAX_POINTS, limit: LOW_SEGMENT_LIMIT_2025.toFixed(2) })}
+                {segment === 'middle' && t('regulatedMidDesc', { minPoints: LOW_SEGMENT_MAX_POINTS + 1, maxPoints: MIDDLE_SEGMENT_MAX_POINTS, minLimit: LOW_SEGMENT_LIMIT_2025.toFixed(2), maxLimit: MIDDLE_SEGMENT_LIMIT_2025.toFixed(2) })}
+                {segment === 'high' && t('privateSectorDesc', { points: MIDDLE_SEGMENT_MAX_POINTS + 1 })}
               </p>
             </div>
           </div>
@@ -265,38 +263,37 @@ export default function WWSCalculator({
             className="flex items-center gap-2 text-sm font-medium text-purple-600 hover:text-purple-700"
           >
             <HelpCircle className="w-4 h-4" />
-            What is the Huurcommissie?
+            {t('whatIsHuurcommissie')}
           </button>
 
           {showHuurcommissieInfo && (
             <div className="mt-3 bg-blue-50 rounded-lg p-4 text-sm space-y-3 border border-blue-200">
               <div>
-                <p className="font-semibold text-blue-900 mb-2">🏛️ Huurcommissie (Rent Tribunal)</p>
+                <p className="font-semibold text-blue-900 mb-2">{t('huurcommissieTitle')}</p>
                 <p className="text-blue-800 leading-relaxed">
-                  The Huurcommissie is an independent Dutch government organization that protects tenant rights.
-                  They help resolve disputes between tenants and landlords about rent prices, maintenance, and service charges.
+                  {t('huurcommissieDesc')}
                 </p>
               </div>
 
               <div className="space-y-2 text-blue-800">
-                <p className="font-medium">What they can do for you:</p>
+                <p className="font-medium">{t('whatTheyCanDo')}</p>
                 <ul className="list-disc list-inside space-y-1 text-xs">
-                  <li>Check if your rent price is correct based on WWS points</li>
-                  <li>Lower your rent if it's too high for social housing</li>
-                  <li>Settle disputes about property maintenance</li>
-                  <li>Review service charge costs (heating, water, etc.)</li>
-                  <li>Provide free advice on rental law</li>
+                  <li>{t('canDo1')}</li>
+                  <li>{t('canDo2')}</li>
+                  <li>{t('canDo3')}</li>
+                  <li>{t('canDo4')}</li>
+                  <li>{t('canDo5')}</li>
                 </ul>
               </div>
 
               <div className="space-y-2 text-blue-800">
-                <p className="font-medium">💡 Tips for Expats:</p>
+                <p className="font-medium">{t('tipsForExpats')}</p>
                 <ul className="list-disc list-inside space-y-1 text-xs">
-                  <li>Services available in English on their website</li>
-                  <li>You can request a rent check for social housing (€25 fee, refunded if rent is lowered)</li>
-                  <li>Decision is legally binding for both tenant and landlord</li>
-                  <li>Process typically takes 8-12 weeks</li>
-                  <li>Your landlord cannot evict you for filing a complaint</li>
+                  <li>{t('expat1')}</li>
+                  <li>{t('expat2')}</li>
+                  <li>{t('expat3')}</li>
+                  <li>{t('expat4')}</li>
+                  <li>{t('expat5')}</li>
                 </ul>
               </div>
 
@@ -308,12 +305,12 @@ export default function WWSCalculator({
                   className="inline-flex items-center gap-2 text-sm font-medium text-blue-700 hover:text-blue-800"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  Check your rent on Huurcommissie.nl
+                  {t('checkRent')}
                 </a>
               </div>
 
               <div className="bg-yellow-50 border border-yellow-200 rounded p-3 text-xs text-yellow-800">
-                <strong>⚠️ Important:</strong> The Huurcommissie can only help with regulated rentals (below €{LOW_SEGMENT_LIMIT_2025.toFixed(2)}/month). For expensive rentals, landlords can charge whatever they want.
+                <strong>⚠️ {t('important')}</strong> {t('importantNote', { limit: LOW_SEGMENT_LIMIT_2025.toFixed(2) })}
               </div>
             </div>
           )}
@@ -321,16 +318,14 @@ export default function WWSCalculator({
 
         {/* Disclaimer */}
         <div className="text-xs text-gray-500 bg-gray-50 rounded p-3">
-          <strong>Note:</strong> This is a simplified calculator for estimation purposes.
-          The actual WWS calculation includes many more factors (bathroom quality, kitchen facilities,
-          insulation, location scarcity, etc.). For an official assessment, use the{' '}
+          <strong>Note:</strong> {t('disclaimer')}{' '}
           <a
             href="https://www.huurcommissie.nl/huurprijs-en-punten/huurprijscheck-doen/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-purple-600 hover:underline"
           >
-            official Huurcommissie calculator
+            {t('officialCalculator')}
           </a>.
         </div>
       </div>

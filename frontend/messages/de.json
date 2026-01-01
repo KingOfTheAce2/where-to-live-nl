@@ -1,8 +1,51 @@
 {
+  "nav": {
+    "home": "Startseite",
+    "backToHome": "Zurück zur Startseite"
+  },
   "app": {
-    "title": "Wo in NL leben",
-    "subtitle": "Finden Sie Ihr perfektes niederländisches Zuhause",
-    "builtWith": "Mit ❤️ für Expats gebaut"
+    "title": "WhereToLive",
+    "subtitle": "Wohnstandorte in den Niederlanden verstehen",
+    "builtWith": "Mit Sorgfalt für Expats entwickelt",
+    "betaDisclaimer": "Beta: Kartenebenen laden möglicherweise langsam (externe Dienste)"
+  },
+  "landing": {
+    "openMap": "Karte öffnen",
+    "hero": {
+      "title": "Finden Sie Ihre perfekte Nachbarschaft in den Niederlanden",
+      "subtitle": "Treffen Sie fundierte Entscheidungen darüber, wo Sie leben möchten, mit umfassenden Daten zu Sicherheit, Lebensqualität, Einrichtungen und mehr.",
+      "cta": "Karte erkunden",
+      "learnMore": "Mehr erfahren"
+    },
+    "features": {
+      "title": "Alles was Sie wissen müssen",
+      "subtitle": "Zugang zu umfassenden Nachbarschaftsdaten für die beste Entscheidung für Sie und Ihre Familie.",
+      "safety": {
+        "title": "Sicherheit & Kriminalität",
+        "description": "Echte Kriminalitätsstatistiken von Politie.nl um die Sicherheit der Nachbarschaft zu verstehen."
+      },
+      "livability": {
+        "title": "Lebensqualität-Scores",
+        "description": "Offizielle Leefbaarometer-Werte zur Messung der Lebensqualität in niederländischen Vierteln."
+      },
+      "amenities": {
+        "title": "Nahegelegene Einrichtungen",
+        "description": "Entfernung zu Supermärkten, Gesundheitswesen, Schulen, Parks und öffentlichen Verkehrsmitteln."
+      },
+      "demographics": {
+        "title": "Demografische Daten",
+        "description": "Bevölkerungsstatistiken, Altersverteilung und Wohnungsinformationen vom CBS."
+      }
+    },
+    "dataSources": {
+      "title": "Vertrauenswürdige Datenquellen",
+      "subtitle": "Alle Daten stammen aus offiziellen niederländischen Regierungsquellen und verifizierten Datenbanken."
+    },
+    "cta": {
+      "title": "Bereit, Ihr neues Zuhause zu finden?",
+      "subtitle": "Beginnen Sie noch heute mit der Erkundung von Vierteln in den Niederlanden.",
+      "button": "Jetzt erkunden"
+    }
   },
   "woz": {
     "title": "WOZ-Immobilienwert",
@@ -11,6 +54,14 @@
     "currentValue": "Aktueller Wert",
     "historicalTrend": "Historischer Trend (2014-2024)",
     "change": "Veränderung"
+  },
+  "wozCard": {
+    "title": "WOZ-Immobilienwert",
+    "value2024": "Wert 2024",
+    "perSqm": "Pro m² (geschätzt 75m²)",
+    "viewHistorical": "Historische Werte anzeigen (2014-2024)",
+    "notIndexedYet": "Diese Adresse wurde noch nicht in unserer Datenbank indexiert. Sie können den WOZ-Wert selbst auf der offiziellen Regierungswebsite nachschlagen.",
+    "checkYourself": "WOZ-Wert auf wozwaardeloket.nl prüfen"
   },
   "energy": {
     "title": "Durchschnittliche Nebenkosten",
@@ -28,6 +79,7 @@
     "title": "Entfernung zu Einrichtungen (CBS 2024)",
     "transport": "Verkehr",
     "trainStation": "Bahnhof",
+    "metroStation": "U-Bahn/Straßenbahn",
     "majorTrainStation": "Großer Bahnhof (IC)",
     "highwayOnramp": "Autobahnauffahrt",
     "healthcareTitle": "Gesundheitsversorgung",
@@ -37,10 +89,10 @@
     "shopping": "Einkaufen",
     "supermarket": "Supermarkt",
     "dailyGroceries": "Täglicher Bedarf",
-    "education": "Bildung & Kinderbetreuung",
+    "education": "Bildung und Kinderbetreuung",
     "primarySchool": "Grundschule",
     "daycare": "Kindertagesstätte",
-    "culture": "Kultur & Freizeit",
+    "culture": "Kultur und Freizeit",
     "library": "Bibliothek",
     "restaurant": "Restaurant"
   },
@@ -80,7 +132,7 @@
     "startSearchDescription": "Geben Sie oben eine Adresse ein, um umfassende Nachbarschaftsinformationen, Immobilienwerte und Lebensqualitätsdaten zu sehen.",
     "discover": "Was Sie entdecken werden:",
     "discoverItems": {
-      "crime": "Sicherheit & Kriminalstatistiken - Nachbarschaftskriminalitätsdaten von Politie.nl",
+      "crime": "Sicherheit und Kriminalstatistiken - Nachbarschaftskriminalitätsdaten von Politie.nl",
       "amenities": "Nahegelegene Einrichtungen - Supermärkte, Gesundheitsversorgung, Schulen, Spielplätze",
       "environment": "Umweltqualität - Grünflächen, Parks, Lebensqualitätswerte",
       "demographics": "Demografie - Bevölkerung, Altersverteilung, Haushaltstypen"
@@ -96,7 +148,7 @@
     "away": "Entfernt"
   },
   "crime": {
-    "title": "Sicherheit & Kriminalität",
+    "title": "Sicherheit und Kriminalität",
     "crimeRate": "Kriminalitätsrate:",
     "notAvailable": "Nicht verfügbar",
     "nlAverage": "NL-Durchschnitt: {average} pro 1.000 Einwohner (CBS {year})",
@@ -104,6 +156,7 @@
   },
   "wijkagent": {
     "title": "Ihr Nachbarschaftspolizist",
+    "clickToLearn": "Mehr erfahren",
     "whatIs": "Was ist ein Wijkagent?",
     "explanation": "Ein Wijkagent (Nachbarschaftspolizist) ist Ihr lokaler Polizeikontakt, der für die Sicherheit in Ihrem spezifischen Gebiet verantwortlich ist. Sie konzentrieren sich auf Kriminalprävention, Vertrauensaufbau mit Bewohnern und die Behandlung lokaler Anliegen.",
     "whatTheyDo": "Was sie tun:",
@@ -129,9 +182,7 @@
     "greenSpace": "Grünflächenqualität",
     "floodRisk": "Hochwasserrisiko",
     "foundationRisk": "Fundamentrisiko",
-    "airQuality": "Luftqualität",
-    "viewOnMap": "Auf Karte anzeigen",
-    "dataVisible": "Umweltdaten auf der Karte sichtbar"
+    "airQuality": "Luftqualität"
   },
   "livability": {
     "title": "Lebensqualitätswert",
@@ -223,6 +274,7 @@
     "baseMap": "Basiskarte",
     "standardMap": "Standard",
     "aerialPhoto": "Luftbild",
+    "neighborhoodBoundaries": "Nachbarschaftsgrenzen",
     "overlays": "Kartenebenen",
     "loading": "Karte wird geladen...",
     "crimeRate": "Kriminalitätsrate",
@@ -233,13 +285,17 @@
     "healthcare": "Gesundheitsversorgung",
     "supermarkets": "Supermärkte",
     "playgrounds": "Spielplätze",
+    "speelbossen": "Naturspielwälder",
     "trainStations": "Bahnhöfe",
+    "metroStations": "U-Bahn/Straßenbahn",
     "schools": "Schulen",
     "cadastralParcels": "Katasterparzellen",
-    "natureEnvironment": "Natur & Umwelt",
+    "natureEnvironment": "Natur und Umwelt",
     "nationalParks": "Nationalparks",
     "natura2000": "Natura 2000 Gebiete",
+    "floodRisk": "Hochwasserrisiko",
     "floodRiskZones": "Hochwasserrisikogebiete",
+    "floodCombined": "Kombiniertes Hochwasserrisiko",
     "droneNoFlyZones": "Drohnen-Flugverbotszonen",
     "pollutants": {
       "NO2": "NO₂ (Stickstoffdioxid)",
@@ -251,7 +307,7 @@
       "baseMap": "Basiskarte",
       "markers": "Markierungen",
       "water": "Wasser",
-      "parks": "Parks & Grün",
+      "parks": "Parks und Grün",
       "buildings": "Gebäude",
       "residential": "Wohngebiet",
       "industrial": "Industrie",
@@ -267,10 +323,16 @@
       "pharmacy": "Apotheke",
       "hospital": "Krankenhaus",
       "clinic": "Klinik",
-      "transportAmenities": "Verkehr & Einrichtungen",
+      "transportAmenities": "Verkehr und Einrichtungen",
+      "transport": "Verkehr",
+      "shopping": "Einkaufen",
+      "recreation": "Freizeit",
       "trainStation": "Bahnhof",
+      "metroStation": "U-Bahn/Straßenbahn",
       "supermarket": "Supermarkt",
       "playground": "Spielplatz",
+      "naturePlay": "Naturspielplatz",
+      "speelbos": "Spielwald",
       "neighborhoodBoundary": "Nachbarschaftsgrenze",
       "crimeRateLegend": "Kriminalitätsrate (blau)",
       "low": "Niedrig",
@@ -301,7 +363,7 @@
     }
   },
   "redFlags": {
-    "title": "Warnungen & Risiken",
+    "title": "Warnungen und Risiken",
     "issue": "Problem",
     "issues": "Probleme",
     "errorLoading": "Fehler beim Laden der Risikodaten",
@@ -310,6 +372,7 @@
     "foundation": {
       "title": "Fundamentrisikogebiet",
       "inRiskArea": "Diese Immobilie befindet sich in einem offiziellen Fundament-Aufmerksamkeitsgebiet (PDOK/RVO)",
+      "unknown": "Fundamentrisiko-Status unbekannt - Daten nicht verfügbar. Immer durch professionelle Inspektion überprüfen.",
       "recommendation": "Lassen Sie vor dem Kauf eine professionelle Fundamentinspektion (bouwkundig rapport) durchführen",
       "linkLabel": "Mehr Info bei KCAF"
     },
@@ -399,5 +462,252 @@
     "premiumDescription": "PDF-Export ist eine Premium-Funktion. Upgraden Sie, um Vergleichsberichte herunterzuladen und mit anderen zu teilen.",
     "upgradeToPremium": "Auf Premium upgraden",
     "maybeLater": "Vielleicht später"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "signup": "Registrieren",
+    "signOut": "Abmelden",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "fullName": "Vollständiger Name",
+    "signingIn": "Anmeldung...",
+    "creatingAccount": "Konto wird erstellt...",
+    "orContinueWith": "Oder fortfahren mit",
+    "noAccount": "Noch kein Konto? Registrieren",
+    "alreadyHaveAccount": "Bereits ein Konto? Anmelden",
+    "checkEmail": "E-Mail überprüfen",
+    "confirmationSent": "Wir haben Ihnen eine Bestätigungs-E-Mail gesendet. Bitte überprüfen Sie Ihren Posteingang und klicken Sie auf den Link.",
+    "passwordTooShort": "Passwort muss mindestens 8 Zeichen haben",
+    "passwordRequirements": "Mindestens 8 Zeichen",
+    "createAccount": "Konto erstellen",
+    "upgradeToPremium": "Auf Premium upgraden",
+    "dashboard": "Dashboard",
+    "savedSearches": "Gespeicherte Suchen",
+    "subscription": "Abonnement"
+  },
+  "premium": {
+    "premiumFeature": "Premium-Funktion",
+    "loginRequired": "Bitte melden Sie sich an, um diese Funktion zu nutzen",
+    "loginToAccess": "Anmelden",
+    "upgradeNow": "Jetzt upgraden",
+    "pdfDescription": "Vergleichsberichte als PDF exportieren",
+    "savedSearchesDescription": "Unbegrenzt Adresssuchen speichern",
+    "favoritesDescription": "Unbegrenzt Lieblingsorte speichern",
+    "advancedDataDescription": "Zugang zu detaillierten Kriminalitätsstatistiken und historischen Daten"
+  },
+  "pricing": {
+    "title": "Wählen Sie Ihren Plan",
+    "subtitle": "Holen Sie das Beste aus Where to Live NL",
+    "freePlan": "Kostenlos",
+    "freeDescription": "Perfekt für gelegentliche Erkundung",
+    "free": "Kostenlos",
+    "premiumPlan": "Premium",
+    "premiumDescription": "Alles, was Sie brauchen, um Ihr perfektes Zuhause zu finden",
+    "price": "€9,99",
+    "perMonth": "/Monat",
+    "cancelAnytime": "Jederzeit kündbar",
+    "unlimitedSearch": "Unbegrenzte Adresssuchen",
+    "basicData": "Grundlegende Nachbarschaftsdaten",
+    "savedSearches3": "Bis zu 3 Suchen speichern",
+    "favorites5": "Bis zu 5 Favoriten speichern",
+    "noPdfExport": "Kein PDF-Export",
+    "noAdvancedData": "Keine erweiterten Analysen",
+    "fullData": "Vollständige Nachbarschaftsdaten",
+    "unlimitedSaved": "Unbegrenzt gespeicherte Suchen",
+    "unlimitedFavorites": "Unbegrenzt Favoriten",
+    "pdfExport": "PDF-Export und Berichte",
+    "advancedData": "Detaillierte Kriminalitätsstatistiken",
+    "historicalData": "Historische Daten (10+ Jahre)",
+    "getStarted": "Loslegen",
+    "subscribe": "Jetzt abonnieren",
+    "currentPlan": "Aktueller Plan",
+    "processing": "Verarbeitung...",
+    "securePayment": "Sichere Zahlung über Stripe",
+    "popular": "Am beliebtesten"
+  },
+  "dashboard": {
+    "welcome": "Willkommen",
+    "upgradeBanner": "Premium-Funktionen freischalten",
+    "upgradeDescription": "Erhalten Sie unbegrenzt gespeicherte Suchen, PDF-Exports und erweiterte Daten.",
+    "upgradeCta": "Jetzt upgraden",
+    "savedSearches": "Gespeicherte Suchen",
+    "savedSearchesDescription": "Ihre gespeicherten Adresssuchen anzeigen und verwalten",
+    "subscription": "Abonnement",
+    "subscriptionDescription": "Ihr Abonnement und Abrechnung verwalten",
+    "searchMap": "Karte durchsuchen",
+    "searchMapDescription": "Adressen suchen und Nachbarschaften erkunden",
+    "accountInfo": "Kontoinformationen",
+    "email": "E-Mail",
+    "plan": "Plan",
+    "memberSince": "Mitglied seit"
+  },
+  "savedSearches": {
+    "title": "Gespeicherte Suchen",
+    "usageCount": "{count} von {limit} gespeicherten Suchen verwendet",
+    "backToDashboard": "Zurück zum Dashboard",
+    "limitReached": "Sie haben Ihr Limit erreicht",
+    "upgradeForMore": "Upgraden Sie auf Premium für unbegrenzt gespeicherte Suchen",
+    "upgrade": "Upgraden",
+    "noSearches": "Keine gespeicherten Suchen",
+    "noSearchesDescription": "Suchen Sie eine Adresse und speichern Sie sie für später",
+    "startSearching": "Suche starten",
+    "savedOn": "Gespeichert am",
+    "openSearch": "Öffnen",
+    "deleteSearch": "Löschen"
+  },
+  "subscription": {
+    "title": "Abonnement",
+    "backToDashboard": "Zurück zum Dashboard",
+    "subscriptionSuccess": "Ihr Abonnement ist jetzt aktiv!",
+    "currentPlan": "Aktueller Plan",
+    "planDetails": "Verwalten Sie Ihr Abonnement und Abrechnung",
+    "status": "Status",
+    "active": "Aktiv",
+    "renewsOn": "Verlängert am",
+    "price": "Preis",
+    "priceValue": "€9,99/Monat",
+    "loading": "Laden...",
+    "manageSubscription": "Abonnement verwalten",
+    "freeDescription": "Sie sind derzeit im kostenlosen Plan mit eingeschränkten Funktionen.",
+    "premiumBenefits": "Premium beinhaltet:",
+    "benefit1": "Unbegrenzt gespeicherte Suchen",
+    "benefit2": "PDF-Export und Vergleichsberichte",
+    "benefit3": "Detaillierte Kriminalitätsstatistiken",
+    "benefit4": "Historische Daten (10+ Jahre)",
+    "upgradeToPremium": "Auf Premium upgraden"
+  },
+  "guide": {
+    "openMap": "Karte öffnen",
+    "backToMap": "Zurück zur Karte",
+    "title": "Kartenebenen-Leitfaden",
+    "subtitle": "Verstehen Sie, was jede Kartenebene bedeutet und warum sie bei der Wahl Ihres Wohnorts in den Niederlanden wichtig ist. Dieser Leitfaden erklärt niederländische Begriffe und Konzepte, die Expats möglicherweise nicht kennen.",
+    "intro": {
+      "title": "So verwenden Sie diesen Leitfaden",
+      "description": "Jede Kartenebene zeigt verschiedene Aspekte einer Nachbarschaft. Schalten Sie diese Ebenen auf der Karte ein, um Daten zu visualisieren, die Ihre Lebensqualität beeinflussen. Klicken Sie auf einen Bereich, um spezifische Werte zu sehen."
+    },
+    "whyMatters": "Warum das für Sie wichtig ist",
+    "dataSource": "Datenquelle",
+    "layers": {
+      "leefbaarometer": {
+        "title": "Lebensqualitäts-Score (Leefbaarometer)",
+        "description": "Der Leefbaarometer ist ein offizieller niederländischer Regierungsindex, der die Lebensqualität in allen Stadtvierteln misst. Er kombiniert über 100 Indikatoren wie Sicherheit, Wohnqualität, sozialer Zusammenhalt und Zugang zu Einrichtungen.",
+        "whyMatters": "Dies ist der umfassendste verfügbare Indikator für Lebensqualität. Ein Wert unter 3 weist auf Problembereiche hin. Der Score wird alle 2 Jahre aktualisiert."
+      },
+      "airQuality": {
+        "title": "Luftqualität",
+        "description": "Zeigt Konzentrationen von Schadstoffen wie NO₂ (Stickstoffdioxid aus dem Verkehr), PM10 (Grobpartikel) und PM2,5 (Feinstaub). Daten stammen von RIVM-Messstationen.",
+        "whyMatters": "Luftverschmutzung wirkt sich erheblich auf die Gesundheit aus, besonders bei Kindern, älteren Menschen und Personen mit Atemwegserkrankungen."
+      },
+      "noise": {
+        "title": "Lärmbelastung",
+        "description": "Zeigt Lärmpegel in Dezibel (dB) aus verschiedenen Quellen: Straßenverkehr, Eisenbahnen und Flugzeuge. Die Lden-Metrik stellt einen 24-Stunden-Durchschnitt dar.",
+        "whyMatters": "Chronische Lärmbelastung über 55 dB erhöht Stress und das Risiko von Herz-Kreislauf-Erkrankungen. Prüfen Sie dies vor dem Mieten oder Kaufen in der Nähe von Infrastruktur."
+      },
+      "crime": {
+        "title": "Kriminalitätsstatistiken",
+        "description": "Kriminalitätsdaten der niederländischen Polizei mit gemeldeten Vorfällen pro 1.000 Einwohner. Einschließlich Diebstahl, Einbruch, Gewalt und Vandalismus.",
+        "whyMatters": "Kriminalitätsraten variieren erheblich zwischen Stadtvierteln, sogar innerhalb derselben Stadt. Geringe Kriminalität korreliert mit höheren Lebensqualitätswerten."
+      },
+      "flooding": {
+        "title": "Hochwasserrisiko",
+        "description": "Zeigt Gebiete mit Hochwasserrisiko durch Flüsse, Meer oder Starkregen. Die Niederlande sind bekannt für ihre Tiefländer, 26% des Landes liegen unter dem Meeresspiegel.",
+        "whyMatters": "Obwohl der niederländische Hochwasserschutz Weltklasse ist, besteht ein Restrisiko. Hochwasserrisiko beeinflusst Versicherungskosten und kann die Kellernutzung einschränken."
+      },
+      "foundationRisk": {
+        "title": "Fundamentrisiko",
+        "description": "Identifiziert Gebiete, in denen Gebäude Fundamentprobleme aufgrund von Bodensenkungen haben können. Relevant für ältere Gebäude (vor 1970) mit Holzpfahlfundamenten.",
+        "whyMatters": "Fundamentprobleme sind extrem teuer zu beheben (€50.000-€150.000+) und werden NICHT von Standardversicherungen abgedeckt. Verkäufer müssen Probleme nicht offenlegen."
+      },
+      "natura2000": {
+        "title": "Natura 2000-Schutzgebiete",
+        "description": "Natura 2000 ist das Netzwerk geschützter Naturgebiete der Europäischen Union. Die Niederlande haben 162 Natura 2000-Gebiete, die etwa 14% der Land- und Wasserfläche umfassen.",
+        "whyMatters": "Das Wohnen in der Nähe von Natura 2000-Gebieten bedeutet Zugang zu unberührter Natur. Es gelten jedoch strenge Vorschriften: Sie können nicht frei bauen oder renovieren."
+      },
+      "nationalParks": {
+        "title": "Nationalparks",
+        "description": "Die Niederlande haben 21 Nationalparks mit einzigartigen Landschaften wie dem Wattenmeer, Veluwe-Wäldern, Dünen und Feuchtgebieten.",
+        "whyMatters": "Nationalparks bieten außergewöhnliche Erholungsmöglichkeiten: Wandern, Radfahren, Wildtierbeobachtung. Immobilien in Parknähe haben oft Premiumwerte."
+      },
+      "droneNoFly": {
+        "title": "Drohnen-Flugverbotszonen",
+        "description": "Gebiete, in denen Drohnenflüge eingeschränkt oder verboten sind. Einschließlich Flughäfen, Militäranlagen, Königspaläste und Naturschutzgebiete.",
+        "whyMatters": "Wenn Sie Drohnen-Hobbyist sind, prüfen Sie diese Zonen vor der Standortwahl. Diese Karte zeigt auch die Nähe zu sensibler Infrastruktur."
+      },
+      "cadastral": {
+        "title": "Katasterparzellen",
+        "description": "Zeigt offizielle Grundstücksgrenzen wie beim Kadaster (niederländisches Grundbuchamt) registriert. Jede Parzelle hat eine eindeutige Kennung und rechtlich definierte Grenzen.",
+        "whyMatters": "Wesentlich beim Immobilienkauf, um genaue Grenzen zu verstehen. Grenzstreitigkeiten können teuer in der Lösung sein."
+      },
+      "neighborhoods": {
+        "title": "Stadtteilgrenzen",
+        "description": "Zeigt offizielle CBS-Stadtteil- und Bezirksgrenzen. Die Niederlande sind in etwa 17.000 Stadtteile unterteilt. Alle Regierungsstatistiken werden auf dieser Ebene gemeldet.",
+        "whyMatters": "Das Verständnis der Stadtteilgrenzen hilft Ihnen, relevante Statistiken zu suchen und Gebiete genau zu vergleichen."
+      },
+      "schools": {
+        "title": "Schulen",
+        "description": "Standorte aller niederländischen Schulen einschließlich Grundschulen, weiterführender Schulen, MBO, HBO und WO. Daten von DUO.",
+        "whyMatters": "Für Familien ist die Nähe zu Schulen entscheidend. Niederländische Kinder gehen meist selbstständig zu Fuß oder mit dem Fahrrad zur Schule."
+      },
+      "healthcare": {
+        "title": "Gesundheitseinrichtungen",
+        "description": "Zeigt Standorte von Hausärzten, Apotheken, Krankenhäusern und Fachkliniken. Im niederländischen System ist Ihr Hausarzt Ihre erste Anlaufstelle.",
+        "whyMatters": "Jeder in den Niederlanden muss sich bei einem lokalen Hausarzt registrieren. Beliebte Praxen in Städten haben oft Wartelisten."
+      },
+      "supermarkets": {
+        "title": "Supermärkte",
+        "description": "Große Supermärkte wie Albert Heijn, Jumbo, Lidl, Aldi, Plus und Fachgeschäfte. Die meisten niederländischen Supermärkte befinden sich in Stadtteilzentren.",
+        "whyMatters": "Tägliches Einkaufen ist in den Niederlanden üblich. Die meisten Niederländer fahren mit dem Fahrrad zum Einkaufen. Ein Supermarkt in Radentfernung beeinflusst den Alltag erheblich."
+      },
+      "trainStations": {
+        "title": "Bahnhöfe (NS)",
+        "description": "Niederländische Bahnhöfe (NS) einschließlich Intercity- und Nahverkehrshaltestellen. Die Niederlande haben eines der dichtesten Schienennetze Europas.",
+        "whyMatters": "Bahnpendeln ist sehr verbreitet. Das Wohnen in der Nähe eines Intercity-Bahnhofs bietet schnelle Verbindungen im ganzen Land. Bahnhofsnähe beeinflusst Immobilienwerte."
+      },
+      "publicTransport": {
+        "title": "Metro und Straßenbahn",
+        "description": "Metro-Systeme gibt es in Amsterdam und Rotterdam. Straßenbahnnetze verkehren in Amsterdam, Rotterdam, Den Haag und Utrecht.",
+        "whyMatters": "In Großstädten kann der Zugang zu Straßenbahn und Metro wichtiger sein als Bahnhöfe für das tägliche Pendeln."
+      },
+      "playgrounds": {
+        "title": "Spielplätze",
+        "description": "Öffentliche Spielplätze, die von Gemeinden unterhalten werden. Niederländische Stadtteile haben typischerweise gut gepflegte Spielbereiche für Kinder.",
+        "whyMatters": "Für Familien mit kleinen Kindern sind nahegelegene Spielplätze für den Alltag unerlässlich. Niederländische Kinder verbringen viel Zeit draußen."
+      }
+    },
+    "glossary": {
+      "title": "Niederländische Begriffe für Expats",
+      "places": "Geografische Begriffe",
+      "terms": "Wohnbegriffe"
+    },
+    "cta": {
+      "title": "Bereit zum Erkunden?",
+      "subtitle": "Jetzt, da Sie die Datenebenen verstehen, erkunden Sie Stadtteile, um Ihren perfekten Wohnort in den Niederlanden zu finden.",
+      "button": "Interaktive Karte öffnen"
+    },
+    "footer": {
+      "disclaimer": "Die Daten stammen von offiziellen niederländischen Regierungsbehörden und dienen nur zu Informationszwecken. Überprüfen Sie wichtige Informationen immer mit professioneller Beratung, bevor Sie Immobilienentscheidungen treffen."
+    }
+  },
+  "utilities": {
+    "title": "Average utility costs",
+    "perMonth": "/month",
+    "perYear": "/year",
+    "total": "total",
+    "gas": "Gas",
+    "electricity": "Electricity",
+    "water": "Water",
+    "districtHeating": "of homes here use district heating (stadsverwarming)",
+    "aboutCosts": "About these costs",
+    "dataSource": "Data source:",
+    "prices": "Prices (Jan 2025):",
+    "note": "Note:",
+    "noteDesc": "Actual costs vary by:",
+    "varFactor1": "Home size and insulation",
+    "varFactor2": "Number of residents",
+    "varFactor3": "Personal usage habits",
+    "varFactor4": "Energy provider and contract",
+    "noData": "No energy consumption data available for this area",
+    "energyLabel": "Energieausweis",
+    "estimatedLabel": "Geschätzt basierend auf dem durchschnittlichen Verbrauch der Nachbarschaft"
   }
 }
