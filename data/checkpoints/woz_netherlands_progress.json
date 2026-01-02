@@ -1,7 +1,45 @@
 {
-  "last_index": 182458,
-  "total_scraped": 137000,
-  "total_failed": 45458,
+  "last_index": 212344,
+  "total_scraped": 161000,
+  "total_failed": 51344,
   "started_at": "2025-11-05T06:46:02.376313",
-  "last_updated": "2025-12-10T03:59:10.958329"
+  "last_updated": "2026-01-02T06:50:02.156352",
+  "by_prefix": {
+    "1": {
+      "scraped": 9000,
+      "failed": 0
+    },
+    "2": {
+      "scraped": 0,
+      "failed": 0
+    },
+    "3": {
+      "scraped": 0,
+      "failed": 0
+    },
+    "4": {
+      "scraped": 0,
+      "failed": 0
+    },
+    "5": {
+      "scraped": 0,
+      "failed": 0
+    },
+    "6": {
+      "scraped": 0,
+      "failed": 0
+    },
+    "7": {
+      "scraped": 0,
+      "failed": 0
+    },
+    "8": {
+      "scraped": 0,
+      "failed": 0
+    },
+    "9": {
+      "scraped": 0,
+      "failed": 0
+    }
+  }
 }

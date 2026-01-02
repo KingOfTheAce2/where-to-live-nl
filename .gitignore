@@ -46,6 +46,11 @@ data/processed/
 data/tiles/
 data/gtfs/
 
+# Public data (split by postal code for GitHub upload)
+# These are explicitly tracked - do NOT ignore:
+!data/public/
+!data/public/**
+
 # Scripts data directory (large raw data files)
 scripts/data/
 scripts/etl/data/

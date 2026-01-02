@@ -5,9 +5,16 @@ This script is designed to run for MONTHS continuously.
 It handles:
 - Automatic checkpointing (saves every 1000 addresses)
 - Resume capability (can stop and restart anytime)
-- Incremental Parquet saves (won't lose data if crashed)
+- Incremental saves split by postal code prefix
 - Progress tracking and ETA
 - Error resilience
+
+Output structure:
+    data/public/woz/
+        woz_1xxx.parquet
+        woz_2xxx.parquet
+        ...
+        woz_9xxx.parquet
 
 Estimated time: 90-120 days at 1 req/sec
 """
@@ -19,12 +26,26 @@ import polars as pl
 from tqdm import tqdm
 import time
 from datetime import datetime, timedelta
-
 import sys
+import io
+
+# Fix Windows console encoding
+if sys.platform == 'win32':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
 sys.path.append(str(Path(__file__).parent))
 
 from ingest.woz import WOZScraper
 from common.logger import log
+
+# Paths
+DATA_DIR = Path(__file__).parent.parent.parent / "data"
+PUBLIC_DIR = DATA_DIR / "public"
+WOZ_DIR = PUBLIC_DIR / "woz"
+CHECKPOINT_DIR = DATA_DIR / "checkpoints"
+
+# Dutch postal code prefixes
+POSTAL_PREFIXES = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 
 def load_checkpoint(checkpoint_path: Path) -> dict:
@@ -34,70 +55,90 @@ def load_checkpoint(checkpoint_path: Path) -> dict:
             "last_index": 0,
             "total_scraped": 0,
             "total_failed": 0,
-            "started_at": datetime.now().isoformat()
+            "started_at": datetime.now().isoformat(),
+            "by_prefix": {p: {"scraped": 0, "failed": 0} for p in POSTAL_PREFIXES}
         }
 
     with open(checkpoint_path, "r") as f:
-        return json.load(f)
+        data = json.load(f)
+        # Ensure by_prefix exists for backward compatibility
+        if "by_prefix" not in data:
+            data["by_prefix"] = {p: {"scraped": 0, "failed": 0} for p in POSTAL_PREFIXES}
+        return data
 
 
 def save_checkpoint(checkpoint_path: Path, data: dict):
     """Save progress checkpoint."""
     checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
-
     data["last_updated"] = datetime.now().isoformat()
 
     with open(checkpoint_path, "w") as f:
         json.dump(data, f, indent=2)
 
 
-def append_to_parquet(new_data: list[dict], output_path: Path):
-    """Append new data to existing Parquet file."""
+def get_postal_prefix(postal_code: str) -> str:
+    """Get the first digit of a postal code."""
+    if postal_code and len(postal_code) >= 1:
+        return postal_code[0]
+    return "0"
+
+
+def append_to_parquet_by_prefix(new_data: list[dict], output_dir: Path):
+    """Append new data to existing Parquet files, split by postal prefix."""
     if not new_data:
         return
 
-    # Use infer_schema_length=None to scan all rows for schema inference
-    # This prevents integer overflow errors with large bag_pand_id values
-    new_df = pl.DataFrame(new_data, infer_schema_length=None)
+    output_dir.mkdir(parents=True, exist_ok=True)
 
-    if output_path.exists():
-        # Load existing and concatenate
-        existing_df = pl.read_parquet(output_path)
+    # Group data by postal prefix
+    by_prefix = {}
+    for record in new_data:
+        prefix = get_postal_prefix(record.get("postal_code", ""))
+        if prefix not in by_prefix:
+            by_prefix[prefix] = []
+        by_prefix[prefix].append(record)
 
-        # Align columns: get all unique columns from both dataframes
-        all_columns = set(existing_df.columns) | set(new_df.columns)
+    # Append to each prefix file
+    for prefix, records in by_prefix.items():
+        if not records:
+            continue
 
-        # Add missing columns to existing_df with null values
-        for col in all_columns:
-            if col not in existing_df.columns:
-                existing_df = existing_df.with_columns(pl.lit(None).alias(col))
+        output_path = output_dir / f"woz_{prefix}xxx.parquet"
 
-        # Add missing columns to new_df with null values
-        for col in all_columns:
-            if col not in new_df.columns:
-                new_df = new_df.with_columns(pl.lit(None).alias(col))
+        # Use infer_schema_length=None to scan all rows for schema inference
+        new_df = pl.DataFrame(records, infer_schema_length=None)
 
-        # Ensure both dataframes have columns in the same order
-        sorted_columns = sorted(all_columns)
-        existing_df = existing_df.select(sorted_columns)
-        new_df = new_df.select(sorted_columns)
+        if output_path.exists():
+            # Load existing and concatenate
+            existing_df = pl.read_parquet(output_path)
 
-        combined_df = pl.concat([existing_df, new_df], how="vertical_relaxed")
-        combined_df.write_parquet(
-            output_path,
-            compression="snappy",
-            statistics=True,
-            use_pyarrow=True
-        )
-    else:
-        # Create new file
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        new_df.write_parquet(
-            output_path,
-            compression="snappy",
-            statistics=True,
-            use_pyarrow=True
-        )
+            # Align columns
+            all_columns = set(existing_df.columns) | set(new_df.columns)
+
+            for col in all_columns:
+                if col not in existing_df.columns:
+                    existing_df = existing_df.with_columns(pl.lit(None).alias(col))
+                if col not in new_df.columns:
+                    new_df = new_df.with_columns(pl.lit(None).alias(col))
+
+            sorted_columns = sorted(all_columns)
+            existing_df = existing_df.select(sorted_columns)
+            new_df = new_df.select(sorted_columns)
+
+            combined_df = pl.concat([existing_df, new_df], how="vertical_relaxed")
+            combined_df.write_parquet(
+                output_path,
+                compression="snappy",
+                statistics=True,
+                use_pyarrow=True
+            )
+        else:
+            new_df.write_parquet(
+                output_path,
+                compression="snappy",
+                statistics=True,
+                use_pyarrow=True
+            )
 
 
 def flatten_woz(woz_result: dict) -> dict:
@@ -124,18 +165,31 @@ def flatten_woz(woz_result: dict) -> dict:
     return flat
 
 
+def show_output_stats(output_dir: Path):
+    """Show statistics for output files."""
+    log.info("\nOutput file statistics:")
+    total_records = 0
+    total_size = 0
+
+    for prefix in POSTAL_PREFIXES:
+        output_path = output_dir / f"woz_{prefix}xxx.parquet"
+        if output_path.exists():
+            df = pl.scan_parquet(output_path)
+            count = df.select(pl.len()).collect().item()
+            size_mb = output_path.stat().st_size / (1024 * 1024)
+            total_records += count
+            total_size += size_mb
+            log.info(f"  {prefix}xxx: {count:,} records ({size_mb:.2f} MB)")
+
+    log.info(f"  TOTAL: {total_records:,} records ({total_size:.1f} MB)")
+
+
 @click.command()
 @click.option(
     "--input",
     type=click.Path(exists=True),
     default="../../data/raw/netherlands_all_addresses.json",
     help="Input addresses JSON file"
-)
-@click.option(
-    "--output",
-    type=click.Path(),
-    default="../../data/processed/woz-netherlands-complete.parquet",
-    help="Output Parquet file"
 )
 @click.option(
     "--rate-limit",
@@ -150,41 +204,57 @@ def flatten_woz(woz_result: dict) -> dict:
     help="Save to Parquet every N addresses"
 )
 @click.option(
-    "--resume",
-    is_flag=True,
+    "--resume/--no-resume",
     default=True,
     help="Resume from checkpoint (default: True)"
 )
-def main(input: str, output: str, rate_limit: float, save_every: int, resume: bool):
+@click.option(
+    "--prefix",
+    type=str,
+    default=None,
+    help="Only process addresses starting with this prefix (1-9)"
+)
+def main(input: str, rate_limit: float, save_every: int, resume: bool, prefix: str):
     """
     Scrape WOZ values for ALL Netherlands addresses.
 
-    This is THE BIG ONE. Designed to run for months.
+    Output is split by postal code prefix into data/public/woz/
 
     Examples:
-        # Start the marathon
-        python scrape_all_woz.py
+        # Start the marathon (all addresses)
+        python scrape_all_woz.py --rate-limit 5.0
 
-        # Resume after interruption (automatically resumes by default)
-        python scrape_all_woz.py --resume
+        # Only scrape 9xxx postal codes (Groningen/Drenthe)
+        python scrape_all_woz.py --rate-limit 5.0 --prefix 9
 
-        # Faster (2 req/sec - use with caution)
-        python scrape_all_woz.py --rate-limit 2.0
+        # Resume after interruption
+        python scrape_all_woz.py --rate-limit 5.0 --resume
     """
     log.info("="*70)
-    log.info("🇳🇱 SCRAPING ALL WOZ VALUES FOR THE NETHERLANDS 🇳🇱")
+    log.info("WOZ SCRAPER - Split by Postal Code")
     log.info("="*70)
 
     input_path = Path(input)
-    output_path = Path(output)
-    checkpoint_path = Path("../../data/checkpoints/woz_netherlands_progress.json")
+    checkpoint_path = CHECKPOINT_DIR / "woz_netherlands_progress.json"
+
+    # Create output directory
+    WOZ_DIR.mkdir(parents=True, exist_ok=True)
 
     # Load addresses
     log.info(f"Loading addresses from {input_path}...")
     with open(input_path, "r") as f:
-        addresses = json.load(f)
+        all_addresses = json.load(f)
 
-    total_addresses = len(addresses)
+    # Filter by prefix if specified
+    if prefix:
+        log.info(f"Filtering for postal codes starting with {prefix}...")
+        all_addresses = [
+            addr for addr in all_addresses
+            if addr.get("postal_code", "").startswith(prefix)
+        ]
+        log.info(f"Filtered to {len(all_addresses):,} addresses")
+
+    total_addresses = len(all_addresses)
     log.info(f"Total addresses to process: {total_addresses:,}")
 
     # Load checkpoint
@@ -196,43 +266,42 @@ def main(input: str, output: str, rate_limit: float, save_every: int, resume: bo
         log.info(f"Already scraped: {checkpoint['total_scraped']:,} WOZ values")
         log.info(f"Failed: {checkpoint['total_failed']:,}")
 
+    # Show current output stats
+    show_output_stats(WOZ_DIR)
+
     # Calculate estimates
     remaining = total_addresses - start_index
-    time_per_address = (1.0 / rate_limit) + 0.5  # accounting for API overhead
+    time_per_address = (1.0 / rate_limit) + 0.5
     estimated_hours = (remaining * time_per_address) / 3600
     estimated_days = estimated_hours / 24
 
-    log.info(f"\n📊 ESTIMATES:")
+    log.info(f"\nESTIMATES:")
     log.info(f"  Remaining addresses: {remaining:,}")
     log.info(f"  Rate: {rate_limit} req/sec")
     log.info(f"  Estimated time: {estimated_days:.1f} days ({estimated_hours:.1f} hours)")
     log.info(f"  Expected completion: {(datetime.now() + timedelta(hours=estimated_hours)).strftime('%Y-%m-%d %H:%M')}")
 
-    # Ask for confirmation
-    log.warning(f"\n⚠️  This will take approximately {estimated_days:.0f} DAYS to complete!")
-    log.warning(f"⚠️  Make sure:")
-    log.warning(f"     - Your computer can run continuously")
-    log.warning(f"     - You have stable internet")
-    log.warning(f"     - You have enough disk space (~2-3 GB)")
+    log.warning(f"\nThis will take approximately {estimated_days:.0f} DAYS to complete!")
+    log.warning(f"Output directory: {WOZ_DIR}")
 
     import builtins
-    builtins.input(f"\n➤ Press ENTER to start the marathon, or Ctrl+C to cancel...")
+    builtins.input(f"\nPress ENTER to start, or Ctrl+C to cancel...")
 
     # Start scraping
     log.info(f"\n{'='*70}")
-    log.info("🚀 STARTING WOZ SCRAPING MARATHON 🚀")
+    log.info("STARTING WOZ SCRAPING")
     log.info(f"{'='*70}\n")
 
     batch_results = []
     start_time = time.time()
     scrape_start_time = start_time
     consecutive_429s = 0
-    backoff_time = 60  # Start with 60 seconds backoff
+    backoff_time = 60
 
     with WOZScraper(rate_limit=rate_limit) as scraper:
         with tqdm(total=total_addresses, initial=start_index, desc="Scraping WOZ", unit=" addr") as pbar:
             for i in range(start_index, total_addresses):
-                addr = addresses[i]
+                addr = all_addresses[i]
 
                 if not addr.get("postal_code") or not addr.get("house_number"):
                     checkpoint["total_failed"] += 1
@@ -241,9 +310,9 @@ def main(input: str, output: str, rate_limit: float, save_every: int, resume: bo
 
                 # Check if we need extended backoff due to rate limiting
                 if consecutive_429s > 10:
-                    log.warning(f"⚠️  Too many 429s ({consecutive_429s}). Taking {backoff_time}s break...")
+                    log.warning(f"Too many 429s ({consecutive_429s}). Taking {backoff_time}s break...")
                     time.sleep(backoff_time)
-                    backoff_time = min(backoff_time * 2, 600)  # Max 10 minutes
+                    backoff_time = min(backoff_time * 2, 600)
                     consecutive_429s = 0
 
                 try:
@@ -257,11 +326,16 @@ def main(input: str, output: str, rate_limit: float, save_every: int, resume: bo
                         flat = flatten_woz(woz_data)
                         batch_results.append(flat)
                         checkpoint["total_scraped"] += 1
-                        consecutive_429s = 0  # Reset on success
-                        backoff_time = 60  # Reset backoff time
+
+                        # Track by prefix
+                        postal_prefix = get_postal_prefix(addr["postal_code"])
+                        if postal_prefix in checkpoint["by_prefix"]:
+                            checkpoint["by_prefix"][postal_prefix]["scraped"] += 1
+
+                        consecutive_429s = 0
+                        backoff_time = 60
                     else:
                         checkpoint["total_failed"] += 1
-                        # Check if it was a 429 (would be logged)
                         consecutive_429s += 1
 
                 except Exception as e:
@@ -275,9 +349,9 @@ def main(input: str, output: str, rate_limit: float, save_every: int, resume: bo
 
                 # Save batch periodically
                 if len(batch_results) >= save_every:
-                    log.info(f"\n💾 Saving batch of {len(batch_results)} records...")
+                    log.info(f"\nSaving batch of {len(batch_results)} records...")
 
-                    append_to_parquet(batch_results, output_path)
+                    append_to_parquet_by_prefix(batch_results, WOZ_DIR)
                     save_checkpoint(checkpoint_path, checkpoint)
 
                     # Calculate statistics
@@ -301,28 +375,27 @@ def main(input: str, output: str, rate_limit: float, save_every: int, resume: bo
 
     # Save final batch
     if batch_results:
-        log.info(f"\n💾 Saving final batch of {len(batch_results)} records...")
-        append_to_parquet(batch_results, output_path)
+        log.info(f"\nSaving final batch of {len(batch_results)} records...")
+        append_to_parquet_by_prefix(batch_results, WOZ_DIR)
 
     # Final statistics
     total_time = time.time() - scrape_start_time
-    success_rate = (checkpoint["total_scraped"] / total_addresses * 100)
+    success_rate = (checkpoint["total_scraped"] / total_addresses * 100) if total_addresses > 0 else 0
 
     log.success(f"\n{'='*70}")
-    log.success("🎉 MARATHON COMPLETE! 🎉")
+    log.success("SCRAPING COMPLETE!")
     log.success(f"{'='*70}")
     log.success(f"Total addresses processed: {total_addresses:,}")
     log.success(f"WOZ values found: {checkpoint['total_scraped']:,}")
     log.success(f"Failed/Not found: {checkpoint['total_failed']:,}")
     log.success(f"Success rate: {success_rate:.1f}%")
-    log.success(f"Total time: {total_time/3600/24:.1f} days")
-    log.success(f"Output: {output_path}")
-    log.success(f"{'='*70}")
+    log.success(f"Total time: {total_time/3600:.1f} hours")
 
-    # Clean up checkpoint
-    if checkpoint_path.exists():
-        checkpoint_path.unlink()
-        log.info("Checkpoint deleted (scraping complete)")
+    # Show final output stats
+    show_output_stats(WOZ_DIR)
+
+    log.success(f"\nOutput: {WOZ_DIR}")
+    log.success(f"{'='*70}")
 
 
 if __name__ == "__main__":
