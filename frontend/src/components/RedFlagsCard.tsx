@@ -122,15 +122,19 @@ export default function RedFlagsCard({
 
     // Foundation risk
     if (riskData?.foundation_risk?.in_risk_area) {
+      // HIGH RISK - Strong warning needed
       const severity: SeverityLevel = riskData.foundation_risk.risk_level === 'high' ? 'critical' :
         riskData.foundation_risk.risk_level === 'medium' ? 'warning' : 'info'
+      const pctPre1970 = riskData.foundation_risk.pct_pre_1970 ? parseFloat(riskData.foundation_risk.pct_pre_1970).toFixed(0) : null
       flags.push({
         id: 'foundation',
         title: t('foundation.title'),
         description: riskData.foundation_risk.legenda || t('foundation.inRiskArea'),
         severity,
-        details: riskData.foundation_risk.warning || `${riskData.foundation_risk.pct_pre_1970 ? `${parseFloat(riskData.foundation_risk.pct_pre_1970).toFixed(0)}% of buildings in this area were built before 1970` : ''}`,
-        recommendation: riskData.foundation_risk.recommendation || t('foundation.recommendation'),
+        details: riskData.foundation_risk.warning || (pctPre1970 ? `⚠️ ${pctPre1970}% of buildings in this area were built before 1970. Foundation problems are common in this region.` : 'This area has known foundation issues.'),
+        recommendation: severity === 'critical'
+          ? '🚨 MUST get a professional foundation inspection (bouwkundig rapport) before purchasing. Budget €1,000-1,500. Do NOT skip this!'
+          : riskData.foundation_risk.recommendation || t('foundation.recommendation'),
         link: {
           url: 'https://www.kcaf.nl/',
           label: t('foundation.linkLabel')
@@ -149,8 +153,24 @@ export default function RedFlagsCard({
           label: t('foundation.linkLabel')
         }
       })
+    } else if (riskData?.foundation_risk && riskData.foundation_risk.in_risk_area === false) {
+      // LOW RISK - Show positive message but still recommend caution
+      const pctPre1970 = riskData.foundation_risk.pct_pre_1970 ? parseFloat(riskData.foundation_risk.pct_pre_1970).toFixed(0) : null
+      flags.push({
+        id: 'foundation-safe',
+        title: t('foundation.title'),
+        description: riskData.foundation_risk.legenda || 'No known foundation risk in this area',
+        severity: 'safe',
+        details: pctPre1970
+          ? `${pctPre1970}% of buildings in this area were built before 1970. While this area has low foundation risk, it's still wise to verify for older properties.`
+          : 'This area is not in a known foundation risk zone.',
+        recommendation: 'Consider a foundation inspection for buildings built before 1970, especially in areas with clay or peat soil.',
+        link: {
+          url: 'https://www.kcaf.nl/',
+          label: t('foundation.linkLabel')
+        }
+      })
     }
-    // Note: If in_risk_area is false and no error, we don't show anything (good news!)
 
     // Building age check (pre-1970)
     if (buildingYear && buildingYear < 1970) {
