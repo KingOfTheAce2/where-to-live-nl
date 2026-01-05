@@ -1262,68 +1262,77 @@ async def get_snapshot(
 @app.get("/api/map-overlays/crime")
 def get_crime_map_data():
     """
-    Get crime data with coordinates for map overlay.
+    Get crime data with polygon geometries for map overlay.
 
     Returns:
-        GeoJSON-compatible data with crime rates per neighborhood
+        GeoJSON FeatureCollection with neighborhood polygons colored by crime rate
     """
+    import json
+
     crime_df = load_dataframe("crime", CRIME_DATA)
     demographics_df = load_dataframe("demographics", CBS_DEMOGRAPHICS)
-    leefbaarometer_df = load_dataframe("livability", LEEFBAAROMETER)
+    boundaries_df = pl.read_parquet(DATA_DIR / "neighborhood_boundaries.parquet")
 
-    if crime_df is None or demographics_df is None or leefbaarometer_df is None:
-        raise HTTPException(status_code=503, detail="Data not available")
+    if crime_df is None or demographics_df is None:
+        raise HTTPException(status_code=503, detail="Crime or demographics data not available")
 
-    # Aggregate crime by area_code
+    if boundaries_df is None:
+        raise HTTPException(status_code=503, detail="Neighborhood boundaries not available")
+
+    # Aggregate crime by area_code (total crimes across all crime types)
     crime_summary = crime_df.group_by("area_code").agg([
-        pl.sum("GeregistreerdeMisdrijven_1").alias("total_crimes"),
+        pl.sum("GeregistreerdeMisdrijven_1").alias("crime_count"),
         pl.max("year").alias("year")
     ])
 
-    # Get population from demographics for crime rate calculation
+    # Get population from demographics
     demographics_subset = demographics_df.select(["area_code", "population"])
 
-    # Get coordinates from leefbaarometer
-    coords_subset = leefbaarometer_df.select(["area_code", "area_name", "longitude", "latitude"])
+    # Join crime with demographics
+    crime_with_pop = crime_summary.join(demographics_subset, on="area_code", how="left")
 
-    # Join all three
-    joined = crime_summary.join(demographics_subset, on="area_code", how="left")
-    joined = joined.join(coords_subset, on="area_code", how="left")
-
-    # Calculate crime rate per 1000 residents
-    joined = joined.with_columns([
-        (pl.col("total_crimes") / pl.col("population") * 1000).alias("crime_rate_per_1000")
-    ])
-
-    # Filter out nulls and areas without coordinates
-    filtered = joined.filter(
-        pl.col("population").is_not_null() &
-        pl.col("longitude").is_not_null() &
-        pl.col("latitude").is_not_null()
+    # Join with boundaries (buurtcode = area_code)
+    joined = boundaries_df.join(
+        crime_with_pop,
+        left_on="buurtcode",
+        right_on="area_code",
+        how="inner"
     )
 
-    # Convert to dicts
-    result = filtered.to_dicts()
+    # Build GeoJSON features
+    features = []
+    for row in joined.iter_rows(named=True):
+        if not row.get("geometry_json"):
+            continue
 
-    # Convert RD coordinates to WGS84
-    for item in result:
-        if item.get("longitude") and item.get("latitude"):
-            try:
-                # Transform RD (x, y) to WGS84 (lon, lat)
-                lon, lat = rd_to_wgs84.transform(item["longitude"], item["latitude"])
-                item["lng"] = lon
-                item["lat"] = lat
-            except Exception as e:
-                print(f"Error converting coordinates for {item.get('area_code')}: {e}")
-                item["lng"] = None
-                item["lat"] = None
+        try:
+            geometry = json.loads(row["geometry_json"])
+
+            feature = {
+                "type": "Feature",
+                "properties": {
+                    "area_code": row["buurtcode"],
+                    "area_name": row.get("buurtnaam", ""),
+                    "municipality": row.get("gemeentenaam", ""),
+                    "crime_count": row.get("crime_count", 0) or 0,
+                    "population": row.get("population", 0) or 0,
+                    "year": row.get("year", 2024)
+                },
+                "geometry": geometry
+            }
+            features.append(feature)
+        except Exception as e:
+            print(f"Error processing crime row: {e}")
+            continue
 
     return {
         "success": True,
-        "data": result,
+        "type": "FeatureCollection",
+        "count": len(features),
+        "features": features,
         "metadata": {
-            "source": "Politie.nl / CBS / Leefbaarometer",
-            "note": "Crime rates per 1,000 residents by neighborhood",
+            "source": "Politie.nl / CBS / Kadaster",
+            "note": "Total registered crimes per neighborhood",
             "coordinate_system": "WGS84 (EPSG:4326)"
         }
     }

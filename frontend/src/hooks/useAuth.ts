@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { User, Session } from '@supabase/supabase-js'
-import { createClient } from '@/lib/supabase/client'
+import { createClient, isSupabaseConfigured } from '@/lib/supabase/client'
 
 interface Profile {
   id: string
@@ -24,13 +24,27 @@ export function useAuth() {
     user: null,
     session: null,
     profile: null,
-    loading: true,
+    loading: !isSupabaseConfigured ? false : true,
   })
 
   const supabase = createClient()
 
+  // If Supabase is not configured, return mock auth functions
+  if (!isSupabaseConfigured) {
+    const noopAsync = async () => ({ error: null as Error | null })
+    return {
+      ...state,
+      signIn: noopAsync,
+      signUp: noopAsync,
+      signInWithGoogle: noopAsync,
+      signInWithGitHub: noopAsync,
+      signOut: noopAsync,
+      resetPassword: noopAsync,
+    }
+  }
+
   const fetchProfile = useCallback(async (userId: string) => {
-    const { data } = await supabase
+    const { data } = await supabase!
       .from('profiles')
       .select('*')
       .eq('id', userId)
@@ -41,7 +55,7 @@ export function useAuth() {
   useEffect(() => {
     const getSession = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession()
+        const { data: { session } } = await supabase!.auth.getSession()
         const user = session?.user ?? null
         let profile = null
 
@@ -71,7 +85,7 @@ export function useAuth() {
 
     let subscription: { unsubscribe: () => void } | null = null
     try {
-      const { data } = supabase.auth.onAuthStateChange(
+      const { data } = supabase!.auth.onAuthStateChange(
         async (event, session) => {
           try {
             const user = session?.user ?? null
@@ -103,7 +117,7 @@ export function useAuth() {
   }, [supabase, fetchProfile])
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase!.auth.signInWithPassword({
       email,
       password,
     })
@@ -111,7 +125,7 @@ export function useAuth() {
   }
 
   const signUp = async (email: string, password: string, fullName?: string) => {
-    const { error } = await supabase.auth.signUp({
+    const { error } = await supabase!.auth.signUp({
       email,
       password,
       options: {
@@ -124,7 +138,7 @@ export function useAuth() {
   }
 
   const signInWithGoogle = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
+    const { error } = await supabase!.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
@@ -134,7 +148,7 @@ export function useAuth() {
   }
 
   const signInWithGitHub = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
+    const { error } = await supabase!.auth.signInWithOAuth({
       provider: 'github',
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
@@ -144,12 +158,12 @@ export function useAuth() {
   }
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut()
+    const { error } = await supabase!.auth.signOut()
     return { error }
   }
 
   const resetPassword = async (email: string) => {
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    const { error } = await supabase!.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/auth/reset-password`,
     })
     return { error }

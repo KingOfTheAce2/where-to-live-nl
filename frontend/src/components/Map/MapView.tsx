@@ -2450,15 +2450,15 @@ export default function MapView({ destinations, showProperties = true, showSchoo
     }
   }, [mapLoaded, amenities])
 
-  // Load crime overlay data
+  // Load crime overlay data from backend
   useEffect(() => {
     if (!showCrimeOverlay) return
 
-    console.log('🔍 Fetching crime overlay data...')
-    fetch(`/api/map-overlays/crime`)
+    console.log('🔍 Fetching crime overlay data from backend...')
+    fetch(`http://localhost:8000/api/map-overlays/crime`)
       .then(res => res.json())
       .then(data => {
-        if (data.success) {
+        if (data.success && data.features) {
           console.log('✅ Crime data loaded:', data.count, 'neighborhoods')
           setCrimeData(data.features)
         } else {
@@ -3806,7 +3806,7 @@ export default function MapView({ destinations, showProperties = true, showSchoo
       {/* Labeled Icon Toolbar - More intuitive with text labels */}
       {mapLoaded && (() => {
         // Calculate active layer counts for each category
-        const riskLayerCount = [showCrimeOverlay, showFoundationRiskOverlay, showCadastralParcels, showFloodRisk, showLeefbaarometer, showNeighborhoodBoundaries].filter(Boolean).length
+        const riskLayerCount = [showCrimeOverlay, showFoundationRiskOverlay, showFloodRisk, showCadastralParcels, showNeighborhoodBoundaries].filter(Boolean).length
         const insightLayerCount = [showLeefbaarometer, showLivabilityChange].filter(Boolean).length
         const envLayerCount = [showAirQualityOverlay, showAirQualityRealtimeOverlay, showNoiseOverlay].filter(Boolean).length
         const natureLayerCount = [showNationalParks, showNatura2000, showDroneNoFly].filter(Boolean).length
@@ -3853,7 +3853,7 @@ export default function MapView({ destinations, showProperties = true, showSchoo
               <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="text-xs font-medium whitespace-nowrap">Air & Noise</span>
+              <span className="text-xs font-medium whitespace-nowrap">{t('airAndNoise')}</span>
               {envLayerCount > 0 && (
                 <span className="ml-auto bg-green-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">{envLayerCount}</span>
               )}
@@ -3867,7 +3867,7 @@ export default function MapView({ destinations, showProperties = true, showSchoo
               <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
               </svg>
-              <span className="text-xs font-medium whitespace-nowrap">Nature</span>
+              <span className="text-xs font-medium whitespace-nowrap">{t('nature')}</span>
               {natureLayerCount > 0 && (
                 <span className="ml-auto bg-emerald-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">{natureLayerCount}</span>
               )}
@@ -3897,7 +3897,7 @@ export default function MapView({ destinations, showProperties = true, showSchoo
               <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
-              <span className="text-xs font-medium whitespace-nowrap">POIs</span>
+              <span className="text-xs font-medium whitespace-nowrap">{t('pois')}</span>
               {amenityLayerCount > 0 && (
                 <span className="ml-auto bg-purple-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">{amenityLayerCount}</span>
               )}
@@ -3915,14 +3915,14 @@ export default function MapView({ destinations, showProperties = true, showSchoo
               <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="text-xs font-medium whitespace-nowrap">Help</span>
+              <span className="text-xs font-medium whitespace-nowrap">{t('help')}</span>
             </Link>
           </div>
 
           {/* Popup panels - positioned to the right of the icon bar */}
           {activeToolbarPanel === 'layers' && (
             <div className="absolute left-full ml-2 top-0 bg-white rounded-lg shadow-xl p-3 min-w-[200px] border border-gray-200 max-h-[60vh] overflow-y-auto">
-              <h4 className="font-semibold text-xs text-gray-700 mb-2">Data Layers</h4>
+              <h4 className="font-semibold text-xs text-gray-700 mb-2">{t('risks')}</h4>
               <div className="space-y-2">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={showCrimeOverlay} onChange={(e) => setShowCrimeOverlay(e.target.checked)} className="w-4 h-4 text-blue-600 rounded" />
@@ -3931,10 +3931,6 @@ export default function MapView({ destinations, showProperties = true, showSchoo
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={showFoundationRiskOverlay} onChange={(e) => setShowFoundationRiskOverlay(e.target.checked)} className="w-4 h-4 text-orange-600 rounded" />
                   <span className="text-xs text-gray-700">{t('foundationRisk')}</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" checked={showLeefbaarometer} onChange={(e) => setShowLeefbaarometer(e.target.checked)} className="w-4 h-4 text-emerald-600 rounded" />
-                  <span className="text-xs text-gray-700">{t('livabilityHeatmap')}</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={showFloodRisk} onChange={(e) => setShowFloodRisk(e.target.checked)} className="w-4 h-4 text-blue-600 rounded" />
@@ -3954,6 +3950,9 @@ export default function MapView({ destinations, showProperties = true, showSchoo
                     <span className="text-[10px] text-gray-500">How often this flooding could occur</span>
                   </div>
                 )}
+              </div>
+              <h4 className="font-semibold text-xs text-gray-700 mt-3 mb-2">{t('mapLayers')}</h4>
+              <div className="space-y-2">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={showCadastralParcels} onChange={(e) => setShowCadastralParcels(e.target.checked)} className="w-4 h-4 text-gray-600 rounded" />
                   <span className="text-xs text-gray-700">{t('cadastralParcels')}</span>
@@ -3961,6 +3960,22 @@ export default function MapView({ destinations, showProperties = true, showSchoo
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={showNeighborhoodBoundaries} onChange={(e) => setShowNeighborhoodBoundaries(e.target.checked)} className="w-4 h-4 text-purple-600 rounded" />
                   <span className="text-xs text-gray-700">{t('neighborhoodBoundaries')}</span>
+                </label>
+              </div>
+            </div>
+          )}
+
+          {activeToolbarPanel === 'insights' && (
+            <div className="absolute left-full ml-2 top-0 bg-white rounded-lg shadow-xl p-3 min-w-[200px] border border-gray-200">
+              <h4 className="font-semibold text-xs text-gray-700 mb-2">{t('insights')}</h4>
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" checked={showLeefbaarometer} onChange={(e) => setShowLeefbaarometer(e.target.checked)} className="w-4 h-4 text-emerald-600 rounded" />
+                  <span className="text-xs text-gray-700">{t('livabilityHeatmap')}</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" checked={showLivabilityChange} onChange={(e) => setShowLivabilityChange(e.target.checked)} className="w-4 h-4 text-teal-600 rounded" />
+                  <span className="text-xs text-gray-700">{t('livabilityChange')}</span>
                 </label>
               </div>
             </div>
@@ -4192,7 +4207,7 @@ export default function MapView({ destinations, showProperties = true, showSchoo
             <div className="font-semibold text-gray-600 mb-3">{t('legend.markers')}</div>
 
             {/* Schools - unified purple, different shapes */}
-            {showSchools && (
+            {(showPrimarySchools || showSecondarySchools || showMboSchools || showHboSchools || showWoSchools || showSpecialSchools) && (
               <div className="space-y-2 pb-3 border-b border-gray-200">
                 <div className="font-semibold text-purple-600">{t('legend.schools')} (purple)</div>
                 <div className="flex items-center gap-3">
@@ -4375,9 +4390,22 @@ export default function MapView({ destinations, showProperties = true, showSchoo
                 <div className="font-semibold text-gray-600">
                   {t('legend.foundationRiskLegend')}
                 </div>
+                <div className="text-xs text-gray-500 mb-2">{t('legend.subsidenceRisk')}</div>
                 <div className="flex items-center gap-3">
-                  <div className="w-4 h-4 rounded" style={{backgroundColor: '#f97316', opacity: 0.6}}></div>
-                  <span>{t('legend.riskArea')}</span>
+                  <div className="w-4 h-4 rounded" style={{backgroundColor: '#22c55e'}}></div>
+                  <span>{t('legend.lowRisk')}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-4 rounded" style={{backgroundColor: '#facc15'}}></div>
+                  <span>{t('legend.moderateRisk')}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-4 rounded" style={{backgroundColor: '#f97316'}}></div>
+                  <span>{t('legend.highRisk')}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-4 rounded" style={{backgroundColor: '#dc2626'}}></div>
+                  <span>{t('legend.veryHighRisk')}</span>
                 </div>
               </div>
             )}

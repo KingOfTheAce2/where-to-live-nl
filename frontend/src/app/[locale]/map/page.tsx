@@ -191,7 +191,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden">
       {/* Top Navigation Bar */}
-      <header className="h-14 bg-gradient-to-r from-blue-600 to-blue-700 text-white flex items-center justify-between px-6 shadow-md z-50">
+      <header className="h-14 bg-gradient-to-r from-blue-600 to-blue-700 text-white flex items-center px-6 shadow-md z-50">
         <div className="flex items-center gap-4">
           {/* Clear Home Button */}
           <Link
@@ -211,7 +211,9 @@ export default function HomePage() {
               {t('app.subtitle')}
             </p>
           </div>
-          {/* Beta disclaimer */}
+        </div>
+        {/* Beta disclaimer - centered */}
+        <div className="flex-1 flex justify-center">
           <div className="hidden lg:flex items-center gap-1.5 px-2 py-1 bg-white/10 rounded text-xs text-blue-100">
             <span className="text-blue-200">ℹ️</span>
             <span>{t('app.betaDisclaimer')}</span>

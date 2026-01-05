@@ -21,7 +21,7 @@
       "title": "Alles Wat Je Moet Weten",
       "subtitle": "Toegang tot uitgebreide buurtgegevens om de beste beslissing te nemen voor jou en je gezin.",
       "safety": {
-        "title": "Veiligheid & Criminaliteit",
+        "title": "Veiligheid en criminaliteit",
         "description": "Echte criminaliteitscijfers van Politie.nl om de veiligheid van de buurt te begrijpen."
       },
       "livability": {
@@ -29,11 +29,11 @@
         "description": "Officiële Leefbaarometer scores die de kwaliteit van leven in Nederlandse buurten meten."
       },
       "amenities": {
-        "title": "Nabije Voorzieningen",
+        "title": "Nabije voorzieningen",
         "description": "Afstand tot supermarkten, gezondheidszorg, scholen, parken en openbaar vervoer."
       },
       "demographics": {
-        "title": "Demografische Gegevens",
+        "title": "Demografische gegevens",
         "description": "Bevolkingsstatistieken, leeftijdsverdeling en woninginformatie van het CBS."
       }
     },
@@ -127,9 +127,9 @@
     "analyzing": "Locatiegegevens analyseren..."
   },
   "sections": {
-    "risks": "Risico's & Waarschuwingen",
-    "costs": "Kosten & Waarde",
-    "location": "Locatie & Voorzieningen",
+    "risks": "Risico's en waarschuwingen",
+    "costs": "Kosten en waarde",
+    "location": "Locatie en voorzieningen",
     "neighborhood": "Buurt"
   },
   "snapshot": {
@@ -278,6 +278,16 @@
     "maxAreaLabel": "Max oppervlakte:"
   },
   "map": {
+    "risks": "Risico's",
+    "insights": "Inzichten",
+    "airAndNoise": "Lucht en geluid",
+    "nature": "Natuur",
+    "pois": "Voorzieningen",
+    "help": "Help",
+    "tramLine": "Tramlijn",
+    "metroLine": "Metrolijn",
+    "tramLines": "Tramlijnen",
+    "metroLines": "Metrolijnen",
     "baseMap": "Basiskaart",
     "standardMap": "Standaard",
     "aerialPhoto": "Luchtfoto",
@@ -288,6 +298,8 @@
     "airQuality": "Luchtkwaliteit (RIVM)",
     "foundationRisk": "Funderingsrisico",
     "livabilityHeatmap": "Leefbaarheid heatmap",
+    "livabilityChange": "Leefbaarheid verandering",
+    "mapLayers": "Kaartlagen",
     "amenities": "Voorzieningen",
     "healthcare": "Gezondheidszorg",
     "supermarkets": "Supermarkten",
@@ -358,7 +370,12 @@
       "moderate": "Matig",
       "unhealthy": "Ongezond",
       "veryUnhealthy": "Zeer ongezond",
-      "foundationRiskLegend": "Funderingsrisico (oranje)",
+      "foundationRiskLegend": "Funderingsrisico",
+      "subsidenceRisk": "Bodemdaling 2020-2050 (hoog scenario)",
+      "lowRisk": "Laag risico",
+      "moderateRisk": "Matig risico",
+      "highRisk": "Hoog risico",
+      "veryHighRisk": "Zeer hoog risico",
       "riskArea": "Risicogebied (KCAF)",
       "cadastralParcelsLegend": "Kadastrale percelen (Kadaster)",
       "definiteBoundary": "Definitieve grens",
@@ -616,6 +633,7 @@
     "maybeLater": "Misschien Later"
   },
   "auth": {
+    "signIn": "Inloggen",
     "login": "Inloggen",
     "signup": "Registreren",
     "signOut": "Uitloggen",

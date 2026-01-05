@@ -26,15 +26,16 @@ let cachedData: CrimeData | null = null
 function loadData(): CrimeData {
   if (cachedData) return cachedData
 
+  // Use the crime overlay GeoJSON (with geometries), not the raw CBS data
   const dataPath = path.join(process.cwd(), '..', 'data', 'raw', 'crime_overlay.json')
 
   try {
     const fileContent = fs.readFileSync(dataPath, 'utf-8')
     cachedData = JSON.parse(fileContent)
-    console.log(`✅ Loaded ${cachedData!.features.length} crime zones from local data`)
+    console.log(`Loaded ${cachedData!.features.length} crime zones from crime_overlay.json`)
     return cachedData!
   } catch (error) {
-    console.error('Failed to load crime data:', error)
+    console.error('Failed to load crime overlay data:', error)
     return { type: 'FeatureCollection', metadata: {}, features: [] }
   }
 }

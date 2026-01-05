@@ -21,11 +21,11 @@
       "title": "Everything You Need to Know",
       "subtitle": "Access comprehensive neighborhood data to make the best decision for you and your family.",
       "safety": {
-        "title": "Safety & Crime Data",
+        "title": "Safety and crime data",
         "description": "Real crime statistics from Politie.nl to understand neighborhood safety levels."
       },
       "livability": {
-        "title": "Livability Scores",
+        "title": "Livability scores",
         "description": "Official Leefbaarometer scores measuring quality of life across Dutch neighborhoods."
       },
       "amenities": {
@@ -127,9 +127,9 @@
     "analyzing": "Analyzing location data..."
   },
   "sections": {
-    "risks": "Risks & Warnings",
-    "costs": "Costs & Value",
-    "location": "Location & Amenities",
+    "risks": "Risks and warnings",
+    "costs": "Costs and value",
+    "location": "Location and amenities",
     "neighborhood": "Neighborhood"
   },
   "snapshot": {
@@ -278,6 +278,16 @@
     "maxAreaLabel": "Max area:"
   },
   "map": {
+    "risks": "Risks",
+    "insights": "Insights",
+    "airAndNoise": "Air and noise",
+    "nature": "Nature",
+    "pois": "POIs",
+    "help": "Help",
+    "tramLine": "Tram line",
+    "metroLine": "Metro line",
+    "tramLines": "Tram lines",
+    "metroLines": "Metro lines",
     "baseMap": "Base map",
     "standardMap": "Standard",
     "aerialPhoto": "Aerial",
@@ -288,6 +298,8 @@
     "airQuality": "Air quality (RIVM)",
     "foundationRisk": "Foundation risk",
     "livabilityHeatmap": "Livability heat map",
+    "livabilityChange": "Livability change",
+    "mapLayers": "Map layers",
     "amenities": "Amenities",
     "healthcare": "Healthcare",
     "supermarkets": "Supermarkets",
@@ -358,7 +370,12 @@
       "moderate": "Moderate",
       "unhealthy": "Unhealthy",
       "veryUnhealthy": "Very Unhealthy",
-      "foundationRiskLegend": "Foundation risk (orange)",
+      "foundationRiskLegend": "Foundation risk",
+      "subsidenceRisk": "Subsidence 2020-2050 (high scenario)",
+      "lowRisk": "Low risk",
+      "moderateRisk": "Moderate risk",
+      "highRisk": "High risk",
+      "veryHighRisk": "Very high risk",
       "riskArea": "Risk Area (KCAF)",
       "cadastralParcelsLegend": "Cadastral parcels (Kadaster)",
       "definiteBoundary": "Definite boundary",

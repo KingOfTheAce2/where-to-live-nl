@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { createClient } from '@/lib/supabase/client'
+import { createClient, isSupabaseConfigured } from '@/lib/supabase/client'
 import { useAuth } from './useAuth'
 
 export type SubscriptionStatus = 'free' | 'active' | 'canceled' | 'past_due' | 'trialing'
@@ -26,13 +26,22 @@ export function useSubscription() {
   const [state, setState] = useState<SubscriptionState>({
     subscription: null,
     isPremium: false,
-    loading: true,
+    loading: !isSupabaseConfigured ? false : true,
   })
 
   const supabase = createClient()
 
+  // If Supabase is not configured, return default subscription state
+  if (!isSupabaseConfigured) {
+    return {
+      ...state,
+      canAccessFeature: () => true, // Allow all features when auth disabled
+      getFeatureLimit: () => Infinity,
+    }
+  }
+
   const fetchSubscription = useCallback(async (userId: string) => {
-    const { data } = await supabase
+    const { data } = await supabase!
       .from('subscriptions')
       .select('*')
       .eq('user_id', userId)
