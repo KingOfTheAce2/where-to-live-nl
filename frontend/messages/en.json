@@ -12,7 +12,7 @@
   "landing": {
     "openMap": "Open Map",
     "hero": {
-      "title": "Find Your Perfect Neighborhood in the Netherlands",
+      "title": "Find your perfect neighborhood in the Netherlands",
       "subtitle": "Make informed decisions about where to live with comprehensive data on safety, livability, amenities, and more.",
       "cta": "Explore the Map",
       "learnMore": "Learn More"
@@ -283,6 +283,7 @@
     "airAndNoise": "Air and noise",
     "nature": "Nature",
     "pois": "POIs",
+    "boundaries": "Boundaries",
     "help": "Help",
     "tramLine": "Tram line",
     "metroLine": "Metro line",

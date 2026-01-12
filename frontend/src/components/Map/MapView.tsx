@@ -55,9 +55,6 @@ export default function MapView({ destinations, showProperties = true, showSchoo
   const [airQualityPollutant, setAirQualityPollutant] = useState<'NO2' | 'PM10' | 'PM25'>('NO2')
   const [airQualityYear, setAirQualityYear] = useState<'current' | '2023' | '2022' | '2021' | '2020' | '2019'>('current')
   const [crimeData, setCrimeData] = useState<any[]>([])
-  const [crimeLoading, setCrimeLoading] = useState(false)
-  const [neighborhoodLoading, setNeighborhoodLoading] = useState(false)
-  const [cadastralLoading, setCadastralLoading] = useState(false)
   const [airQualityData, setAirQualityData] = useState<any[]>([])
   const [airQualityRealtimeData, setAirQualityRealtimeData] = useState<any[]>([])
 
@@ -88,7 +85,7 @@ export default function MapView({ destinations, showProperties = true, showSchoo
   const [showSpecialSchools, setShowSpecialSchools] = useState(false)
 
   // Compact toolbar state - which panel is currently open
-  const [activeToolbarPanel, setActiveToolbarPanel] = useState<'mapStyle' | 'layers' | 'mapLayers' | 'insights' | 'environment' | 'nature' | 'schools' | 'amenities' | 'legend' | null>(null)
+  const [activeToolbarPanel, setActiveToolbarPanel] = useState<'mapStyle' | 'layers' | 'insights' | 'environment' | 'nature' | 'schools' | 'amenities' | 'boundaries' | 'legend' | null>(null)
   const [showLegend, setShowLegend] = useState(false)
   const [healthcareData, setHealthcareData] = useState<any[]>([])
   const [supermarketsData, setSupermarketsData] = useState<any[]>([])
@@ -2457,24 +2454,18 @@ export default function MapView({ destinations, showProperties = true, showSchoo
   useEffect(() => {
     if (!showCrimeOverlay) return
 
-    console.log('🔍 Fetching crime overlay data from backend...', BACKEND_URL)
-    setCrimeLoading(true)
-    fetch(`${BACKEND_URL}/api/map-overlays/crime`)
-      .then(res => {
-        console.log('Crime API response status:', res.status)
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        return res.json()
-      })
+    console.log('🔍 Fetching crime overlay data from backend...')
+    fetch(`/api/map-overlays/crime`)
+      .then(res => res.json())
       .then(data => {
         if (data.success && data.features) {
-          console.log('✅ Crime data loaded:', data.count, 'neighborhoods, first feature:', data.features[0]?.properties)
+          console.log('✅ Crime data loaded:', data.count, 'neighborhoods')
           setCrimeData(data.features)
         } else {
-          console.error('❌ Crime data fetch failed - unexpected format:', data)
+          console.error('❌ Crime data fetch failed:', data)
         }
       })
-      .catch(err => console.error('❌ Error loading crime data:', err.message, err))
-      .finally(() => setCrimeLoading(false))
+      .catch(err => console.error('❌ Error loading crime data:', err))
   }, [showCrimeOverlay])
 
   // Add crime overlay to map
@@ -2482,8 +2473,7 @@ export default function MapView({ destinations, showProperties = true, showSchoo
     if (!map.current || !mapLoaded) return
 
     if (showCrimeOverlay && crimeData.length > 0) {
-      console.log('🗺️ Adding crime overlay to map with', crimeData.length, 'features')
-      console.log('Sample crime feature geometry type:', crimeData[0]?.geometry?.type)
+      console.log('🗺️ Adding crime overlay to map with', crimeData.length, 'data points')
 
       // Add source and layers if they don't exist
       if (!map.current.getSource('crime-overlay')) {
@@ -3793,24 +3783,6 @@ export default function MapView({ destinations, showProperties = true, showSchoo
         </div>
       )}
 
-      {/* Layer Loading Progress Bar */}
-      {(crimeLoading || schoolsLoading || amenitiesLoading || propertiesLoading) && (
-        <div className="absolute top-0 left-0 right-0 z-50">
-          <div className="h-1 bg-gray-200">
-            <div className="h-full bg-blue-600 animate-pulse" style={{ width: '100%' }} />
-          </div>
-          <div className="absolute top-1 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 shadow-sm flex items-center gap-2">
-            <div className="w-3 h-3 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
-            <span className="text-xs text-gray-600 font-medium">
-              {crimeLoading && 'Loading crime data...'}
-              {schoolsLoading && 'Loading schools...'}
-              {amenitiesLoading && 'Loading amenities...'}
-              {propertiesLoading && 'Loading properties...'}
-            </span>
-          </div>
-        </div>
-      )}
-
       {/* Top Bar - Map Type Selector */}
       {mapLoaded && (
         <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20">
@@ -3835,8 +3807,8 @@ export default function MapView({ destinations, showProperties = true, showSchoo
       {mapLoaded && (() => {
         // Calculate active layer counts for each category
         const riskLayerCount = [showCrimeOverlay, showFoundationRiskOverlay, showFloodRisk].filter(Boolean).length
-        const mapLayerCount = [showCadastralParcels, showNeighborhoodBoundaries].filter(Boolean).length
         const insightLayerCount = [showLeefbaarometer, showLivabilityChange].filter(Boolean).length
+        const boundaryLayerCount = [showCadastralParcels, showNeighborhoodBoundaries].filter(Boolean).length
         const envLayerCount = [showAirQualityOverlay, showAirQualityRealtimeOverlay, showNoiseOverlay].filter(Boolean).length
         const natureLayerCount = [showNationalParks, showNatura2000, showDroneNoFly].filter(Boolean).length
         const schoolLayerCount = [showPrimarySchools, showSecondarySchools, showMboSchools, showHboSchools, showWoSchools, showSpecialSchools].filter(Boolean).length
@@ -3857,20 +3829,6 @@ export default function MapView({ destinations, showProperties = true, showSchoo
               <span className="text-xs font-medium whitespace-nowrap">{t('risks')}</span>
               {riskLayerCount > 0 && (
                 <span className="ml-auto bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">{riskLayerCount}</span>
-              )}
-            </button>
-
-            {/* Map Layers (Cadastral, Neighborhoods) */}
-            <button
-              onClick={() => setActiveToolbarPanel(activeToolbarPanel === 'mapLayers' ? null : 'mapLayers')}
-              className={`flex items-center gap-2 px-2.5 py-2 rounded-lg transition-all ${activeToolbarPanel === 'mapLayers' ? 'bg-slate-100 text-slate-700' : 'hover:bg-gray-100 text-gray-600'} ${mapLayerCount > 0 ? 'ring-2 ring-slate-400 ring-inset' : ''}`}
-            >
-              <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-              </svg>
-              <span className="text-xs font-medium whitespace-nowrap">{t('mapLayers')}</span>
-              {mapLayerCount > 0 && (
-                <span className="ml-auto bg-slate-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">{mapLayerCount}</span>
               )}
             </button>
 
@@ -3946,6 +3904,20 @@ export default function MapView({ destinations, showProperties = true, showSchoo
               )}
             </button>
 
+            {/* Boundaries */}
+            <button
+              onClick={() => setActiveToolbarPanel(activeToolbarPanel === 'boundaries' ? null : 'boundaries')}
+              className={`flex items-center gap-2 px-2.5 py-2 rounded-lg transition-all ${activeToolbarPanel === 'boundaries' ? 'bg-slate-100 text-slate-700' : 'hover:bg-gray-100 text-gray-600'} ${boundaryLayerCount > 0 ? 'ring-2 ring-slate-400 ring-inset' : ''}`}
+            >
+              <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+              </svg>
+              <span className="text-xs font-medium whitespace-nowrap">{t('boundaries')}</span>
+              {boundaryLayerCount > 0 && (
+                <span className="ml-auto bg-slate-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">{boundaryLayerCount}</span>
+              )}
+            </button>
+
             <div className="border-t border-gray-200 my-1" />
 
             {/* Help/Guide link */}
@@ -3970,7 +3942,6 @@ export default function MapView({ destinations, showProperties = true, showSchoo
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={showCrimeOverlay} onChange={(e) => setShowCrimeOverlay(e.target.checked)} className="w-4 h-4 text-blue-600 rounded" />
                   <span className="text-xs text-gray-700">{t('crimeRate')}</span>
-                  {crimeLoading && <div className="w-3 h-3 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />}
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={showFoundationRiskOverlay} onChange={(e) => setShowFoundationRiskOverlay(e.target.checked)} className="w-4 h-4 text-orange-600 rounded" />
@@ -3994,22 +3965,6 @@ export default function MapView({ destinations, showProperties = true, showSchoo
                     <span className="text-[10px] text-gray-500">How often this flooding could occur</span>
                   </div>
                 )}
-              </div>
-            </div>
-          )}
-
-          {activeToolbarPanel === 'mapLayers' && (
-            <div className="absolute left-full ml-2 top-0 bg-white rounded-lg shadow-xl p-3 min-w-[200px] border border-gray-200 max-h-[60vh] overflow-y-auto">
-              <h4 className="font-semibold text-xs text-gray-700 mb-2">{t('mapLayers')}</h4>
-              <div className="space-y-2">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" checked={showCadastralParcels} onChange={(e) => setShowCadastralParcels(e.target.checked)} className="w-4 h-4 text-slate-600 rounded" />
-                  <span className="text-xs text-gray-700">{t('cadastralParcels')}</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" checked={showNeighborhoodBoundaries} onChange={(e) => setShowNeighborhoodBoundaries(e.target.checked)} className="w-4 h-4 text-purple-600 rounded" />
-                  <span className="text-xs text-gray-700">{t('neighborhoodBoundaries')}</span>
-                </label>
               </div>
             </div>
           )}
@@ -4192,6 +4147,22 @@ export default function MapView({ destinations, showProperties = true, showSchoo
                     <span className="text-xs text-gray-700">{t('metroLines') || 'Metro Lines'}</span>
                   </label>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {activeToolbarPanel === 'boundaries' && (
+            <div className="absolute left-full ml-2 top-0 bg-white rounded-lg shadow-xl p-3 min-w-[200px] border border-gray-200">
+              <h4 className="font-semibold text-xs text-gray-700 mb-2">{t('boundaries')}</h4>
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" checked={showCadastralParcels} onChange={(e) => setShowCadastralParcels(e.target.checked)} className="w-4 h-4 text-gray-600 rounded" />
+                  <span className="text-xs text-gray-700">{t('cadastralParcels')}</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" checked={showNeighborhoodBoundaries} onChange={(e) => setShowNeighborhoodBoundaries(e.target.checked)} className="w-4 h-4 text-purple-600 rounded" />
+                  <span className="text-xs text-gray-700">{t('neighborhoodBoundaries')}</span>
+                </label>
               </div>
             </div>
           )}

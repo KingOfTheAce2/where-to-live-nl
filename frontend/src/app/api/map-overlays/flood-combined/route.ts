@@ -13,9 +13,8 @@ import { NextResponse } from 'next/server'
  * - Calculating combined risk scores
  */
 
-// Cache configuration
-let cachedCombinedData: any = null
-let cacheTimestamp = 0
+// Cache configuration - per-scenario caching
+const scenarioCache: Map<string, { data: any; timestamp: number }> = new Map()
 const CACHE_TTL = 1000 * 60 * 60 // 1 hour
 
 // Flood depth scenarios from Lizard
@@ -287,9 +286,11 @@ function combineRiskLevels(zoneRisk: string, depthRisk: string): string {
 async function buildCombinedFloodData(scenario: string = 't100'): Promise<any> {
   const now = Date.now()
 
-  // Check cache
-  if (cachedCombinedData && (now - cacheTimestamp) < CACHE_TTL) {
-    return cachedCombinedData
+  // Check per-scenario cache
+  const cached = scenarioCache.get(scenario)
+  if (cached && (now - cached.timestamp) < CACHE_TTL) {
+    console.log(`Using cached flood data for scenario ${scenario}`)
+    return cached.data
   }
 
   console.log('Building combined flood data...')
@@ -446,7 +447,7 @@ async function buildCombinedFloodData(scenario: string = 't100'): Promise<any> {
     (b.properties.combined_risk_score || 0) - (a.properties.combined_risk_score || 0)
   )
 
-  cachedCombinedData = {
+  const resultData = {
     type: 'FeatureCollection',
     features: combinedFeatures,
     metadata: {
@@ -458,12 +459,14 @@ async function buildCombinedFloodData(scenario: string = 't100'): Promise<any> {
       fetched_at: new Date().toISOString()
     }
   }
-  cacheTimestamp = now
 
-  console.log(`Combined flood data: ${combinedFeatures.length} features ` +
+  // Cache per-scenario
+  scenarioCache.set(scenario, { data: resultData, timestamp: now })
+
+  console.log(`Combined flood data for ${scenario}: ${combinedFeatures.length} features ` +
     `(${floodZones.features?.length || 0} zones + ${depthOnlyCount} depth-only)`)
 
-  return cachedCombinedData
+  return resultData
 }
 
 export async function GET(request: Request) {

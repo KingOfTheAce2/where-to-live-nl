@@ -12,7 +12,7 @@
   "landing": {
     "openMap": "Otwórz Mapę",
     "hero": {
-      "title": "Znajdź Swoją Idealną Dzielnicę w Holandii",
+      "title": "Znajdź swoją idealną dzielnicę w Holandii",
       "subtitle": "Podejmuj świadome decyzje o tym, gdzie mieszkać, korzystając z kompleksowych danych o bezpieczeństwie, jakości życia, udogodnieniach i nie tylko.",
       "cta": "Przeglądaj Mapę",
       "learnMore": "Dowiedz się więcej"
@@ -271,6 +271,13 @@
     "maxAreaLabel": "Powierzchnia maks:"
   },
   "map": {
+    "risks": "Zagrożenia",
+    "insights": "Statystyki",
+    "airAndNoise": "Powietrze i hałas",
+    "nature": "Przyroda",
+    "pois": "Usługi",
+    "boundaries": "Granice",
+    "help": "Pomoc",
     "baseMap": "Mapa bazowa",
     "standardMap": "Standardowa",
     "aerialPhoto": "Zdjecie lotnicze",

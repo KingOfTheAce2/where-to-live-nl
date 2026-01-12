@@ -12,7 +12,7 @@
   "landing": {
     "openMap": "Ouvrir la Carte",
     "hero": {
-      "title": "Trouvez Votre Quartier Idéal aux Pays-Bas",
+      "title": "Trouvez votre quartier idéal aux Pays-Bas",
       "subtitle": "Prenez des décisions éclairées sur où vivre grâce à des données complètes sur la sécurité, la qualité de vie, les commodités et plus encore.",
       "cta": "Explorer la Carte",
       "learnMore": "En Savoir Plus"
@@ -271,6 +271,13 @@
     "maxAreaLabel": "Max area:"
   },
   "map": {
+    "risks": "Risques",
+    "insights": "Perspectives",
+    "airAndNoise": "Air et bruit",
+    "nature": "Nature",
+    "pois": "Services",
+    "boundaries": "Limites",
+    "help": "Aide",
     "baseMap": "Base map",
     "standardMap": "Standard",
     "aerialPhoto": "Aerial",

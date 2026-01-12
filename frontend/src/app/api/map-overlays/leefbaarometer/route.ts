@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 
+// Route segment config for large responses
+export const maxDuration = 30 // 30 seconds timeout
+export const dynamic = 'force-dynamic'
+export const revalidate = 3600 // Cache for 1 hour
+
 interface LeefbaarometerItem {
   id: string
   area_code: string
@@ -19,32 +24,31 @@ interface LeefbaarometerItem {
   geometry: any
 }
 
-let cachedData: { metadata: any; data: LeefbaarometerItem[] } | null = null
+// In-memory cache for converted GeoJSON
+let cachedGeoJSON: any = null
+let cacheTimestamp = 0
+const CACHE_TTL = 1000 * 60 * 60 // 1 hour
 
-function loadData() {
-  if (cachedData) return cachedData
+function loadAndConvertData() {
+  const now = Date.now()
+
+  // Return cached GeoJSON if valid
+  if (cachedGeoJSON && (now - cacheTimestamp) < CACHE_TTL) {
+    console.log('Using cached leefbaarometer GeoJSON')
+    return cachedGeoJSON
+  }
 
   const dataPath = path.join(process.cwd(), '..', 'data', 'raw', 'leefbaarometer.json')
 
   try {
+    console.log('Loading leefbaarometer data from:', dataPath)
     const fileContent = fs.readFileSync(dataPath, 'utf-8')
-    cachedData = JSON.parse(fileContent)
-    console.log(`Loaded ${cachedData!.data.length} leefbaarometer records from local data`)
-    return cachedData!
-  } catch (error) {
-    console.error('Failed to load leefbaarometer data:', error)
-    return { metadata: {}, data: [] }
-  }
-}
+    const rawData = JSON.parse(fileContent)
 
-export async function GET() {
-  try {
-    const { metadata, data } = loadData()
-
-    // Convert to GeoJSON FeatureCollection for the map
-    const features = data
-      .filter(item => item.geometry)
-      .map(item => ({
+    // Convert to GeoJSON immediately and cache
+    const features = rawData.data
+      .filter((item: LeefbaarometerItem) => item.geometry)
+      .map((item: LeefbaarometerItem) => ({
         type: 'Feature',
         id: item.id,
         properties: {
@@ -64,12 +68,26 @@ export async function GET() {
         geometry: item.geometry,
       }))
 
-    return NextResponse.json({
+    cachedGeoJSON = {
       success: true,
       count: features.length,
-      metadata,
+      metadata: rawData.metadata,
       features,
-    })
+    }
+    cacheTimestamp = now
+
+    console.log(`Loaded and cached ${features.length} leefbaarometer records`)
+    return cachedGeoJSON
+  } catch (error) {
+    console.error('Failed to load leefbaarometer data:', error)
+    return { success: false, count: 0, metadata: {}, features: [] }
+  }
+}
+
+export async function GET() {
+  try {
+    const data = loadAndConvertData()
+    return NextResponse.json(data)
   } catch (error) {
     console.error('Error in leefbaarometer API:', error)
     return NextResponse.json(

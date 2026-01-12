@@ -12,7 +12,7 @@
   "landing": {
     "openMap": "Apri Mappa",
     "hero": {
-      "title": "Trova il Tuo Quartiere Perfetto nei Paesi Bassi",
+      "title": "Trova il tuo quartiere perfetto nei Paesi Bassi",
       "subtitle": "Prendi decisioni informate su dove vivere con dati completi su sicurezza, vivibilità, servizi e altro.",
       "cta": "Esplora la Mappa",
       "learnMore": "Scopri di Più"
@@ -271,6 +271,13 @@
     "maxAreaLabel": "Max area:"
   },
   "map": {
+    "risks": "Rischi",
+    "insights": "Approfondimenti",
+    "airAndNoise": "Aria e rumore",
+    "nature": "Natura",
+    "pois": "Servizi",
+    "boundaries": "Confini",
+    "help": "Aiuto",
     "baseMap": "Base map",
     "standardMap": "Standard",
     "aerialPhoto": "Aerial",

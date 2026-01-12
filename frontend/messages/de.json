@@ -271,6 +271,13 @@
     "maxAreaLabel": "Max Fläche:"
   },
   "map": {
+    "risks": "Risiken",
+    "insights": "Einblicke",
+    "airAndNoise": "Luft und Lärm",
+    "nature": "Natur",
+    "pois": "Einrichtungen",
+    "boundaries": "Grenzen",
+    "help": "Hilfe",
     "baseMap": "Basiskarte",
     "standardMap": "Standard",
     "aerialPhoto": "Luftbild",

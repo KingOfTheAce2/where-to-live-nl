@@ -12,7 +12,7 @@
   "landing": {
     "openMap": "Open Kaart",
     "hero": {
-      "title": "Vind Jouw Perfecte Buurt in Nederland",
+      "title": "Vind jouw perfecte buurt in Nederland",
       "subtitle": "Neem weloverwogen beslissingen over waar je wilt wonen met uitgebreide gegevens over veiligheid, leefbaarheid, voorzieningen en meer.",
       "cta": "Verken de Kaart",
       "learnMore": "Meer Informatie"
@@ -283,6 +283,7 @@
     "airAndNoise": "Lucht en geluid",
     "nature": "Natuur",
     "pois": "Voorzieningen",
+    "boundaries": "Grenzen",
     "help": "Help",
     "tramLine": "Tramlijn",
     "metroLine": "Metrolijn",

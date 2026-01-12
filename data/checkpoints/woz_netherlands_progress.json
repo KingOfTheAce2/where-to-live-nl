@@ -1,12 +1,12 @@
 {
-  "last_index": 217255,
-  "total_scraped": 165000,
-  "total_failed": 52255,
+  "last_index": 255803,
+  "total_scraped": 197000,
+  "total_failed": 58803,
   "started_at": "2025-11-05T06:46:02.376313",
-  "last_updated": "2026-01-03T04:44:46.357033",
+  "last_updated": "2026-01-12T07:36:39.791638",
   "by_prefix": {
     "1": {
-      "scraped": 13000,
+      "scraped": 45000,
       "failed": 0
     },
     "2": {

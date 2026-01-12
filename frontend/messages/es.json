@@ -12,7 +12,7 @@
   "landing": {
     "openMap": "Abrir Mapa",
     "hero": {
-      "title": "Encuentra Tu Barrio Perfecto en los Países Bajos",
+      "title": "Encuentra tu barrio perfecto en los Países Bajos",
       "subtitle": "Toma decisiones informadas sobre dónde vivir con datos completos sobre seguridad, habitabilidad, servicios y más.",
       "cta": "Explorar el Mapa",
       "learnMore": "Más Información"
@@ -271,6 +271,13 @@
     "maxAreaLabel": "Max area:"
   },
   "map": {
+    "risks": "Riesgos",
+    "insights": "Perspectivas",
+    "airAndNoise": "Aire y ruido",
+    "nature": "Naturaleza",
+    "pois": "Servicios",
+    "boundaries": "Límites",
+    "help": "Ayuda",
     "baseMap": "Base map",
     "standardMap": "Standard",
     "aerialPhoto": "Aerial",
