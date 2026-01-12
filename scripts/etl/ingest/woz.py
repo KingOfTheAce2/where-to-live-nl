@@ -29,14 +29,28 @@ PDOK_LOOKUP_URL = "https://api.pdok.nl/bzk/locatieserver/search/v3_1/lookup"
 class WOZScraper:
     """Scraper for WOZ property valuations using the official API."""
 
-    def __init__(self, rate_limit: float = 1.0):
+    # Transient errors that should trigger a retry (VPN rotation, connection drops)
+    RETRYABLE_ERRORS = (
+        "Server disconnected",
+        "WinError 10054",  # Connection forcibly closed
+        "WinError 10053",  # Connection aborted
+        "WinError 10013",  # Socket access denied (VPN switching)
+        "Connection reset",
+        "RemoteProtocolError",
+    )
+
+    def __init__(self, rate_limit: float = 1.0, max_retries: int = 3, retry_delay: float = 5.0):
         """
         Initialize WOZ scraper.
 
         Args:
             rate_limit: Requests per second (default: 1.0)
+            max_retries: Number of retries for transient connection errors (default: 3)
+            retry_delay: Seconds to wait before retry (default: 5.0)
         """
         self.rate_limit = rate_limit
+        self.max_retries = max_retries
+        self.retry_delay = retry_delay
         self.last_request_time = 0
 
         self.client = httpx.Client(
@@ -46,6 +60,42 @@ class WOZScraper:
             },
             follow_redirects=True
         )
+
+    def _is_retryable_error(self, error: Exception) -> bool:
+        """Check if error is transient and should be retried (e.g., VPN rotation)."""
+        error_str = str(error)
+        return any(err in error_str for err in self.RETRYABLE_ERRORS)
+
+    def _request_with_retry(self, method: str, url: str, **kwargs):
+        """Make HTTP request with retry logic for transient errors."""
+        last_error = None
+        for attempt in range(self.max_retries + 1):
+            try:
+                if method == "get":
+                    return self.client.get(url, **kwargs)
+                else:
+                    raise ValueError(f"Unsupported method: {method}")
+            except Exception as e:
+                last_error = e
+                if self._is_retryable_error(e) and attempt < self.max_retries:
+                    log.warning(f"Connection error (attempt {attempt + 1}/{self.max_retries + 1}): {e}")
+                    log.info(f"Waiting {self.retry_delay}s for VPN to stabilize...")
+                    time.sleep(self.retry_delay)
+                    # Recreate client in case socket is stale
+                    try:
+                        self.client.close()
+                    except:
+                        pass
+                    self.client = httpx.Client(
+                        timeout=30,
+                        headers={
+                            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+                        },
+                        follow_redirects=True
+                    )
+                else:
+                    raise
+        raise last_error
 
     def _rate_limit_delay(self):
         """Enforce rate limiting."""
@@ -81,7 +131,8 @@ class WOZScraper:
                 address_query += house_letter
 
             # Step 1: Suggest address
-            suggest_response = self.client.get(
+            suggest_response = self._request_with_retry(
+                "get",
                 PDOK_SUGGEST_URL,
                 params={"q": address_query}
             )
@@ -106,7 +157,8 @@ class WOZScraper:
                 return None
 
             # Step 2: Lookup full address details
-            lookup_response = self.client.get(
+            lookup_response = self._request_with_retry(
+                "get",
                 PDOK_LOOKUP_URL,
                 params={"id": address_id}
             )
@@ -170,7 +222,7 @@ class WOZScraper:
 
             self._rate_limit_delay()  # Extra rate limit for WOZ API
 
-            response = self.client.get(woz_url)
+            response = self._request_with_retry("get", woz_url)
 
             log.debug(f"WOZ API response status: {response.status_code}")
             log.debug(f"WOZ API URL: {woz_url}")
